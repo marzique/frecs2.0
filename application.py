@@ -2,12 +2,16 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
-news = [
+articles = [
 	{'Author': 'Denys Tarnavskyi',
 	 'Title': 'Title Post1',
 	 'Date': '18, Aug, 2018',
 	 'Content': 'Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.' \
-				' Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna ' \
+				' Lorem ipsum dolor sit amet, consectetuer mpor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.' \
+				' Lorem ipsum dolor sit amet, consectetuempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.' \
+				' Lorem ipsum dolor sit amet, consectetuempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.' \
+				' Lorem ipsum dolor sit amet, consectetuempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.' \
+				' Lorem ipsum dolor sit amet, consectetueadipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna ' \
 				'aliquam erat volutpat. '},
 
 	{'Author': 'Ihor Beh',
@@ -21,6 +25,10 @@ news = [
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/news')
+def news():
+    return render_template('news.html', articles=articles)
 
 
 if __name__ == '__main__':

@@ -32,23 +32,23 @@ body {
 /*PARALLAX ON MAIN*/
 .parallax{
     background-image: url("../img/beautiful_all_buildings.jpg");
-    min-height: 600px;
+    min-height: 700px;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     margin: 0;
-    margin-bottom: 10px;
+    margin-bottom: 2%;
 }
 
 .header{
+  color: white !important;
   position: absolute;
-  z-index: 1000;
-  top: 200px;
+  top:30%;
   left: 50%;
-  text-align: center;
-  color: white;
-  font-size: 3em;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%)
+
 }
 
 .btn.btn-dark{
@@ -69,3 +69,15 @@ z-index: 1001;
 .navbar {
     margin-bottom: 0 !important;
 }
+
+
+/*add responsiveness for mobiles (remove text?)*/
+.navbar-brand:after{
+    content: "Кафедра радіотехніки та радіоелектронних систем";
+    white-space: pre; /* or pre-wrap */
+    font-size: 80%;
+}
+
+
+
+
