@@ -31,13 +31,14 @@ body {
 
 /*PARALLAX ON MAIN*/
 .parallax{
-    background-image: url("../beautiful_all_buildings.jpg");
+    background-image: url("../img/beautiful_all_buildings.jpg");
     min-height: 600px;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     margin: 0;
+    margin-bottom: 10px;
 }
 
 .header{
@@ -47,7 +48,7 @@ body {
   left: 50%;
   text-align: center;
   color: white;
-  font-size: 1000%;
+  font-size: 3em;
 }
 
 .btn.btn-dark{
