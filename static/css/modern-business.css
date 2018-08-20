@@ -318,12 +318,7 @@ a.article-title:hover {
 }
 
 
-
-
-
-
-
-
+/* PARALLAX NEW*/
 body, html {
   height: 100%;
   margin: 0;
@@ -339,36 +334,43 @@ body, html {
 }
 .bgimg-1 {
   background-image: url("../img/beautiful_all_buildings.jpg");
-  min-height: 100%;
+  min-height: 90%;
 }
 
 .caption {
   position: absolute;
   left: 0;
-  top: 50%;
+  top: 45%;
   width: 100%;
   text-align: center;
-  color: #000;
+  text-decoration: none;
 }
 
 .caption span.border {
-  background-color: #111;
   color: #fff;
-  padding: 18px;
-  font-size: 25px;
-  letter-spacing: 10px;
+  padding: 15px;
+  font-size: 3hv;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+
+.caption span.border:hover {
+    background-color: #fff;
+  color: #000;
+  opacity: 0.5;
+  text-decoration: none;
 }
 
 h3 {
   letter-spacing: 5px;
   text-transform: uppercase;
-  font: 20px "Lato", sans-serif;
+    font-family: "Arial", Gadget, sans-serif;
   color: #111;
 }
 
 /* Turn off parallax scrolling for tablets and phones */
 @media only screen and (max-device-width: 1024px) {
-    .bgimg-1, .bgimg-2, .bgimg-3 {
-        background-attachment: scroll;
+    .bgimg-1 {
+        background-attachment: scroll !important;
     }
 }
