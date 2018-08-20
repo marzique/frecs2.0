@@ -1,10 +1,10 @@
 from flask import Flask, render_template, url_for, flash, redirect
 from forms import RegistrationForm, LoginForm
-import flask.ext.color
+
+
 app = Flask(__name__)
 
 # Initialize extension with your app.
-flask.ext.color.init_app(app)
 app.config['SECRET_KEY'] = '55500b7625c92cd318daa58fabc00e16'
 app.config['DEBUG'] = True
 

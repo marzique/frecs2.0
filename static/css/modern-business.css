@@ -33,7 +33,7 @@ body {
 .parallax{
 
     background-image: url("../img/beautiful_all_buildings.jpg") !important;
-    min-height: 700px;
+    min-height: 600px;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -46,7 +46,7 @@ body {
 .header{
     color: white !important;
     position: absolute;
-    top:30%;
+
     left: 50%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%)
@@ -315,4 +315,60 @@ a.article-title:hover {
 
 .account-heading {
   font-size: 2.5rem;
+}
+
+
+
+
+
+
+
+
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.bgimg-1{
+  position: relative;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+.bgimg-1 {
+  background-image: url("../img/beautiful_all_buildings.jpg");
+  min-height: 100%;
+}
+
+.caption {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  color: #000;
+}
+
+.caption span.border {
+  background-color: #111;
+  color: #fff;
+  padding: 18px;
+  font-size: 25px;
+  letter-spacing: 10px;
+}
+
+h3 {
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  font: 20px "Lato", sans-serif;
+  color: #111;
+}
+
+/* Turn off parallax scrolling for tablets and phones */
+@media only screen and (max-device-width: 1024px) {
+    .bgimg-1, .bgimg-2, .bgimg-3 {
+        background-attachment: scroll;
+    }
 }
