@@ -74,7 +74,7 @@ z-index: 1001;
 /*add responsiveness for mobiles (remove text?)*/
 .navbar-brand:after{
     content: "Кафедра радіотехніки та радіоелектронних систем";
-    white-space: pre; /* or pre-wrap */
+
     font-size: 80%;
 }
 
