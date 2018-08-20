@@ -59,7 +59,7 @@ def about():
 def register():
 	form = RegistrationForm()
 	if form.validate_on_submit():
-		flash(f'Account created', 'success')
+		flash(f'Обліковий запис створено', 'success')
 		return redirect(url_for('login'))
 	
 	return render_template('register.html', form=form, title="Реєстрація")
@@ -68,6 +68,12 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	form = LoginForm()
+	if form.validate_on_submit():
+		if form.email.data == 'marzique@gmail.com' and form.password.data == '1':
+			flash('Успішно!', 'success')
+			return redirect(url_for('index'))
+		else:
+			flash('Неправильний логін або пароль!', 'danger')
 	return render_template('login.html', form=form, title="Увійти")
 
 
