@@ -45,6 +45,10 @@ def index2():
 def news():
 	return render_template('news.html', articles=articles, title="Новини")
 
+@app.route('/history')
+def history():
+	return render_template('history.html', title="Історія")
+
 
 @app.route('/about')
 def about():

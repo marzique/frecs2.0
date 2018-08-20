@@ -83,7 +83,7 @@ z-index: 1001;
 .frecs_heading{
     margin-top: 2%;
     font-family: "Arial", Gadget, sans-serif;
-    font-size: 31px;
+    font-size: 40px;
     letter-spacing: -0.5px;
     word-spacing: 0.8px;
     color: #324696;
@@ -332,9 +332,27 @@ body, html {
   background-size: cover;
 
 }
+
 .bgimg-1 {
-  background-image: url("../img/beautiful_all_buildings.jpg");
+    background-image: url("../img/beautiful_all_buildings.jpg");
+    min-height: 90%;
+    position: relative;
+    background-attachment: fixed;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.bgimg-2 {
+  background-image: url("../img/dep_history.jpg");
   min-height: 90%;
+    position: relative;
+    background-attachment: fixed;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+
 }
 
 .caption {
