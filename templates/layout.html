@@ -12,13 +12,19 @@
         <title>Головна - Кафедра радіотехніки та радіоелектронних систем </title>
     {% endif %}
 
+    <!-- SITE LOGO -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
     <!-- Bootstrap core CSS -->
     <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="static/css/modern-business.css" rel="stylesheet">
 
+    <!-- Icons  -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+    <!-- Google fonts  -->
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
   </head>
 
@@ -31,60 +37,62 @@
           <img src="static/img/knu.jpg" width="50" height="50" alt="Логотип Радіофізичного факультету">
         </a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="about.html">Про нас</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Про Нас
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                <a class="dropdown-item" href="#">Склад кафедри</a>
+                <a class="dropdown-item" href="{{url_for('news')}}">Конференції</a>
+                <a class="dropdown-item" href="#">Інша вкладка</a>
+              </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="news">Новини</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="contact.html">Контакти</a>
+              <a class="nav-link" href="{{url_for('news')}}">Новини</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Портфоліо
+                Студенту
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                <a class="dropdown-item" href="portfolio-1-col.html">1 Column Portfolio</a>
-                <a class="dropdown-item" href="portfolio-2-col.html">2 Column Portfolio</a>
-                <a class="dropdown-item" href="portfolio-3-col.html">3 Column Portfolio</a>
-                <a class="dropdown-item" href="portfolio-4-col.html">4 Column Portfolio</a>
-                <a class="dropdown-item" href="portfolio-item.html">Single Portfolio Item</a>
+                <a class="dropdown-item" href="{{url_for('news')}}">Розклад</a>
+                <a class="dropdown-item" href="#">Навчальні матеріали</a>
+                <a class="dropdown-item" href="#">Вступ</a>
+                <a class="dropdown-item" href="#">Інша вкладка</a>
               </div>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Блог
-              </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-                <a class="dropdown-item" href="blog-home-1.html">Blog Home 1</a>
-                <a class="dropdown-item" href="blog-home-2.html">Blog Home 2</a>
-                <a class="dropdown-item" href="blog-post.html">Blog Post</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Інше
-              </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-                <a class="dropdown-item" href="full-width.html">Full Width Page</a>
-                <a class="dropdown-item" href="sidebar.html">Sidebar Page</a>
-                <a class="dropdown-item" href="faq.html">FAQ</a>
-                <a class="dropdown-item" href="404.html">404</a>
-                <a class="dropdown-item" href="pricing.html">Pricing Table</a>
-              </div>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Контакти</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Мова сайту
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-                <a class="dropdown-item" href="#">Українська</a>
-                <a class="dropdown-item" href="#">English</a>
+                <a class="dropdown-item" href="#">
+                  <img src="static/img/ukr.png" alt="ukranian_lang" style="height: 16px; width: 25px;">
+                  Українська
+                </a>
+                <a class="dropdown-item" href="#">
+                  <img src="static/img/uk.png" alt="english" style="height: 16px; width: 25px;">
+                  English
+                </a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <span class="glyphicon glyphicon-search"></span>
+              <a class="nav-link" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">account_circle</i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
+                <a class="dropdown-item" href="{{url_for('login')}}">Увійти</a>
+                <a class="dropdown-item" href="{{url_for('register')}}">Реєстрація</a>
+
               </div>
             </li>
           </ul>
