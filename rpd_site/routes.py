@@ -63,6 +63,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash('Ваш обліковий запис створено.', 'success')
+        print("User: " + form.username.data + " , email: " + form.email.data + " registered")
         return redirect(url_for('login'))
     
     return render_template('register.html', form=form, title="Реєстрація")
@@ -77,6 +78,7 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
+            print("User: " + str(user) + " logged in")
             return redirect(next_page) if next_page else redirect(url_for('index'))
         else:
             flash('Неправильний email або пароль!', 'danger')
