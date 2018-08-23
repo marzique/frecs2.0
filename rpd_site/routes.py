@@ -1,8 +1,8 @@
-from flask import render_template, url_for, flash, redirect
+from flask import render_template, url_for, flash, redirect, request
 from rpd_site import app, db, bcrypt
 from rpd_site.models import User, Post
 from rpd_site.forms import RegistrationForm, LoginForm
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, current_user, logout_user, login_required
 
 last_news_added = "99 Серпня 2020"
 
@@ -76,7 +76,8 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            return redirect(url_for('index'))
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('index'))
         else:
             flash('Неправильний email або пароль!', 'danger')
     return render_template('login.html', form=form, title="Увійти")
@@ -87,5 +88,6 @@ def logout():
     return redirect(url_for('login'))
 
 @app.route('/account')
+@login_required
 def account():
     return render_template('account.html', title='Обліковий запис')
