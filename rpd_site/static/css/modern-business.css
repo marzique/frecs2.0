@@ -75,7 +75,7 @@ z-index: 1001;
 
 /*add responsiveness for mobiles (remove text?)*/
 .navbar-brand:after{
-    content: "Кафедра радіотехніки та радіоелектронних систем";
+    content: "Кафедра радіотехніки тронних систем";
 
     font-size: 80%;
 }
