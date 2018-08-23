@@ -23,14 +23,32 @@
         <!-- Sidebar Column -->
         <div class="col-lg-3 mb-4">
           <div class="list-group">
-              {% if current_user.image_file == "default.jpg"%}
-            <a href="index.html" class="list-group-item text-center"><img src="http://placehold.it/150x150" class="rounded-circle" alt="Faculty logo"
-                                           width="150" height="150">
+              {% if current_user.image_file == "default.jpg" %}
 
-            </a>
+           <!-- <a href="#" class="list-group-item text-center"><img src="static/img/default.jpg" class="rounded-circle""
+                                           width="150" height="150">
+            </a>-->
+
+              <!-- Avatar -->
+              <a href="#" class="list-group-item text-center">
+                <div class="img__wrap">
+                  <img class="img__img rounded-circle" src="static/img/default.jpg" width="150" height="150" alt="Placeholder picture">
+                  <div class="img__description_layer">
+                    <p class="img__description">Додати фото</p>
+                  </div>
+                </div>
+              </a>
+
               {% else %}
-              <a href="index.html" class="list-group-item text-center"><img src="http://placehold.it/150x150" class="rounded-circle" alt="Faculty logo"
-                                           width="150" height="150"></a>
+              <a href="#" class="list-group-item text-center">
+                <div class="img__wrap">
+                  <img class="img__img rounded-circle" src="static/img/default.jpg" width="150" height="150" alt="Profile avatar">
+                  <div class="img__description_layer">
+                    <p class="img__description ">Оновити фото</p>
+                  </div>
+                </div>
+              </a>
+
               {% endif %}
             <a class="list-group-item">Повне ім&#39я: John Doe</a>
             <a class="list-group-item">Група: Адміністратори</a>
@@ -40,9 +58,15 @@
         <!-- Content Column -->
         <div class="col-lg-9 mb-4">
           <h2>Опис</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, et temporibus, facere perferendis veniam beatae non debitis, numquam blanditiis necessitatibus vel mollitia dolorum laudantium, voluptate dolores iure maxime ducimus fugit.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta,
+              et temporibus, facere perferendis veniam beatae non debitis, numquam
+              blanditiis necessitatibus vel mollitia dolorum laudantium, voluptate dolores
+              iure maxime ducimus fugit.</p>
+           <button type="button" class="btn btn btn-md float-right">Змінити опис</button>
         </div>
+
       </div>
+
       <!-- /.row -->
 
     </div>
