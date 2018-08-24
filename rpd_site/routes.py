@@ -119,3 +119,5 @@ def account():
         
     image_file = url_for('static', filename='img/' + current_user.image_file)
     return render_template('account.html', title='Обліковий запис', form=form, image_file=image_file)
+
+

@@ -29,33 +29,34 @@
             </a>-->
 
               <!-- Avatar -->
-              <a class="list-group-item text-center">
+              <a href="#" class="list-group-item text-center">
+                <div class="img__wrap">
+                  <img class="img__img rounded-circle" src="{{ image_file }}" width="150" height="150" alt="Placeholder picture">
+                  <div class="img__description_layer">
+                    <p class="img__description">Додати фото</p>
+                  </div>
+                </div>
+              </a>
 
-                  <form method="POST" action="" enctype="multipart/form-data">
+              <form method="POST" action="" enctype="multipart/form-data">
                   {{ form.hidden_tag() }}
-                  <fieldset class="form-group">
-                      <div class="form-group">
+              <fieldset class="form-group">
 
-                          <div class="img__wrap">
-                              <img class="img__img rounded-circle" src="{{ image_file }}" width="150" height="150" alt="Placeholder picture">
-                              <div class="img__description_layer">
-                                <p class="img__description ">{{ form.picture(class="form-control-file") }}</p>
-                              </div>
-                          </div>
-                          {% if form.picture.errors %}
-                                {% for error in form.picture.errors %}
-                                    <span class="text-danger">{{ error }}</span><br>
-                                {% endfor %}
-                          {% endif %}
-                      </div>
-                  </fieldset>
+              <div class="form-group">
+                  {{ form.picture.label() }}
+                  {{ form.picture(class="form-control-file") }}
+                  {% if form.picture.errors %}
+                        {% for error in form.picture.errors %}
+                            <span class="text-danger">{{ error }}</span><br>
+                        {% endfor %}
+                  {% endif %}
+              </div>
+
+              </fieldset>
                   <div class="form-group text-center">
                      {{ form.submit(class="btn btn-outline-info") }}
                   </div>
               </form>
-              </a>
-
-
 
             <a class="list-group-item">Повне ім&#39я: John Doe</a>
             <a class="list-group-item">Група: Адміністратори</a>

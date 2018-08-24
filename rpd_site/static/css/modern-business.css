@@ -418,8 +418,8 @@ h3 {
 /* relevant styles */
 .img__wrap {
   position: relative;
-  height: 100%;
-  width: 100%;
+  height: inherit;
+  width: inherit;
 }
 
 .img__description_layer {
