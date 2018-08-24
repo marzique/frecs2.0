@@ -113,9 +113,9 @@ def account():
         if form.picture.data:
             picture_file = save_picture(form.picture.data)
             current_user.image_file = picture_file
-        db.session.commit()
-        flash('Фото оновлено', 'success')
-        return redirect(url_for('account'))
+            db.session.commit()
+            flash('Фото оновлено', 'success')
+            return redirect(url_for('account'))
         
     image_file = url_for('static', filename='img/' + current_user.image_file)
     return render_template('account.html', title='Обліковий запис', form=form, image_file=image_file)
