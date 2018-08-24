@@ -39,6 +39,7 @@
               </a>
 
               <form method="POST" action="" enctype="multipart/form-data">
+                  {{ form.hidden_tag() }}
               <fieldset class="form-group">
 
               <div class="form-group">
@@ -46,7 +47,7 @@
                   {{ form.picture(class="form-control-file") }}
                   {% if form.picture.errors %}
                         {% for error in form.picture.errors %}
-                            <span class="text-danger">{{ error }}</span></br>
+                            <span class="text-danger">{{ error }}</span><br>
                         {% endfor %}
                   {% endif %}
               </div>
@@ -54,7 +55,7 @@
               </fieldset>
                   <div class="form-group text-center">
                      {{ form.submit(class="btn btn-outline-info") }}
-                    </div>
+                  </div>
               </form>
 
             <a class="list-group-item">Повне ім&#39я: John Doe</a>

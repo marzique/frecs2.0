@@ -1,10 +1,13 @@
+import os
+import secrets
+from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from rpd_site import app, db, bcrypt
 from rpd_site.models import User, Post
 from rpd_site.forms import RegistrationForm, LoginForm, UpdateAccountForm, UpdatePicture
 from flask_login import login_user, current_user, logout_user, login_required
 
-last_news_added = "99 Серпня 2020"
+last_news_added = "26 Серпня 2020"
 
 articles = [
     {'Author': 'Denys Tarnavskyi',
@@ -89,9 +92,30 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-@app.route('/account')
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/img', picture_fn)
+
+    output_size = (125, 125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+
+    return picture_fn
+
+@app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
     form = UpdatePicture()
+    if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.image_file = picture_file
+        db.session.commit()
+        flash('Фото оновлено', 'success')
+        return redirect(url_for('account'))
+        
     image_file = url_for('static', filename='img/' + current_user.image_file)
     return render_template('account.html', title='Обліковий запис', form=form, image_file=image_file)

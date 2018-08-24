@@ -58,17 +58,5 @@ class UpdateAccountForm(FlaskForm):
 
 class UpdatePicture(FlaskForm):
     picture = FileField('Змінити зображення користувача', validators=[FileAllowed(['jpg', 'png'])])
-    
     submit = SubmitField('Змінити')
     
-    def validate_username(self, username):
-        if username.data != current_user.username:
-            user = User.query.filter_by(username=username.data).first()
-            if user:
-                raise ValidationError('Користувач з таким іменем вже зареєстрований')
-    
-    def validate_email(self, email):
-        if email.data != current_user.email:
-            user = User.query.filter_by(email=email.data).first()
-            if user:
-                raise ValidationError('Користувач з такою поштовою скринькою вже зареєстрований')
