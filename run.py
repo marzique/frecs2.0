@@ -1,3 +1,4 @@
+'''wrapper for whole app package'''
 from rpd_site import app
 
 
