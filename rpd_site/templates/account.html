@@ -23,7 +23,6 @@
         <!-- Sidebar Column -->
         <div class="col-lg-3 mb-4">
           <div class="list-group">
-              {% if current_user.image_file == "default.jpg" %}
 
            <!-- <a href="#" class="list-group-item text-center"><img src="static/img/default.jpg" class="rounded-circle""
                                            width="150" height="150">
@@ -32,24 +31,32 @@
               <!-- Avatar -->
               <a href="#" class="list-group-item text-center">
                 <div class="img__wrap">
-                  <img class="img__img rounded-circle" src="static/img/default.jpg" width="150" height="150" alt="Placeholder picture">
+                  <img class="img__img rounded-circle" src="{{ image_file }}" width="150" height="150" alt="Placeholder picture">
                   <div class="img__description_layer">
                     <p class="img__description">Додати фото</p>
                   </div>
                 </div>
               </a>
 
-              {% else %}
-              <a href="#" class="list-group-item text-center">
-                <div class="img__wrap">
-                  <img class="img__img rounded-circle" src="static/img/default.jpg" width="150" height="150" alt="Profile avatar">
-                  <div class="img__description_layer">
-                    <p class="img__description ">Оновити фото</p>
-                  </div>
-                </div>
-              </a>
+              <form method="POST" action="" enctype="multipart/form-data">
+              <fieldset class="form-group">
 
-              {% endif %}
+              <div class="form-group">
+                  {{ form.picture.label() }}
+                  {{ form.picture(class="form-control-file") }}
+                  {% if form.picture.errors %}
+                        {% for error in form.picture.errors %}
+                            <span class="text-danger">{{ error }}</span></br>
+                        {% endfor %}
+                  {% endif %}
+              </div>
+
+              </fieldset>
+                  <div class="form-group text-center">
+                     {{ form.submit(class="btn btn-outline-info") }}
+                    </div>
+              </form>
+
             <a class="list-group-item">Повне ім&#39я: John Doe</a>
             <a class="list-group-item">Група: Адміністратори</a>
             <a href="#" class="list-group-item">Додані новини</a>

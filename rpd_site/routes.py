@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request
 from rpd_site import app, db, bcrypt
 from rpd_site.models import User, Post
-from rpd_site.forms import RegistrationForm, LoginForm
+from rpd_site.forms import RegistrationForm, LoginForm, UpdateAccountForm, UpdatePicture
 from flask_login import login_user, current_user, logout_user, login_required
 
 last_news_added = "99 Серпня 2020"
@@ -92,4 +92,6 @@ def logout():
 @app.route('/account')
 @login_required
 def account():
-    return render_template('account.html', title='Обліковий запис')
+    form = UpdatePicture()
+    image_file = url_for('static', filename='img/' + current_user.image_file)
+    return render_template('account.html', title='Обліковий запис', form=form, image_file=image_file)
