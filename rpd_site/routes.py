@@ -6,6 +6,7 @@ from rpd_site import app, db, bcrypt
 from rpd_site.models import User, Post
 from rpd_site.forms import RegistrationForm, LoginForm, UpdateAccountForm, UpdatePicture
 from flask_login import login_user, current_user, logout_user, login_required
+from termcolor import colored
 
 last_news_added = "26 Серпня 2020"
 
@@ -66,7 +67,9 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash('Ваш обліковий запис створено.', 'success')
-        print("User: " + form.username.data + " , email: " + form.email.data + " registered")
+        print()
+        print(colored("User: " + form.username.data + " , email: " + form.email.data + " registered", 'blue'))
+        print()
         return redirect(url_for('login'))
     
     return render_template('register.html', form=form, title="Реєстрація")
@@ -81,7 +84,9 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
-            print("User: " + str(user) + " logged in")
+            print()
+            print(colored(str(user) + " logged in", 'green'))
+            print()
             return redirect(next_page) if next_page else redirect(url_for('index'))
         else:
             flash('Неправильний email або пароль!', 'danger')
@@ -89,6 +94,9 @@ def login():
 
 @app.route('/logout')
 def logout():
+    print()
+    print(colored("User: " + str(current_user.username) + " logged out", 'red'))
+    print()
     logout_user()
     return redirect(url_for('login'))
 
