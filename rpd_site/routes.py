@@ -60,6 +60,7 @@ def about():
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
+    
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -101,13 +102,16 @@ def logout():
     return redirect(url_for('login'))
 
 def save_picture(form_picture):
+    '''uploads square-cropped image with randomised filename and returns it's filename'''
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/img', picture_fn)
-
-    output_size = (125, 125)
+    picture_path = os.path.join(app.root_path, 'static/img/avatars', picture_fn)
+    output_size = (150, 150)
     i = Image.open(form_picture)
+    # crop top square to leave aspect ratio
+    f_width, _ = i.size
+    i = i.crop((0,0,f_width,f_width))
     i.thumbnail(output_size)
     i.save(picture_path)
 
@@ -125,7 +129,7 @@ def account():
             flash('Фото оновлено', 'success')
             return redirect(url_for('account'))
         
-    image_file = url_for('static', filename='img/' + current_user.image_file)
+    image_file = url_for('static', filename='img/avatars/' + current_user.image_file)
     return render_template('account.html', title='Обліковий запис', form=form, image_file=image_file)
 
 
