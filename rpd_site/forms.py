@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from rpd_site.models import User
 
@@ -59,4 +59,10 @@ class UpdateAccountForm(FlaskForm):
 class UpdatePicture(FlaskForm):
     picture = FileField('Змінити зображення користувача', validators=[FileAllowed(['jpg', 'jpeg', 'png'])])
     submit = SubmitField('Змінити')
+    
+class PostForm(FlaskForm):
+    title = StringField('Назва', validators=[DataRequired()])
+    content = TextAreaField('Зміст', validators=[DataRequired()])
+    submit = SubmitField('Додати новину')
+    
     

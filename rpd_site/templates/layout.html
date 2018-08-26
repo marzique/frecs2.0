@@ -16,10 +16,10 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
     <!-- Bootstrap core CSS -->
-    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/bootstrap/css/' + 'bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="static/css/modern-business.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/' + 'modern-business.css') }}" rel="stylesheet">
 
     <!-- Icons  -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -36,8 +36,8 @@
     <!-- Navigation -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="/">
-          <img src="static/img/knu.jpg" width="50" height="50" alt="Логотип Радіофізичного факультету">
+        <a class="navbar-brand" href="{{ url_for('index') }}">
+          <img src="{{ url_for('static', filename='img/' + 'knu.jpg') }}" width="50" height="50" alt="Логотип Радіофізичного факультету">
         </a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -81,17 +81,22 @@
                 <span class="text-info">{{ current_user.username }}</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-                <a class="dropdown-item" href="{{url_for('account')}}">Обліковий запис</a>
+                <a class="dropdown-item" href="{{ url_for('account') }}">Обліковий запис</a>
+
+                  <!-- show only if 'admin' permission/group/etc -->
+                  {% if current_user.username == 'marzique' %}
+                <a class="dropdown-item" href="{{ url_for('new_post') }}">Додати новину</a>
+                  {% endif %}
                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item text-danger" href="{{url_for('logout')}}">Вийти</a>
+                  <a class="dropdown-item text-danger" href="{{ url_for('logout') }}">Вийти</a>
                 </div>
               {% else %}
               <a class="nav-link" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="material-icons" style="margin-left:5%;">account_circle</i>
               </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-                  <a class="dropdown-item" href="{{url_for('login')}}">Увійти</a>
-                  <a class="dropdown-item" href="{{url_for('register')}}">Реєстрація</a>
+                  <a class="dropdown-item" href="{{ url_for('login') }}">Увійти</a>
+                  <a class="dropdown-item" href="{{ url_for('register') }}">Реєстрація</a>
                 </div>
               {% endif %}
 
@@ -100,12 +105,12 @@
             <!-- Language -->
             <li class="nav-item text-right">
               <a class="nav-link" href="#">
-                  <img src="static/img/uk.png" alt="english" style="height: 16px; width: 25px; margin:0; padding:0;">
+                  <img src="{{ url_for('static', filename='img/' + 'uk.png') }}" alt="english" style="height: 16px; width: 25px; margin:0; padding:0;">
               </a>
             </li>
             <li class="nav-item text-right">
               <a class="nav-link" href="#">
-                  <img src="static/img/ukr.png" alt="ukranian_lang" style="height: 16px; width: 25px;margin:0; padding:0;">
+                  <img src="{{ url_for('static', filename='img/' + 'ukr.png') }}" alt="ukranian_lang" style="height: 16px; width: 25px;margin:0; padding:0;">
               </a>
             </li>
 
@@ -163,15 +168,15 @@
 
       <div class="container text-center">
         <div class="d-inline-block">
-        <a href="http://rex.knu.ua" target="_blank"><img src="static/img/frecs.png" class="img-responsive" alt="Faculty logo"
+        <a href="http://rex.knu.ua" target="_blank"><img src="{{ url_for('static', filename='img/' + 'frecs.png') }}" class="img-responsive" alt="Faculty logo"
                                          width="130" height="130"></a>
         </div>
         <div class="d-inline-block">
-        <a href="http://univ.kiev.ua" target="_blank"><img src="static/img/knu.jpg" class="img-responsive" alt="Faculty logo"
+        <a href="http://univ.kiev.ua" target="_blank"><img src="{{ url_for('static', filename='img/' + 'knu.jpg') }}" class="img-responsive" alt="Faculty logo"
                                            width="130" height="130"></a>
           </div>
         <div class="d-inline-block">
-        <a href="{{url_for('index')}}"><img src="http://placehold.it/130x130" class="rounded-circle" alt="Faculty logo"
+        <a href="{{ url_for('index') }}"><img src="http://placehold.it/130x130" class="rounded-circle" alt="Faculty logo"
                                            width="130" height="130"></a>
           </div>
 
@@ -193,7 +198,7 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="static/vendor/jquery/jquery.min.js"></script>
-    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='vendor/jquery/' + 'jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/' + 'bootstrap.bundle.min.js') }}"></script>
   </body>
 </html>
