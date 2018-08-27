@@ -163,4 +163,4 @@ def delete_post(post_id):
     db.session.delete(post)
     db.session.commit()
     flash('Видалено', 'success')
-    return redirect(url_for('index'))
+    return redirect(url_for('news'))

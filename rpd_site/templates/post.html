@@ -1,9 +1,31 @@
 {% extends "layout.html" %}
 {% block body %}
-  <article class="media content-section">
-    <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+<!-- Parallax heading -->
+
+
+
+  <article class="media content-section" style="padding-top:1%">
     <div class="media-body">
-      <div class="article-metadata">
+        <!-- Page Heading/Breadcrumbs -->
+      <h1 class="frecs_heading text-center">{{ post.title }}</h1>
+      <hr>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{{ url_for('index') }} ">Головна</a>
+        </li>
+          <li class="breadcrumb-item">
+          <a href="{{ url_for('news') }}">Новини</a>
+        </li>
+        <li class="breadcrumb-item active">{{ post.title }}</li>
+      </ol>
+        <div class="container-fluid" >
+          <div class="image-container" >
+            <img  class="mx-auto d-block img-thumbnail" src="{{ url_for('static', filename='img/' + post.image_file) }}" alt="img" />
+          </div>
+    </div>
+
+      <p class="article-content">{{ post.content }}</p>
+        <div class="article-metadata">
         <a class="mr-2" href="#">{{ post.author.username }}</a>
         <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
         {% if post.author == current_user %}
@@ -13,8 +35,6 @@
           </div>
         {% endif %}
       </div>
-      <h2 class="article-title">{{ post.title }}</h2>
-      <p class="article-content">{{ post.content }}</p>
     </div>
   </article>
   <!-- Modal -->
