@@ -465,7 +465,10 @@ h3 {
 }
 
 .image-container{
-  width:100%;
+  width:700px;
+   display: block;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .image-container > img {

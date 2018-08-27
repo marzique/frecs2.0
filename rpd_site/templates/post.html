@@ -20,8 +20,9 @@
       </ol>
         <div class="container-fluid" >
           <div class="image-container" >
-            <img  class="mx-auto d-block img-thumbnail" src="{{ url_for('static', filename='img/' + post.image_file) }}" alt="img" />
+            <img  class="mx-auto img-thumbnail " src="{{ url_for('static', filename='img/' + post.image_file) }}" alt="img" />
           </div>
+            <hr>
     </div>
 
       <p class="article-content">{{ post.content }}</p>

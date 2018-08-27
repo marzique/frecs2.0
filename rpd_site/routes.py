@@ -8,13 +8,22 @@ from rpd_site.forms import RegistrationForm, LoginForm, UpdateAccountForm, Updat
 from flask_login import login_user, current_user, logout_user, login_required
 from termcolor import colored
 
-last_news_added = "26 Серпня 2020"
 
 
 @app.route('/index')
 @app.route('/')
 def index():
-    return render_template('index.html', last_news_added=last_news_added)
+    month_translation = {'January': 'Cічня', 'February': 'Лотого', 'March': 'Березня',
+                         'April': 'Квітня', 'May': 'Травня', 'June': 'Червня', 'July': 'Липня',
+                        'August': 'Серпня', 'September': 'Вересня', 'October': 'Жовтня',
+                         'November': 'Листопада', 'December': 'Грудня'}
+    last_3_posts = Post.query.all()[-3:-1]
+    day = last_3_posts[-1].date_posted.strftime('%d')
+    month = last_3_posts[-1].date_posted.strftime('%B')
+    year = last_3_posts[-1].date_posted.strftime('%Y')
+    time = last_3_posts[-1].date_posted.strftime('%X')
+
+    return render_template('index.html', last_3_posts=last_3_posts, day=day, month=month_translation[month], year=year, time=time)
 
 
 @app.route('/index2')
