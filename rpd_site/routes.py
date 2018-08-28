@@ -102,15 +102,19 @@ def save_picture(form_picture, size_crop, is_avatar):
     picture_fn = random_hex + f_ext
     if is_avatar:
         picture_path = os.path.join(app.root_path, 'static/img/avatars', picture_fn)
+        output_size = size_crop
+        i = Image.open(form_picture)
+        # crop top square to leave aspect ratio
+        f_width, _ = i.size
+        i = i.crop((0, 0, f_width, f_width))
+        i.thumbnail(output_size)
+        i.save(picture_path)
     else:
         picture_path = os.path.join(app.root_path, 'static/img', picture_fn)
-    output_size = size_crop
-    i = Image.open(form_picture)
-    # crop top square to leave aspect ratio
-    f_width, _ = i.size
-    i = i.crop((0,0,f_width,f_width))
-    i.thumbnail(output_size)
-    i.save(picture_path)
+        output_size = size_crop
+        i = Image.open(form_picture)
+        i.thumbnail(output_size)
+        i.save(picture_path)
 
     return picture_fn
 
