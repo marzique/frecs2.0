@@ -15,6 +15,7 @@ pycparser==2.18
 pygame==1.9.3
 six==1.11.0
 SQLAlchemy==1.2.11
+termcolor==1.1.0
 virtualenv==16.0.0
 Werkzeug==0.14.1
 WTForms==2.2.1
