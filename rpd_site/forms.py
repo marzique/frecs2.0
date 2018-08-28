@@ -61,8 +61,7 @@ class UpdatePicture(FlaskForm):
     submit = SubmitField('Змінити')
     
 class PostForm(FlaskForm):
-    title = StringField('Назва', validators=[DataRequired()])
+    title = StringField('Назва', validators=[DataRequired(), Length(min=5, max=100)])
     content = TextAreaField('Зміст', validators=[DataRequired()])
+    picture = FileField('Зображення', validators=[FileAllowed(['jpg', 'jpeg', 'png'])])
     submit = SubmitField('Додати новину')
-    
-    

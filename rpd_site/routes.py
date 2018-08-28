@@ -94,14 +94,17 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-def save_picture(form_picture):
+def save_picture(form_picture, size_crop, is_avatar):
     '''uploads square-cropped image with randomised
     filename and returns it's filename'''
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/img/avatars', picture_fn)
-    output_size = (150, 150)
+    if is_avatar:
+        picture_path = os.path.join(app.root_path, 'static/img/avatars', picture_fn)
+    else:
+        picture_path = os.path.join(app.root_path, 'static/img', picture_fn)
+    output_size = size_crop
     i = Image.open(form_picture)
     # crop top square to leave aspect ratio
     f_width, _ = i.size
@@ -117,7 +120,7 @@ def account():
     form = UpdatePicture()
     if form.validate_on_submit():
         if form.picture.data:
-            picture_file = save_picture(form.picture.data)
+            picture_file = save_picture(form.picture.data, (150, 150), True)
             current_user.image_file = picture_file
             db.session.commit()
             flash('Фото оновлено', 'success')
@@ -132,11 +135,14 @@ def new_post():
     form = PostForm()
     if form.validate_on_submit():
         post = Post(title=form.title.data, content=form.content.data, author=current_user)
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data, (750, 600), False)
+            post.image_file = picture_file
         db.session.add(post)
         db.session.commit()
-        flash('Новину додано', 'success')
+        flash('Новину додано!', 'success')
         return redirect(url_for('news'))
-    return render_template('new_post.html', title='Додати новину', form=form, legend='Нова новина')
+    return render_template('new_post.html', title='Додати новину', form=form, legend='Додати новину')
 
 @app.route("/post/<int:post_id>")
 def post(post_id):
@@ -152,10 +158,13 @@ def update_post(post_id):
         abort(403)
     form = PostForm()
     if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data, (750, 600), False)
+            post.image_file = picture_file
         post.title = form.title.data
         post.content = form.content.data
         db.session.commit()
-        flash('Новину відредаговано!', 'success')
+        flash('Новину відредаговано', 'success')
         return redirect(url_for('post', post_id=post.id))
     elif request.method == 'GET':
         form.title.data = post.title
