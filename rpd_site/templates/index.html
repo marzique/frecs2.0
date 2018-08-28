@@ -16,43 +16,52 @@
     </h2>
     <p><small class="text-muted">Останнє оновлення -  {{day}} {{month}} {{year}} - {{time}}</small></p>
     <hr>
+
     <!-- Marketing Icons Section -->
     <div class="row">
-      <div class="col-lg-4 mb-4">
+        <div class="col-lg-4 col-sm-6 portfolio-item">
         <div class="card h-100">
-          <h4 class="card-header">Молетроніка</h4>
+          <a href="{{ url_for('post', post_id=last_3_posts[2].id) }}"><img class="card-img-top" src="{{ url_for('static', filename='img/' + last_3_posts[2].image_file) }}" alt="huawei"></a>
           <div class="card-body">
-            <p class="card-text">У молекулярній електроніці виокремлюють два основні напрями: ма-
-            кромолекулярну електроніку, або органічну електроніку та мікромолеку-
-            лярну електроніку, або просто молекулярну електроніку (молетроника). </p>
+            <h4 class="card-title">
+              <a>{{ last_3_posts[2].title }}</a>
+            </h4>
+            <p class="card-text">{{ last_3_posts[2].content[:75] }}...</p>
           </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">Дізнатись більше</a>
+            <div class="card-footer">
+            <a href="{{ url_for('post', post_id=last_3_posts[2].id) }}" class="btn btn-primary float-right">Дізнатись більше</a>
           </div>
         </div>
       </div>
-      <div class="col-lg-4 mb-4">
+      <div class="col-lg-4 col-sm-6 portfolio-item">
         <div class="card h-100">
-          <h4 class="card-header">Захист інформації</h4>
+          <a href="{{ url_for('post', post_id=last_3_posts[1].id) }}"><img class="card-img-top" src="{{ url_for('static', filename='img/' + last_3_posts[1].image_file) }}" alt="physics"></a>
           <div class="card-body">
-            <p class="card-text">Зáхист інформáції (англ. Data protection) — сукупність методів і засобів, що забезпечують цілісність, конфіденційність і доступність інформації за умов впливу на неї загроз природного або штучного характеру, реалізація яких може призвести до завдання шкоди власникам і користувачам інформації.</p>
+            <h4 class="card-title">
+              <a>{{ last_3_posts[1].title }}</a>
+            </h4>
+            <p class="card-text">{{ last_3_posts[1].content[:75] }}...</p>
           </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">Дізнатись більше</a>
+            <div class="card-footer">
+            <a href="{{ url_for('post', post_id=last_3_posts[1].id) }}" class="btn btn-primary float-right">Дізнатись більше</a>
           </div>
         </div>
       </div>
-      <div class="col-lg-4 mb-4">
+      <div class="col-lg-4 col-sm-6 portfolio-item">
         <div class="card h-100">
-          <h4 class="card-header">Корпоративна соціальна відповідальність</h4>
+          <a href="{{ url_for('post', post_id=last_3_posts[0].id) }}"><img class="card-img-top" src="{{ url_for('static', filename='img/' + last_3_posts[0].image_file) }}" alt=""></a>
           <div class="card-body">
-            <p class="card-text">19 листопада 2015 р. кафедрою Міжнародної економіки та маркетингу було організовано та проведено бізнес форум «Корпоративна соціальна відповідальність як фактор розвитку економіки».</p>
+            <h4 class="card-title">
+              <a >{{ last_3_posts[0].title }}</a>
+            </h4>
+            <p class="card-text">{{ last_3_posts[0].content[:75] }}...</p>
           </div>
-          <div class="card-footer">
-            <a href="http://econom.univ.kiev.ua/2015/11/27/forum/" class="btn btn-primary" target="_blank">Дізнатись більше</a>
+            <div class="card-footer">
+            <a href="{{ url_for('post', post_id=last_3_posts[0].id) }}" class="btn btn-primary float-right">Дізнатись більше</a>
           </div>
         </div>
       </div>
+
     </div>
     <!-- /.row -->
 
@@ -61,46 +70,13 @@
     <hr>
     <br>
     <div class="row">
-      <div class="col-lg-4 col-sm-6 portfolio-item">
-        <div class="card h-100">
-          <a href="#"><img class="card-img-top" src="static/img/nik.jpg" alt="huawei"></a>
-          <div class="card-body">
-            <h4 class="card-title">
-              <a href="http://www.univ.kiev.ua/news/3476" target="_blank">Huawei</a>
-            </h4>
-            <p class="card-text">27 березня 2012 року відбулося урочисте відкриття авторизованої Мережевої Академії Huawei в Київському національному університеті імені Тараса Шевченка.До речі першої не лише в Україні, а й в СНД.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-sm-6 portfolio-item">
-        <div class="card h-100">
-          <a href="http://rex.knu.ua/2018/05/02/xviii-international-young-scientists-conference-on-applied-physics/"><img class="card-img-top" src="static/img/icap18.jpg" alt="physics"></a>
-          <div class="card-body">
-            <h4 class="card-title">
-              <a href="http://rex.knu.ua/2018/05/02/xviii-international-young-scientists-conference-on-applied-physics/" target="_blank">Прикладна фізика</a>
-            </h4>
-            <p class="card-text">Нагадуємо, що вже скоро завершується прийом тез на міжнародну конференцію молодих вчених з прикладної фізики, яка відбудеться на факультеті РЕКС з 22 по 26 травня! Дедлайн подовжено до 8 травня.
-                Серед запрошених доповідачів виступатиме Вадим Присяжний (Institute of Physics and Biophysics, Faculty of Science, University of South Bohemia) із доповіддю «Magnetron sputtering of nanomaterials for various applications».</p>
-          </div>
-        </div>
-      </div>
+
       <div class="col-lg-4 col-sm-6 portfolio-item">
         <div class="card h-100">
           <a href="#"><img class="card-img-top" src="http://placehold.it/800x550" alt=""></a>
           <div class="card-body">
             <h4 class="card-title">
-              <a href="#">Інформаційна безпека</a>
-            </h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos quisquam, error quod sed cumque, odio distinctio velit nostrum temporibus necessitatibus et facere atque iure perspiciatis mollitia recusandae vero vel quam!</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-sm-6 portfolio-item">
-        <div class="card h-100">
-          <a href="#"><img class="card-img-top" src="http://placehold.it/800x550" alt=""></a>
-          <div class="card-body">
-            <h4 class="card-title">
-              <a href="#">Наноелектроніка</a>
+              <a href="#">Конференція</a>
             </h4>
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
           </div>
@@ -111,7 +87,7 @@
           <a href="#"><img class="card-img-top" src="http://placehold.it/800x550" alt=""></a>
           <div class="card-body">
             <h4 class="card-title">
-              <a href="#">Напівпровідники</a>
+              <a href="#">Оголошення</a>
             </h4>
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
           </div>
@@ -122,7 +98,7 @@
           <a href="#"><img class="card-img-top" src="http://placehold.it/800x550" alt=""></a>
           <div class="card-body">
             <h4 class="card-title">
-              <a href="#">Інтернет речей (IoT)</a>
+              <a href="#">Курси</a>
             </h4>
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque earum nostrum suscipit ducimus nihil provident, perferendis rem illo, voluptate atque, sit eius in voluptates, nemo repellat fugiat excepturi! Nemo, esse.</p>
           </div>

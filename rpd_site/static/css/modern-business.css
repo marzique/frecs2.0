@@ -465,7 +465,7 @@ h3 {
 }
 
 .image-container{
-  width:700px;
+  width:100%;
    display: block;
   margin-right: auto;
   margin-left: auto;

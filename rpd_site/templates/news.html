@@ -21,7 +21,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col-lg-6">
-              <a href="#">
+              <a href="{{ url_for('post', post_id=article.id) }}">
                 <img class="img-fluid rounded" src="{{ url_for('static', filename='img/' + article.image_file) }}" alt="">
               </a>
             </div>

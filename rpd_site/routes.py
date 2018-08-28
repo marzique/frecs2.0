@@ -1,7 +1,7 @@
 import os
 import secrets
 from PIL import Image
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, abort
 from rpd_site import app, db, bcrypt
 from rpd_site.models import User, Post
 from rpd_site.forms import RegistrationForm, LoginForm, UpdateAccountForm, UpdatePicture, PostForm
@@ -17,7 +17,7 @@ def index():
                          'April': 'Квітня', 'May': 'Травня', 'June': 'Червня', 'July': 'Липня',
                         'August': 'Серпня', 'September': 'Вересня', 'October': 'Жовтня',
                          'November': 'Листопада', 'December': 'Грудня'}
-    last_3_posts = Post.query.all()[-3:-1]
+    last_3_posts = Post.query.all()[-3:]
     day = last_3_posts[-1].date_posted.strftime('%d')
     month = last_3_posts[-1].date_posted.strftime('%B')
     year = last_3_posts[-1].date_posted.strftime('%Y')
@@ -159,8 +159,8 @@ def update_post(post_id):
     elif request.method == 'GET':
         form.title.data = post.title
         form.content.data = post.content
-    return render_template('new_post.html', title='Оновити новину',
-                           form=form, legend='Оновити новину')
+    return render_template('new_post.html', title='Редагувати новину',
+                           form=form, legend='Редагувати новину')
 
 
 @app.route("/post/<int:post_id>/delete", methods=['POST'])
