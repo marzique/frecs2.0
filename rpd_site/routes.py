@@ -33,7 +33,8 @@ def index2():
 
 @app.route('/news')
 def news():
-    posts = Post.query.all()
+    # LIFO list
+    posts = reversed(Post.query.all())
     return render_template('news.html', posts=posts, title="Новини")
 
 

@@ -21,7 +21,9 @@
     <div class="row">
         <div class="col-lg-4 col-sm-6 portfolio-item">
         <div class="card h-100">
-          <a href="{{ url_for('post', post_id=last_3_posts[2].id) }}"><img class="card-img-top" src="{{ url_for('static', filename='img/' + last_3_posts[2].image_file) }}" alt="huawei"></a>
+          <a href="{{ url_for('post', post_id=last_3_posts[2].id) }}">
+              <img class="card-img-top" src="{{ url_for('static', filename='img/' + last_3_posts[2].image_file) }}" alt="huawei">
+          </a>
           <div class="card-body">
             <h4 class="card-title">
               <a>{{ last_3_posts[2].title }}</a>
@@ -35,7 +37,9 @@
       </div>
       <div class="col-lg-4 col-sm-6 portfolio-item">
         <div class="card h-100">
-          <a href="{{ url_for('post', post_id=last_3_posts[1].id) }}"><img class="card-img-top" src="{{ url_for('static', filename='img/' + last_3_posts[1].image_file) }}" alt="physics"></a>
+          <a href="{{ url_for('post', post_id=last_3_posts[1].id) }}">
+              <img class="card-img-top" src="{{ url_for('static', filename='img/' + last_3_posts[1].image_file) }}" alt="physics">
+          </a>
           <div class="card-body">
             <h4 class="card-title">
               <a>{{ last_3_posts[1].title }}</a>
@@ -49,7 +53,9 @@
       </div>
       <div class="col-lg-4 col-sm-6 portfolio-item">
         <div class="card h-100">
-          <a href="{{ url_for('post', post_id=last_3_posts[0].id) }}"><img class="card-img-top" src="{{ url_for('static', filename='img/' + last_3_posts[0].image_file) }}" alt=""></a>
+          <a href="{{ url_for('post', post_id=last_3_posts[0].id) }}">
+              <img class="card-img-top" src="{{ url_for('static', filename='img/' + last_3_posts[0].image_file) }}" alt="">
+          </a>
           <div class="card-body">
             <h4 class="card-title">
               <a >{{ last_3_posts[0].title }}</a>
