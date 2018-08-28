@@ -27,6 +27,7 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Користувач з такою поштовою скринькою вже зареєстрований')
 
 
+# Email+password authentication model
 class LoginForm(FlaskForm):
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
