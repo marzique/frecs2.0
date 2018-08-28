@@ -4,8 +4,17 @@
   <article class="media content-section" style="padding-top:1%">
     <div class="media-body">
         <!-- Page Heading/Breadcrumbs -->
-      <h1 class="frecs_heading text-center">{{ post.title }}</h1>
-      <hr>
+        <div class="container-fluid" >
+            <hr>
+          <div class="image-container" >
+            <img  class="mx-auto img-thumbnail " src="{{ url_for('static', filename='img/' + post.image_file) }}" alt="img" />
+          </div>
+    </div>
+
+      <h1 class="zero_margin mb-0 text-center" style="margin-bottom:2%; margin-top:1%;">
+            <kbd class="display-4 text-center ">{{ post.title }} <br></kbd>
+        </h1>
+        <hr>
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <a href="{{ url_for('index') }} ">Головна</a>
@@ -15,12 +24,7 @@
         </li>
         <li class="breadcrumb-item active">{{ post.title }}</li>
       </ol>
-        <div class="container-fluid" >
-          <div class="image-container" >
-            <img  class="mx-auto img-thumbnail " src="{{ url_for('static', filename='img/' + post.image_file) }}" alt="img" />
-          </div>
-            <hr>
-    </div>
+        <hr>
 
       <p class="article-content">{{ post.content }}</p>
         <div class="article-metadata float-right">
@@ -28,8 +32,8 @@
         <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
         {% if post.author == current_user %}
           <div>
-            <a class="btn btn-warning btn-sm mt-1 mb-1" href="{{ url_for('update_post', post_id=post.id) }}">Редагувати</a>
-            <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Видалити</button>
+            <a class="btn btn-warning btn-bg mt-1 mb-1" href="{{ url_for('update_post', post_id=post.id) }}">Редагувати</a>
+            <button type="button" class="btn btn-danger btn-bg m-1" data-toggle="modal" data-target="#deleteModal">Видалити</button>
           </div>
         {% endif %}
       </div>

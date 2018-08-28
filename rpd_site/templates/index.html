@@ -4,7 +4,7 @@
   <!-- Parallax heading -->
   <div class="bgimg-1">
     <div class="caption">
-      <h1><span class="border">Кафедра радіотехніки та радіоелектронних систем</span></h1>
+      <h1><span class="border text-uppercase">Кафедра радіотехніки та радіоелектронних систем</span></h1>
     </div>
   </div>
 
@@ -12,9 +12,11 @@
   <div class="container">
 
     <!-- last news heading -->
-    <h2 class="frecs_heading">Останні новини
+    <h2 class="zero_margin mb-0" style="margin-bottom:2%; margin-top:2%;">
+        <kbd class="display-4 text-center ">Останні новини <br>
+        </kbd>
     </h2>
-    <p><small class="text-muted">Останнє оновлення -  {{day}} {{month}} {{year}} - {{time}}</small></p>
+      <p class="text-muted zero_padding" id="last_updated">Останнє оновлення -  {{day}} {{month}} {{year}} - {{time}}</p>
     <hr>
 
     <!-- Marketing Icons Section -->
@@ -72,7 +74,7 @@
     <!-- /.row -->
 
     <!-- Portfolio Section -->
-    <h2 class="frecs_heading">Події кафедри та університету</h2>
+      <h2 style="margin-bottom:2%"><kbd class="display-4 text-center">Події кафедри та університету</kbd></h2>
     <hr>
     <br>
     <div class="row">
@@ -115,24 +117,24 @@
 
     <!-- Features Section -->
     <div class="row">
-      <div class="col-lg-6">
-        <h2 class="frecs_heading">Популярні галузі застосування радіотехніки</h2>
+      <div class="col-lg-12">
+        <h2><kbd class="display-4 text-center">Абітурієнту</kbd></h2>
         <hr>
-        <p>Де ти можеш працювати здобувши освіту на ФРЕКС:</p>
+        <p>Шановні абітурієнти! Факультет радіофізики, електроніки та комп'ютерних систем Київського
+            національного університету імені Тараса Шевченка запрошує вас безкоштовно отримати вищу
+            освіту за освітньо-кваліфікаційним рівнем “бакалавр” на денній формі навчання і стати фахівцем
+            за напрямом підготовки “Радіотехніка”. Прийом на навчання на другий курс здійснюється на базі диплому молодшого
+            спеціаліста після проходження фахового випробування у формі екзамену з предметів фізика та математика, та на перший курс за результатами ЗНО.
+        </p>
+
+          <h2 style="margin-bottom:2%"><kbd class="display-4 text-center">Чим займаються студенти</kbd></h2>
+          <hr>
         <ul>
-          <li>
-            <strong>Комп'ютерна інженерія</strong>
-          </li>
-          <li>Робототехніка</li>
-          <li>НВЧ галузь</li>
-          <li>Інтернет речей (IoT)</li>
-          <li>Наноелектроніка</li>
+            <a class="list-group-item">Прикладна радіотехніка</a>
+            <a class="list-group-item">Робототехніка</a>
+            <a class="list-group-item">Галузь НВЧ</a>
+            <a class="list-group-item">Наноелектроніка</a>
         </ul>
-        <p>Факультет радіофізики, електроніки та комп’ютерних систем — один із найкращих фахових центрів в Україні, який дозволяє отримати сучасну конкурентоспроможну в світі й якісну освіту в галузі прикладної фізики, електроніки та комп’ютерних систем на безкоштовній основі.</p>
-      </div>
-      <div class="col-lg-6">
-        <!-- <img class="img-fluid rounded" src="img/loc.jpg" alt=""> -->
-        <iframe height="400" width="100%" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d10176.868259453342!2d30.469817000000003!3d50.381152!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x4732b80e33e6b43!2sUniversity+of+Kiev+Faculty+of+Radio+Physics%2C+Electronics+and+Computer+Systems!5e0!3m2!1sen!2sua!4v1527705681370" frameborder="0" style="border:0" allowfullscreen></iframe>
       </div>
     </div>
       <!-- /.row -->
@@ -147,5 +149,13 @@
       </div>
     </div>
   </div>
+
+  <div class="image-container" >
+      <iframe height="600" width="100%" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d10176.868259453342!2d30.
+        469817000000003!3d50.381152!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x4732b80e33e6b43!2sUniversity+o
+        f+Kiev+Faculty+of+Radio+Physics%2C+Electronics+and+Computer+Systems!5e0!3m2!1sen!2sua!4v1527705681370"
+                frameborder="0" style="border:0" allowfullscreen></iframe>
+  </div>
+
     <!-- /.container -->
 {% endblock %}

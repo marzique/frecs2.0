@@ -3,8 +3,11 @@
  <div class="content-section">
     <form method="POST" action="" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
+        <h1 class="zero_margin mb-0" style="margin-bottom:2%; margin-top:0%;">
+            <kbd class="display-4 text-center ">Додати новину <br></kbd>
+        </h1>
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">{{ legend }}</legend>
+            <legend class="border-bottom mb-4"></legend>
             <div class="form-group">
                 {{ form.title.label(class="form-control-label") }}
                 {% if form.title.errors %}

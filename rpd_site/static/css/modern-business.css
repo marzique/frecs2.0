@@ -375,10 +375,10 @@ body, html {
 }
 
 .caption span.border {
-  color: #fff;
   padding: 15px;
-  font-size: 3hv;
-  letter-spacing: 1px;
+  background-color: #fff;
+  color: #000;
+  opacity: 0.5;
   text-decoration: none;
 }
 
@@ -477,4 +477,17 @@ h3 {
     height:100%;
  background-image:cover;
  margin:0;
+}
+
+#last_updated{
+    font-size:150%
+    padding:0;
+}
+
+.zero_padding{
+    padding:0;
+}
+
+.zero_margin{
+    margin:0;
 }
