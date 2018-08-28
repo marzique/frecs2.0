@@ -85,7 +85,7 @@
                 <a class="dropdown-item" href="{{ url_for('account') }}">Обліковий запис</a>
 
                   <!-- show only if 'admin' permission/group/etc -->
-                  {% if current_user.username == 'marzique' %}
+                  {% if current_user.username in ['marzique', 'tariq', 'yurets'] %}
                 <a class="dropdown-item" href="{{ url_for('new_post') }}">Додати новину</a>
                   {% endif %}
                  <div class="dropdown-divider"></div>
