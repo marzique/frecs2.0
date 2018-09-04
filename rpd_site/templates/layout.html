@@ -77,7 +77,7 @@
             <li class="nav-item dropdown">
               {% if current_user.is_authenticated: %}
               <a class="nav-link" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="material-icons" style="vertical-align: middle;">account_circle</i>
+                <img src="{{ url_for('static', filename='img/avatars/' + current_user.image_file) }}" width="30" height="30"  class="rounded-circle" style="vertical-align: middle;" alt="Логотип Радіофізичного факультету">
                 <!-- username + color -->
                 <span class="text-info">{{ current_user.username }}</span>
               </a>
