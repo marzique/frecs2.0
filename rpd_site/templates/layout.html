@@ -63,7 +63,7 @@
                 Студенту
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                <a class="dropdown-item" href="{{url_for('news')}}">Розклад</a>
+                <a class="dropdown-item" href="{{url_for('schedule')}}">Розклад</a>
                 <a class="dropdown-item" href="#">Навчальні матеріали</a>
                 <a class="dropdown-item" href="#">Вступ</a>
                 <a class="dropdown-item" href="#">Інша вкладка</a>
@@ -199,5 +199,6 @@
     <!-- Bootstrap core JavaScript -->
     <script src="{{ url_for('static', filename='vendor/jquery/' + 'jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/js/' + 'bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/' + 'bootstrap-lightbox.js') }}"></script>
   </body>
 </html>

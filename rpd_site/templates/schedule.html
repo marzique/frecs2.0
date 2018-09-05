@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <div style="margin-top:2%; margin-bottom:2%;" class="container">
+        <h1 class="zero_margin mb-0" style="margin-bottom:2%; margin-top:2%;">
+            <kbd class="display-4 text-center "> Розклад</kbd>
+        </h1>
+
+        <!-- Page Heading/Breadcrumbs -->
+        <div class="container-fluid" >
+                <hr>
+              <div class="image-container" >
+                  <img  class="mx-auto img-thumbnail " src="{{ url_for('static', filename='img/' + 'schedule_2018-19-page-001.jpg') }}" alt="img" />
+                  <img  class="mx-auto img-thumbnail " src="{{ url_for('static', filename='img/' + 'schedule_2018-19-page-002.jpg') }}" alt="img" />
+                  <img  class="mx-auto img-thumbnail " src="{{ url_for('static', filename='img/' + 'schedule_2018-19-page-003.jpg') }}" alt="img" />
+
+              </div>
+         </div>
+     </div>
+
+{% endblock %}
