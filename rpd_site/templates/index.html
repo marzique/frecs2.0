@@ -22,6 +22,7 @@
     <!-- Marketing Icons Section -->
     <div class="row">
         <div class="col-lg-4 col-sm-6 portfolio-item">
+            {% if last_3_posts[2] %}
         <div class="card h-100">
           <a href="{{ url_for('post', post_id=last_3_posts[2].id) }}">
               <img class="card-img-top" src="{{ url_for('static', filename='img/' + last_3_posts[2].image_file) }}" alt="huawei">
@@ -37,8 +38,26 @@
             <a href="{{ url_for('post', post_id=last_3_posts[2].id) }}" class="btn btn-primary float-right">Дізнатись більше</a>
           </div>
         </div>
+            {% else %}
+        <div class="card h-100">
+          <a href="#">
+              <img class="card-img-top" src="https://via.placeholder.com/350x250" alt="huawei">
+          </a>
+          <div class="card-body">
+            <h4 class="card-title">
+              <a>Новина</a>
+            </h4>
+              <p class="card-text">Додайте новини <a href="{{url_for('new_post')}}">тут</a></p>
+          </div>
+            <div class="card-footer">
+              <p class="float-left">Автор</p>
+            <a href="#" class="btn btn-primary float-right">Дізнатись більше</a>
+          </div>
+        </div>
+            {% endif %}
       </div>
       <div class="col-lg-4 col-sm-6 portfolio-item">
+          {% if last_3_posts[1] %}
         <div class="card h-100">
           <a href="{{ url_for('post', post_id=last_3_posts[1].id) }}">
               <img class="card-img-top" src="{{ url_for('static', filename='img/' + last_3_posts[1].image_file) }}" alt="physics">
@@ -54,8 +73,26 @@
             <a href="{{ url_for('post', post_id=last_3_posts[1].id) }}" class="btn btn-primary float-right">Дізнатись більше</a>
           </div>
         </div>
+          {% else %}
+        <div class="card h-100">
+          <a href="#">
+              <img class="card-img-top" src="https://via.placeholder.com/350x250" alt="huawei">
+          </a>
+          <div class="card-body">
+            <h4 class="card-title">
+              <a>Новина</a>
+            </h4>
+              <p class="card-text">Додайте новини <a href="{{url_for('new_post')}}">тут</a></p>
+          </div>
+            <div class="card-footer">
+              <p class="float-left">Автор</p>
+            <a href="#" class="btn btn-primary float-right">Дізнатись більше</a>
+          </div>
+        </div>
+            {% endif %}
       </div>
       <div class="col-lg-4 col-sm-6 portfolio-item">
+          {% if last_3_posts[0] %}
         <div class="card h-100">
           <a href="{{ url_for('post', post_id=last_3_posts[0].id) }}">
               <img class="card-img-top" src="{{ url_for('static', filename='img/' + last_3_posts[0].image_file) }}" alt="">
@@ -71,6 +108,23 @@
             <a href="{{ url_for('post', post_id=last_3_posts[0].id) }}" class="btn btn-primary float-right">Дізнатись більше</a>
           </div>
         </div>
+          {% else %}
+        <div class="card h-100">
+          <a href="#">
+              <img class="card-img-top" src="https://via.placeholder.com/350x250" alt="huawei">
+          </a>
+          <div class="card-body">
+            <h4 class="card-title">
+              <a>Новина</a>
+            </h4>
+              <p class="card-text">Додайте новини <a href="{{url_for('new_post')}}">тут</a></p>
+          </div>
+            <div class="card-footer">
+              <p class="float-left">Автор</p>
+            <a href="#" class="btn btn-primary float-right">Дізнатись більше</a>
+          </div>
+        </div>
+            {% endif %}
       </div>
 
     </div>

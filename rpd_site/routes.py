@@ -17,11 +17,17 @@ def index():
 						 'August': 'Серпня', 'September': 'Вересня', 'October': 'Жовтня',
 						 'November': 'Листопада', 'December': 'Грудня'}
 	last_3_posts = Post.query.all()[-3:]
-	day = last_3_posts[-1].date_posted.strftime('%d')
-	month = last_3_posts[-1].date_posted.strftime('%B')
-	year = last_3_posts[-1].date_posted.strftime('%Y')
-	time = last_3_posts[-1].date_posted.strftime('%X')
-
+	if last_3_posts:
+		# get date of the last post
+		day = last_3_posts[-1].date_posted.strftime('%d')
+		month = last_3_posts[-1].date_posted.strftime('%B')
+		year = last_3_posts[-1].date_posted.strftime('%Y')
+		time = last_3_posts[-1].date_posted.strftime('%X')
+	else:
+		day = "26"
+		month = "August"
+		year = "1995"
+		time = "08:54:24"
 	return render_template('index.html', last_3_posts=last_3_posts, day=day, month=month_translation[month], year=year,
 						   time=time)
 
@@ -103,7 +109,7 @@ def logout():
 
 def save_picture(form_picture, size_crop, is_avatar):
 	'''uploads square-cropped image with randomised
-    filename and returns it's filename'''
+    filename and returns it's filename + input extension'''
 	random_hex = secrets.token_hex(8)
 	_, f_ext = os.path.splitext(form_picture.filename)
 	picture_fn = random_hex + f_ext
