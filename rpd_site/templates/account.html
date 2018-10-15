@@ -10,7 +10,13 @@
         <h1 class="zero_margin mb-0" style="margin-bottom:2%; margin-top:5%;">
             <kbd class="display-4 text-center ">{{ current_user.username }} <br></kbd>
         </h1>
-                <p class="text-secondary" style="margin-top:0">{{ current_user.email }}</p>
+                <p class="text-secondary" style="margin-top:0">{{ current_user.email }}
+                {% if current_user.confirmed %}
+                    <span style="color:green;"> -  адреса підтверджена</span>
+                {% else %}
+                    <span style="color:red;"> -  адреса не підтверджена</span>
+                {% endif %}
+                </p>
 
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
