@@ -3,12 +3,22 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 
+from flask_mail import Mail, Message
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+
 
 app = Flask(__name__)
 # Initialize extension with your app.
+app.config.from_pyfile('config.cfg')
 app.config['SECRET_KEY'] = '55500b7625c92cd318daa58fabc00e16'
 app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+
+
+mail = Mail(app)
+
+# mail secret
+s = URLSafeTimedSerializer('testingkey')
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)

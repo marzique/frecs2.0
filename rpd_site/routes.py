@@ -2,12 +2,12 @@ import os
 import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort, send_file
-from rpd_site import app, db, bcrypt
+from rpd_site import app, db, bcrypt, s
 from rpd_site.models import User, Post
 from rpd_site.forms import RegistrationForm, LoginForm, UpdateAccountForm, UpdatePicture, PostForm
 from flask_login import login_user, current_user, logout_user, login_required
 from termcolor import colored
-
+from itsdangerous import SignatureExpired
 
 @app.route('/index')
 @app.route('/')
@@ -61,22 +61,47 @@ def about():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 	if current_user.is_authenticated:
+		flash('Ви вже ввійшли в аккаунт як ' + current_user.username, 'danger')
 		return redirect(url_for('index'))
+	else:
+		form = RegistrationForm()
+		if request.method == 'GET':
+			return render_template('register.html', form=form, title="Реєстрація")
+		elif request.method == 'POST':
+			if form.validate_on_submit():
+				# store only hash of the password
+				hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+				user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+				global token
+				token = s.dumps(request.form['email'], salt="confirmemail")
+				db.session.add(user)
+				db.session.commit()
+				flash('Ваш обліковий запис створено. Для підтвердження поштової адреси перейдіть по посиланню яке було надіслано на ' + form.email.data, 'success')
+				print()
+				print(colored("User: " + form.username.data + " , email: " + form.email.data + " registered", 'blue'))
+				print(colored("token: " + token, 'blue'))
+				print()
+				return render_template('register.html', form=form, title="Реєстрація")
+			return render_template('register.html', form=form, title="Реєстрація")
 
-	form = RegistrationForm()
-	if form.validate_on_submit():
-		# store only hash of the password
-		hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-		user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-		db.session.add(user)
+
+@app.route('/confirm_email/<token>', methods=['GET', 'POST'])
+def confirm_email(token):
+	if current_user.is_authenticated:
+		try:
+			get_token = s.loads(token, salt="confirmemail", max_age=120)
+		except SignatureExpired:
+			return '<h1>Старе посилання. Для підтвердження пошти зверніться до адміністратора.</h1><br> \
+				   <a href="' + url_for("index") + '">Повернутись на сайт</a>'
+
+		# confirm user
+		current_user.confirmed = 1
 		db.session.commit()
-		flash('Ваш обліковий запис створено.', 'success')
-		print()
-		print(colored("User: " + form.username.data + " , email: " + form.email.data + " registered", 'blue'))
-		print()
+		flash("Пошта " + current_user.email  +" прив'язана до аккаунту - " + current_user.username, 'success')
+		return redirect(url_for('account'))
+	else:
+		flash("Спочатку авторизуйтесь!", 'danger')
 		return redirect(url_for('login'))
-
-	return render_template('register.html', form=form, title="Реєстрація")
 
 
 @app.route('/login', methods=['GET', 'POST'])
