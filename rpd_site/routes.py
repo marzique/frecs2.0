@@ -82,7 +82,7 @@ def register():
 				mail.send(msg)
 				db.session.add(user)
 				db.session.commit()
-				flash('Ваш обліковий запис створено. Для підтвердження поштової адреси перейдіть по посиланню яке було надіслано на ' + form.email.data, 'success')
+				flash('Ваш обліковий запис створено. Для підтвердження поштової адреси перейдіть по посиланню яке було надіслано на адресу ' + form.email.data, 'success')
 				print()
 				print(colored("User: " + form.username.data + " , email: " + form.email.data + " registered", 'blue'))
 				print(colored("token: " + token, 'blue'))
