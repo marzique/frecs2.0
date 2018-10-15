@@ -87,7 +87,7 @@ def register():
 				print(colored("User: " + form.username.data + " , email: " + form.email.data + " registered", 'blue'))
 				print(colored("token: " + token, 'blue'))
 				print()
-				return render_template('register.html', form=form, title="Реєстрація")
+				return redirect(url_for('login'))
 			return render_template('register.html', form=form, title="Реєстрація")
 
 
