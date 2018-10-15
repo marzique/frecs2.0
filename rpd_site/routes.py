@@ -2,12 +2,13 @@ import os
 import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort, send_file
-from rpd_site import app, db, bcrypt, s
+from rpd_site import app, db, bcrypt, s, mail
 from rpd_site.models import User, Post
 from rpd_site.forms import RegistrationForm, LoginForm, UpdateAccountForm, UpdatePicture, PostForm
 from flask_login import login_user, current_user, logout_user, login_required
 from termcolor import colored
 from itsdangerous import SignatureExpired
+from flask_mail import Message
 
 @app.route('/index')
 @app.route('/')
@@ -72,8 +73,13 @@ def register():
 				# store only hash of the password
 				hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
 				user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+				email = request.form['email']
 				global token
-				token = s.dumps(request.form['email'], salt="confirmemail")
+				token = s.dumps(email, salt="confirmemail")
+				msg = Message('confirm email', sender='marzique@gmail.com', recipients=[email])
+				link = url_for('confirm_email', token=token)
+				msg.body = 'Для того щоб підтвердити цю електронну адресу перейдіть за цим посиланням: ' + request.url_root[:-1] + link
+				mail.send(msg)
 				db.session.add(user)
 				db.session.commit()
 				flash('Ваш обліковий запис створено. Для підтвердження поштової адреси перейдіть по посиланню яке було надіслано на ' + form.email.data, 'success')
