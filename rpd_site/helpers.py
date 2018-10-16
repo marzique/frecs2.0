@@ -4,45 +4,41 @@ import secrets
 from PIL import Image
 from rpd_site import app
 
+
 def password_check(password):
-    """
-    Verify the strength of 'password'
-    Returns a dict indicating the wrong criteria
-    A password is considered strong if:
-        8 characters length or more
-        1 digit or more
-        1 symbol or more
-        1 uppercase letter or more
-        1 lowercase letter or moreg
-        https://stackoverflow.com/a/32542964/10103803
-    """
+	"""
+	Verify the strength of 'password'
+	Returns a dict indicating the wrong criteria
+	A password is considered strong if:
+		8 characters length or more
+		1 digit or more
+		1 symbol or more
+		1 uppercase letter or more
+		1 lowercase letter or more
+		https://stackoverflow.com/a/32542964/10103803
+	"""
 
-    # calculating the length
-    length_error = len(password) < 8
+	# length
+	length_error = len(password) < 8
+	# digits
+	digit_error = re.search(r"\d", password) is None
+	# uppercase
+	uppercase_error = re.search(r"[A-Z]", password) is None
+	# lowercase
+	lowercase_error = re.search(r"[a-z]", password) is None
+	# symbols
+	symbol_error = re.search(r"\W", password) is None
+	# overall result
+	password_ok = not (length_error or digit_error or uppercase_error or lowercase_error or symbol_error)
 
-    # searching for digits
-    digit_error = re.search(r"\d", password) is None
-
-    # searching for uppercase
-    uppercase_error = re.search(r"[A-Z]", password) is None
-
-    # searching for lowercase
-    lowercase_error = re.search(r"[a-z]", password) is None
-
-    # searching for symbols
-    symbol_error = re.search(r"\W", password) is None
-
-    # overall result
-    password_ok = not ( length_error or digit_error or uppercase_error or lowercase_error or symbol_error )
-
-    return password_ok
-
+	return password_ok
 
 
 def save_picture(form_picture, size_crop, is_avatar):
 	'''uploads square-cropped image with randomised
     filename and returns it's filename + input extension'''
 	random_hex = secrets.token_hex(8)
+	# get image extension
 	_, f_ext = os.path.splitext(form_picture.filename)
 	picture_fn = random_hex + f_ext
 	if is_avatar:

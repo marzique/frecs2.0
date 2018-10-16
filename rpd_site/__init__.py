@@ -6,7 +6,6 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from itsdangerous import URLSafeTimedSerializer
 
-
 app = Flask(__name__)
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Initialize extension with your app.
@@ -14,7 +13,6 @@ app.config.from_pyfile('config.cfg')
 app.config['SECRET_KEY'] = '55500b7625c92cd318daa58fabc00e16'
 app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-
 
 mail = Mail(app)
 
