@@ -133,13 +133,10 @@ def confirm_email(token):
 def login():
 	# how many times user tried to login
 	if current_user.is_authenticated:
-		attempts = 0
 		return redirect(url_for('index'))
 	else:
-		attempts = 0
 		form = LoginForm()
 		if form.validate_on_submit():
-			attempts = 0
 			user = User.query.filter_by(email=form.email.data).first()
 			if user and bcrypt.check_password_hash(user.password, form.password.data):
 				login_user(user, remember=form.remember.data)
@@ -150,7 +147,7 @@ def login():
 				return redirect(next_page) if next_page else redirect(url_for('index'))
 			else:
 				flash('Неправильний email або пароль!', 'danger')
-				attempts += 1
+				return redirect(url_for('login'))
 	return render_template('login.html', form=form, title="Увійти")
 
 

@@ -7,3 +7,4 @@ VAR_SAFE_TIMED_KEY = 'testingkey'
 VAR_APP_SECRET_KEY = '55500b7625c92cd318daa58fabc00e16'
 VAR_DEBUG = True
 VAR_CFG_FILE = 'config.cfg'
+VAR_MAX_LOGIN_TRY = 3
