@@ -4,6 +4,10 @@ import secrets
 from PIL import Image
 from rpd_site import app
 
+"""
+All useful functions for routes
+"""
+
 
 def password_check(password):
 	"""
@@ -35,8 +39,10 @@ def password_check(password):
 
 
 def save_picture(form_picture, size_crop, is_avatar):
-	'''uploads square-cropped image with randomised
-    filename and returns it's filename + input extension'''
+	'''
+	Uploads square-cropped image with randomised
+    filename and returns it's filename + input extension
+    '''
 	random_hex = secrets.token_hex(8)
 	# get image extension
 	_, f_ext = os.path.splitext(form_picture.filename)

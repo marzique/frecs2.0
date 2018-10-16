@@ -20,7 +20,7 @@ class User(db.Model, UserMixin):
 	posts = db.relationship('Post', backref='author', lazy=True)
 
 	def __repr__(self):
-		return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+		return f"User('{self.username}', '{self.email}', '{self.confirmed}')"
 
 
 # New posts collection
@@ -33,4 +33,4 @@ class Post(db.Model):
 	image_file = db.Column(db.String(20), nullable=False, default='default_post.png')
 
 	def __repr__(self):
-		return f"Post('{self.title}', '{self.date_posted}', '{self.image_file}')"
+		return f"Post('{self.title}', '{self.date_posted}', '{self.content[:15]}')"

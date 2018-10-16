@@ -8,6 +8,8 @@ from itsdangerous import SignatureExpired
 from flask_mail import Message
 from rpd_site.helpers import password_check, save_picture
 from rpd_site.constants import *
+from smtplib import SMTPException
+
 
 @app.route('/index')
 @app.route('/')
@@ -33,11 +35,6 @@ def index():
 						   time=time)
 
 
-@app.route('/index2')
-def index2():
-	return render_template('index2.html')
-
-
 @app.route('/news')
 def news():
 	# LIFO list
@@ -53,6 +50,7 @@ def history():
 @app.route('/schedule')
 def schedule():
 	return render_template('schedule.html', title="Розклад")
+
 
 @app.route('/about')
 def about():
@@ -76,34 +74,38 @@ def register():
 					hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
 					user = User(username=form.username.data, email=form.email.data, password=hashed_password)
 					email = request.form['email']
+					# global unique confirmation link token
 					global token
-					token = s.dumps(email, salt=VAR_MAILSALT )
+					token = s.dumps(email, salt=VAR_MAIL_SALT)
 					msg = Message('confirm email', sender='marzique@gmail.com', recipients=[email])
 					link = url_for('confirm_email', token=token)
-					msg.body = 'Для того щоб підтвердити цю електронну адресу перейдіть за цим посиланням: '\
+					msg.body = 'Для того щоб підтвердити цю електронну адресу перейдіть за цим посиланням: ' \
 							   + request.url_root[:-1] + link
 					try:
 						mail.send(msg)
 						db.session.add(user)
 						db.session.commit()
 						flash('Ваш обліковий запис створено. Для підтвердження поштової адреси перейдіть по посиланню '
-							  'яке було надіслано на адресу: '  + form.email.data, 'success')
+							  'яке було надіслано на адресу: ' + form.email.data, 'success')
 						print()
-						print(colored("User: " + form.username.data + " , email: " + form.email.data + " registered", 'blue'))
+						print(colored("User: " + form.username.data + " , email: " + form.email.data + " registered",
+									  'blue'))
 						print(colored("token: " + token, 'blue'))
 						print()
 						return redirect(url_for('login'))
 					# catch GMAIL/SMTP error here
-					except:
-						print(colored("User: " + form.username.data + " , email: " + form.email.data + " not registered", 'red'))
+					except SMTPException:
+						#  https://stackoverflow.com/a/16120288/10103803 - add logging here !!
+						print(
+							colored("User: " + form.username.data + " , email: " + form.email.data + " not registered",
+									'red'))
 						print(colored("SMTP error ", 'red'))
 						flash('Щось пішло не так, спробуйте пізніше або зверніться до адміністратора!', 'danger')
 			else:
 				print(colored("User: " + form.username.data + " , email: " + form.email.data + " used weak password",
 							  'red'))
 				flash('Ваш пароль дуже слабкий, спробуйте додати Великі, малі літери, цифри, та спеціальні символи. '
-					  'Пароль має складатись з щонайменше '  + str(VAR_MINPASSLEN) + ' символів', 'danger')
-
+					  'Пароль має складатись з щонайменше ' + str(VAR_MIN_PASS_LEN) + ' символів', 'danger')
 
 			return render_template('register.html', form=form, title="Реєстрація")
 
@@ -112,7 +114,7 @@ def register():
 def confirm_email(token):
 	if current_user.is_authenticated:
 		try:
-			get_token = s.loads(token, salt=VAR_MAILSALT , max_age=VAR_TOKEN_MAX_AGE)
+			get_token = s.loads(token, salt=VAR_MAIL_SALT, max_age=VAR_TOKEN_MAX_AGE)
 		except SignatureExpired:
 			return '<h1>Старе посилання. Для підтвердження пошти зверніться до адміністратора.</h1><br> \
 				   <a href="' + url_for("index") + '">Повернутись на сайт</a>'
@@ -120,7 +122,7 @@ def confirm_email(token):
 		# confirm user
 		current_user.confirmed = 1
 		db.session.commit()
-		flash("Пошта " + current_user.email  +" прив'язана до аккаунту - " + current_user.username, 'success')
+		flash("Пошта " + current_user.email + " прив'язана до аккаунту - " + current_user.username, 'success')
 		return redirect(url_for('account'))
 	else:
 		flash("Спочатку авторизуйтесь!", 'danger')
@@ -129,20 +131,26 @@ def confirm_email(token):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+	# how many times user tried to login
 	if current_user.is_authenticated:
+		attempts = 0
 		return redirect(url_for('index'))
-	form = LoginForm()
-	if form.validate_on_submit():
-		user = User.query.filter_by(email=form.email.data).first()
-		if user and bcrypt.check_password_hash(user.password, form.password.data):
-			login_user(user, remember=form.remember.data)
-			next_page = request.args.get('next')
-			print()
-			print(colored(str(user) + " logged in", 'green'))
-			print()
-			return redirect(next_page) if next_page else redirect(url_for('index'))
-		else:
-			flash('Неправильний email або пароль!', 'danger')
+	else:
+		attempts = 0
+		form = LoginForm()
+		if form.validate_on_submit():
+			attempts = 0
+			user = User.query.filter_by(email=form.email.data).first()
+			if user and bcrypt.check_password_hash(user.password, form.password.data):
+				login_user(user, remember=form.remember.data)
+				next_page = request.args.get('next')
+				print()
+				print(colored(str(user) + " logged in", 'green'))
+				print()
+				return redirect(next_page) if next_page else redirect(url_for('index'))
+			else:
+				flash('Неправильний email або пароль!', 'danger')
+				attempts += 1
 	return render_template('login.html', form=form, title="Увійти")
 
 
@@ -153,7 +161,6 @@ def logout():
 	print()
 	logout_user()
 	return redirect(url_for('login'))
-
 
 
 @app.route('/account', methods=['GET', 'POST'])
