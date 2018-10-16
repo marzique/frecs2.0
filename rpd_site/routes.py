@@ -9,6 +9,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from termcolor import colored
 from itsdangerous import SignatureExpired
 from flask_mail import Message
+from rpd_site.helpers import password_check
 
 @app.route('/index')
 @app.route('/')
@@ -63,38 +64,44 @@ def about():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 	if current_user.is_authenticated:
-		flash('Ви вже ввійшли в аккаунт як ' + current_user.username, 'danger')
+		flash('Ви вже аутентифіковані як ' + current_user.username, 'danger')
 		return redirect(url_for('index'))
 	else:
 		form = RegistrationForm()
 		if request.method == 'GET':
 			return render_template('register.html', form=form, title="Реєстрація")
 		elif request.method == 'POST':
-			if form.validate_on_submit():
-				# store only hash of the password
-				hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-				user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-				email = request.form['email']
-				global token
-				token = s.dumps(email, salt="confirmemail")
-				msg = Message('confirm email', sender='marzique@gmail.com', recipients=[email])
-				link = url_for('confirm_email', token=token)
-				msg.body = 'Для того щоб підтвердити цю електронну адресу перейдіть за цим посиланням: ' + request.url_root[:-1] + link
-				try:
-					mail.send(msg)
-					db.session.add(user)
-					db.session.commit()
-					flash('Ваш обліковий запис створено. Для підтвердження поштової адреси перейдіть по посиланню яке було надіслано на адресу: ' + form.email.data, 'success')
-					print()
-					print(colored("User: " + form.username.data + " , email: " + form.email.data + " registered", 'blue'))
-					print(colored("token: " + token, 'blue'))
-					print()
-					return redirect(url_for('login'))
-				# catch GMAIL/SMTP error here
-				except:
-					print(colored("User: " + form.username.data + " , email: " + form.email.data + " not registered", 'red'))
-					print(colored("SMTP error ", 'red'))
-					flash('Щось пішло не так, спробуйте пізніше або зверніться до адміністратора!', 'danger')
+			if password_check(form.password.data):
+				if form.validate_on_submit():
+					# store only hash of the password
+					hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+					user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+					email = request.form['email']
+					global token
+					token = s.dumps(email, salt="confirmemail")
+					msg = Message('confirm email', sender='marzique@gmail.com', recipients=[email])
+					link = url_for('confirm_email', token=token)
+					msg.body = 'Для того щоб підтвердити цю електронну адресу перейдіть за цим посиланням: ' + request.url_root[:-1] + link
+					try:
+						mail.send(msg)
+						db.session.add(user)
+						db.session.commit()
+						flash('Ваш обліковий запис створено.'
+							  ' Для підтвердження поштової адреси увійдіть у ваш обліковий запис і потім перейдіть по посиланню яке було надіслано на адресу: '
+							  + form.email.data, 'success')
+						print()
+						print(colored("User: " + form.username.data + " , email: " + form.email.data + " registered", 'blue'))
+						print(colored("link: " + link, 'green'))
+						print()
+						return redirect(url_for('login'))
+					# catch GMAIL/SMTP error here
+					except:
+						print(colored("User: " + form.username.data + " , email: " + form.email.data + " not registered", 'red'))
+						print(colored("SMTP error ", 'red'))
+						flash('Щось пішло не так, спробуйте пізніше або зверніться до адміністратора!', 'danger')
+				else:
+					flash(
+						"Обраний вами пароль є дуже слабким, будь ласка використайте літери в обох регістрах, цифру, та один спеціальний символ", 'danger')
 
 			return render_template('register.html', form=form, title="Реєстрація")
 
@@ -103,14 +110,16 @@ def register():
 def confirm_email(token):
 	if current_user.is_authenticated:
 		try:
-			get_token = s.loads(token, salt="confirmemail", max_age=120)
+			get_token = s.loads(token, salt="confirmemail", max_age=120) # link valid for 2 minutes
 		except SignatureExpired:
 			return '<h1>Старе посилання. Для підтвердження пошти зверніться до адміністратора.</h1><br> \
 				   <a href="' + url_for("index") + '">Повернутись на сайт</a>'
 
 		# confirm user
+
 		current_user.confirmed = 1
 		db.session.commit()
+		print(colored('User: ' + current_user.username + ' confirmed his email address: ' + current_user.email, 'yellow'))
 		flash("Пошта " + current_user.email  +" прив'язана до аккаунту - " + current_user.username, 'success')
 		return redirect(url_for('account'))
 	else:
