@@ -109,5 +109,3 @@ venv.bak/
 
 # db
 rpd_site/site.db
-
-config.cfg

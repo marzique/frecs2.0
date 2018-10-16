@@ -8,6 +8,7 @@ from itsdangerous import URLSafeTimedSerializer
 
 
 app = Flask(__name__)
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Initialize extension with your app.
 app.config.from_pyfile('config.cfg')
 app.config['SECRET_KEY'] = '55500b7625c92cd318daa58fabc00e16'

@@ -24,6 +24,7 @@ def index():
 		month = last_3_posts[-1].date_posted.strftime('%B')
 		year = last_3_posts[-1].date_posted.strftime('%Y')
 		time = last_3_posts[-1].date_posted.strftime('%X')
+	# in case of 0 posts
 	else:
 		day = "26"
 		month = "August"
@@ -79,15 +80,22 @@ def register():
 				msg = Message('confirm email', sender='marzique@gmail.com', recipients=[email])
 				link = url_for('confirm_email', token=token)
 				msg.body = 'Для того щоб підтвердити цю електронну адресу перейдіть за цим посиланням: ' + request.url_root[:-1] + link
-				mail.send(msg)
-				db.session.add(user)
-				db.session.commit()
-				flash('Ваш обліковий запис створено. Для підтвердження поштової адреси перейдіть по посиланню яке було надіслано на адресу: ' + form.email.data, 'success')
-				print()
-				print(colored("User: " + form.username.data + " , email: " + form.email.data + " registered", 'blue'))
-				print(colored("token: " + token, 'blue'))
-				print()
-				return redirect(url_for('login'))
+				try:
+					mail.send(msg)
+					db.session.add(user)
+					db.session.commit()
+					flash('Ваш обліковий запис створено. Для підтвердження поштової адреси перейдіть по посиланню яке було надіслано на адресу: ' + form.email.data, 'success')
+					print()
+					print(colored("User: " + form.username.data + " , email: " + form.email.data + " registered", 'blue'))
+					print(colored("token: " + token, 'blue'))
+					print()
+					return redirect(url_for('login'))
+				# catch GMAIL/SMTP error here
+				except:
+					print(colored("User: " + form.username.data + " , email: " + form.email.data + " not registered", 'red'))
+					print(colored("SMTP error ", 'red'))
+					flash('Щось пішло не так, спробуйте пізніше або зверніться до адміністратора!', 'danger')
+
 			return render_template('register.html', form=form, title="Реєстрація")
 
 
