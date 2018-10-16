@@ -13,7 +13,8 @@ def password_check(password):
         1 digit or more
         1 symbol or more
         1 uppercase letter or more
-        1 lowercase letter or more
+        1 lowercase letter or moreg
+        https://stackoverflow.com/a/32542964/10103803
     """
 
     # calculating the length
