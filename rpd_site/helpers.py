@@ -1,4 +1,8 @@
 import re
+import os
+import secrets
+from PIL import Image
+from rpd_site import app
 
 def password_check(password):
     """
@@ -31,3 +35,29 @@ def password_check(password):
     password_ok = not ( length_error or digit_error or uppercase_error or lowercase_error or symbol_error )
 
     return password_ok
+
+
+
+def save_picture(form_picture, size_crop, is_avatar):
+	'''uploads square-cropped image with randomised
+    filename and returns it's filename + input extension'''
+	random_hex = secrets.token_hex(8)
+	_, f_ext = os.path.splitext(form_picture.filename)
+	picture_fn = random_hex + f_ext
+	if is_avatar:
+		picture_path = os.path.join(app.root_path, 'static/img/avatars', picture_fn)
+		output_size = size_crop
+		i = Image.open(form_picture)
+		# crop top square to leave aspect ratio
+		f_width, _ = i.size
+		i = i.crop((0, 0, f_width, f_width))
+		i.thumbnail(output_size)
+		i.save(picture_path)
+	else:
+		picture_path = os.path.join(app.root_path, 'static/img', picture_fn)
+		output_size = size_crop
+		i = Image.open(form_picture)
+		i.thumbnail(output_size)
+		i.save(picture_path)
+
+	return picture_fn

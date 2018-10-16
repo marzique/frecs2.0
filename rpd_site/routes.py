@@ -1,6 +1,3 @@
-import os
-import secrets
-from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort, send_file
 from rpd_site import app, db, bcrypt, s, mail
 from rpd_site.models import User, Post
@@ -9,7 +6,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from termcolor import colored
 from itsdangerous import SignatureExpired
 from flask_mail import Message
-from rpd_site.helpers import password_check
+from rpd_site.helpers import password_check, save_picture
 from rpd_site.constants import *
 
 @app.route('/index')
@@ -157,30 +154,6 @@ def logout():
 	logout_user()
 	return redirect(url_for('login'))
 
-
-def save_picture(form_picture, size_crop, is_avatar):
-	'''uploads square-cropped image with randomised
-    filename and returns it's filename + input extension'''
-	random_hex = secrets.token_hex(8)
-	_, f_ext = os.path.splitext(form_picture.filename)
-	picture_fn = random_hex + f_ext
-	if is_avatar:
-		picture_path = os.path.join(app.root_path, 'static/img/avatars', picture_fn)
-		output_size = size_crop
-		i = Image.open(form_picture)
-		# crop top square to leave aspect ratio
-		f_width, _ = i.size
-		i = i.crop((0, 0, f_width, f_width))
-		i.thumbnail(output_size)
-		i.save(picture_path)
-	else:
-		picture_path = os.path.join(app.root_path, 'static/img', picture_fn)
-		output_size = size_crop
-		i = Image.open(form_picture)
-		i.thumbnail(output_size)
-		i.save(picture_path)
-
-	return picture_fn
 
 
 @app.route('/account', methods=['GET', 'POST'])
