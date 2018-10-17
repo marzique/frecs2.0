@@ -64,3 +64,5 @@ def save_picture(form_picture, size_crop, is_avatar):
 		i.save(picture_path)
 
 	return picture_fn
+
+

@@ -19,6 +19,7 @@ def index():
 						 'August': 'Серпня', 'September': 'Вересня', 'October': 'Жовтня',
 						 'November': 'Листопада', 'December': 'Грудня'}
 	last_3_posts = Post.query.all()[-3:]
+	# at least 1 post exists
 	if last_3_posts:
 		# get date of the last post
 		day = last_3_posts[-1].date_posted.strftime('%d')
@@ -162,6 +163,7 @@ def login():
 
 @app.route('/logout')
 def logout():
+
 	print()
 	print(colored("User: " + str(current_user.username) + " logged out", 'red'))
 	print()
@@ -248,7 +250,7 @@ def update_account():
 	if current_user.is_authenticated:
 		if request.method == 'POST':
 			if form.validate_on_submit():
-				# if user changing email address
+				# user changing email address
 				if current_user.email != form.email.data:
 					global token
 					token = signature.dumps(form.email.data, salt=VAR_MAIL_SALT)
@@ -281,6 +283,10 @@ def update_account():
 								'red'))
 						print(colored("SMTP error ", 'red'))
 						flash('Щось пішло не так, спробуйте пізніше або зверніться до адміністратора!', 'danger')
+
+				# user provided same email and username
+				elif current_user.username == form.username.data and current_user.email == form.email.data:
+					flash('Ви ввели старе ім\'я та адресу, змініть хоча б шось одне з двох!', 'danger')
 				# just change username
 				else:
 					current_user.username = form.username.data

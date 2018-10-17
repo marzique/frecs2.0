@@ -23,7 +23,6 @@ class User(db.Model, UserMixin):
 		return f"User('{self.username}', '{self.email}', '{self.confirmed}')"
 
 
-# New posts collection
 class Post(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	title = db.Column(db.String(100), nullable=False)
