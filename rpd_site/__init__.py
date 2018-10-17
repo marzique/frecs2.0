@@ -15,6 +15,8 @@ app.config.from_pyfile(VAR_CFG_FILE)
 app.config['SECRET_KEY'] = VAR_APP_SECRET_KEY
 app.config['DEBUG'] = VAR_DEBUG
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['RECAPTCHA_PUBLIC_KEY'] = '6LcPZ3UUAAAAAO_WGbcXUI9tsI-Ya8Sq89mePlAW'
+app.config['RECAPTCHA_PRIVATE_KEY'] = '6LcPZ3UUAAAAAFN3SdsrsEAk9xsslHQHW_byLYmg'
 
 mail = Mail(app)
 

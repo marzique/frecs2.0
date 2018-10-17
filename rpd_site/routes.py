@@ -30,7 +30,7 @@ def index():
 		day = "26"
 		month = "August"
 		year = "1995"
-		time = "08:54:14"
+		time = "00:00:01"
 	return render_template('index.html', last_3_posts=last_3_posts, day=day, month=month_translation[month], year=year,
 						   time=time)
 

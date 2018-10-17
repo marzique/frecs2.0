@@ -1,4 +1,4 @@
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, RecaptchaField
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
@@ -34,6 +34,7 @@ class LoginForm(FlaskForm):
     password = PasswordField('Пароль', validators=[DataRequired()])
     remember = BooleanField('Запам&#39ятати')
     submit = SubmitField('Увійти')
+    recaptcha = RecaptchaField()
 
 
 class UpdateAccountForm(FlaskForm):
