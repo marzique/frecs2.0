@@ -232,6 +232,7 @@ def delete_post(post_id):
 	flash('Видалено', 'success')
 	return redirect(url_for('news'))
 
+
 @app.route('/account/update', methods=['GET', 'POST'])
 def update_account():
 	form = UpdateAccountForm()
@@ -286,7 +287,7 @@ def update_account():
 								   form=form, legend='Редагувати профіль')
 
 	else:
-		flash("Увійдіть у свій обліковий запис", 'danger')
+		flash("Спочатку увійдіть у свій обліковий запис", 'danger')
 		return redirect(url_for('login'))
 
 	return render_template('update_account.html', title='Редагувати профіль',
