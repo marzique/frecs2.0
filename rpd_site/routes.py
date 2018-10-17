@@ -231,3 +231,63 @@ def delete_post(post_id):
 	db.session.commit()
 	flash('Видалено', 'success')
 	return redirect(url_for('news'))
+
+@app.route('/account/update', methods=['GET', 'POST'])
+def update_account():
+	form = UpdateAccountForm()
+	if current_user.is_authenticated:
+		if request.method == 'POST':
+				if form.validate_on_submit():
+					# if user changing email address
+					if current_user.email != form.email.data:
+						global token
+						token = s.dumps(form.email.data, salt=VAR_MAIL_SALT)
+						msg = Message('confirm new email', sender='marzique@gmail.com', recipients=[form.email.data])
+						link = url_for('confirm_email', token=token)
+						msg.body = 'Для того щоб підтвердити цю електронну адресу перейдіть за цим посиланням: ' \
+								   + request.url_root[:-1] + link
+						try:
+							mail.send(msg)
+							current_user.username = form.username.data
+							current_user.email = form.email.data
+							current_user.confirmed = 0
+							db.session.commit()
+							flash('Обліковий запис успішно відредаговано. Для підтвердження поштової адреси перейдіть по посиланню '
+								  'яке було надіслано на адресу: ' + form.email.data, 'success')
+							print()
+							print(colored("User new name: " + form.username.data + " , changed email to: " + form.email.data,
+										  'blue'))
+							print(colored("token: " + token, 'blue'))
+							print()
+							return redirect(url_for('account'))
+						# catch GMAIL/SMTP error here
+						except SMTPException:
+							#  https://stackoverflow.com/a/16120288/10103803 - add logging here !!
+							print(
+								colored("User: " + form.username.data + " , email: " + form.email.data + " didn't change account",
+										'red'))
+							print(colored("SMTP error ", 'red'))
+							flash('Щось пішло не так, спробуйте пізніше або зверніться до адміністратора!', 'danger')
+					# just change username
+					else:
+						current_user.username = form.username.data
+						db.session.commit()
+						flash(
+							'Обліковий запис успішно відредаговано.', 'success')
+						print()
+						print(
+							colored("User new name: " + form.username.data + " , old email : " + form.email.data,
+									'blue'))
+						print()
+						return redirect(url_for('account'))
+
+		elif request.method == 'GET':
+			return render_template('update_account.html', title='Редагувати профіль',
+								   form=form, legend='Редагувати профіль')
+
+	else:
+		flash("Увійдіть у свій обліковий запис", 'danger')
+		return redirect(url_for('login'))
+
+	return render_template('update_account.html', title='Редагувати профіль',
+						   form=form, legend='Редагувати профіль')
