@@ -68,8 +68,8 @@ def register():
 			return render_template('register.html', form=form, title="Реєстрація")
 		elif request.method == 'POST':
 			# check password weakness first
-			if password_check(form.password.data):
-				if form.validate_on_submit():
+			if form.validate_on_submit():
+				if password_check(form.password.data):
 					# store only hash of the password
 					hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
 					user = User(username=form.username.data, email=form.email.data, password=hashed_password)
@@ -101,11 +101,11 @@ def register():
 									'red'))
 						print(colored("SMTP error ", 'red'))
 						flash('Щось пішло не так, спробуйте пізніше або зверніться до адміністратора!', 'danger')
-			else:
-				print(colored("User: " + form.username.data + " , email: " + form.email.data + " used weak password",
-							  'red'))
-				flash('Ваш пароль дуже слабкий, спробуйте додати Великі, малі літери, цифри, та спеціальні символи. '
-					  'Пароль має складатись з щонайменше ' + str(VAR_MIN_PASS_LEN) + ' символів', 'danger')
+				else:
+					print(colored("User: " + form.username.data + " , email: " + form.email.data + " used weak password",
+								  'red'))
+					flash('Ваш пароль дуже слабкий, спробуйте додати Великі, малі літери, цифри, та спеціальні символи. '
+						  'Пароль має складатись з щонайменше ' + str(VAR_MIN_PASS_LEN) + ' символів', 'danger')
 
 			return render_template('register.html', form=form, title="Реєстрація")
 
