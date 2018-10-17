@@ -1,10 +1,10 @@
 from flask import render_template, url_for, flash, redirect, request, abort, send_file
-from rpd_site import app, db, bcrypt, s, mail
+from rpd_site import app, db, bcrypt, signature, mail
 from rpd_site.models import User, Post
 from rpd_site.forms import RegistrationForm, LoginForm, UpdateAccountForm, UpdatePicture, PostForm
 from flask_login import login_user, current_user, logout_user, login_required
 from termcolor import colored
-from itsdangerous import SignatureExpired
+from itsdangerous import SignatureExpired, BadSignature
 from flask_mail import Message
 from rpd_site.helpers import password_check, save_picture
 from rpd_site.constants import *
@@ -67,8 +67,8 @@ def register():
 		if request.method == 'GET':
 			return render_template('register.html', form=form, title="Реєстрація")
 		elif request.method == 'POST':
-			# check password weakness first
 			if form.validate_on_submit():
+				# check password weakness first
 				if password_check(form.password.data):
 					# store only hash of the password
 					hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -76,7 +76,7 @@ def register():
 					email = request.form['email']
 					# global unique confirmation link token
 					global token
-					token = s.dumps(email, salt=VAR_MAIL_SALT)
+					token = signature.dumps(email, salt=VAR_MAIL_SALT)
 					msg = Message('confirm email', sender='marzique@gmail.com', recipients=[email])
 					link = url_for('confirm_email', token=token)
 					msg.body = 'Для того щоб підтвердити цю електронну адресу перейдіть за цим посиланням: ' \
@@ -102,10 +102,12 @@ def register():
 						print(colored("SMTP error ", 'red'))
 						flash('Щось пішло не так, спробуйте пізніше або зверніться до адміністратора!', 'danger')
 				else:
-					print(colored("User: " + form.username.data + " , email: " + form.email.data + " used weak password",
-								  'red'))
-					flash('Ваш пароль дуже слабкий, спробуйте додати Великі, малі літери, цифри, та спеціальні символи. '
-						  'Пароль має складатись з щонайменше ' + str(VAR_MIN_PASS_LEN) + ' символів', 'danger')
+					print(
+						colored("User: " + form.username.data + " , email: " + form.email.data + " used weak password",
+								'red'))
+					flash(
+						'Ваш пароль дуже слабкий, спробуйте додати Великі, малі літери, цифри, та спеціальні символи. '
+						'Пароль має складатись з щонайменше ' + str(VAR_MIN_PASS_LEN) + ' символів', 'danger')
 
 			return render_template('register.html', form=form, title="Реєстрація")
 
@@ -114,10 +116,17 @@ def register():
 def confirm_email(token):
 	if current_user.is_authenticated:
 		try:
-			get_token = s.loads(token, salt=VAR_MAIL_SALT, max_age=VAR_TOKEN_MAX_AGE)
+			# check if URL correct and still valid
+			signature.loads(token, salt=VAR_MAIL_SALT, max_age=VAR_TOKEN_MAX_AGE)
 		except SignatureExpired:
 			return '<h1>Старе посилання. Для підтвердження пошти зверніться до адміністратора.</h1><br> \
 				   <a href="' + url_for("index") + '">Повернутись на сайт</a>'
+
+		except BadSignature:
+			return '<h1>Посилання не є дійсним. Для підтвердження пошти перейдіть по посиланню надісланому вам на пошту \
+				    або зверніться до адміністратора.</h1><br> \
+							   <a href="' + url_for("index") + '">Повернутись на сайт</a>'
+
 
 		# confirm user
 		current_user.confirmed = 1
@@ -238,49 +247,52 @@ def update_account():
 	form = UpdateAccountForm()
 	if current_user.is_authenticated:
 		if request.method == 'POST':
-				if form.validate_on_submit():
-					# if user changing email address
-					if current_user.email != form.email.data:
-						global token
-						token = s.dumps(form.email.data, salt=VAR_MAIL_SALT)
-						msg = Message('confirm new email', sender='marzique@gmail.com', recipients=[form.email.data])
-						link = url_for('confirm_email', token=token)
-						msg.body = 'Для того щоб підтвердити цю електронну адресу перейдіть за цим посиланням: ' \
-								   + request.url_root[:-1] + link
-						try:
-							mail.send(msg)
-							current_user.username = form.username.data
-							current_user.email = form.email.data
-							current_user.confirmed = 0
-							db.session.commit()
-							flash('Обліковий запис успішно відредаговано. Для підтвердження поштової адреси перейдіть по посиланню '
-								  'яке було надіслано на адресу: ' + form.email.data, 'success')
-							print()
-							print(colored("User new name: " + form.username.data + " , changed email to: " + form.email.data,
-										  'blue'))
-							print(colored("token: " + token, 'blue'))
-							print()
-							return redirect(url_for('account'))
-						# catch GMAIL/SMTP error here
-						except SMTPException:
-							#  https://stackoverflow.com/a/16120288/10103803 - add logging here !!
-							print(
-								colored("User: " + form.username.data + " , email: " + form.email.data + " didn't change account",
-										'red'))
-							print(colored("SMTP error ", 'red'))
-							flash('Щось пішло не так, спробуйте пізніше або зверніться до адміністратора!', 'danger')
-					# just change username
-					else:
+			if form.validate_on_submit():
+				# if user changing email address
+				if current_user.email != form.email.data:
+					global token
+					token = signature.dumps(form.email.data, salt=VAR_MAIL_SALT)
+					msg = Message('confirm new email', sender='marzique@gmail.com', recipients=[form.email.data])
+					link = url_for('confirm_email', token=token)
+					msg.body = 'Для того щоб підтвердити цю електронну адресу перейдіть за цим посиланням: ' \
+							   + request.url_root[:-1] + link
+					try:
+						mail.send(msg)
 						current_user.username = form.username.data
+						current_user.email = form.email.data
+						current_user.confirmed = 0
 						db.session.commit()
 						flash(
-							'Обліковий запис успішно відредаговано.', 'success')
+							'Обліковий запис успішно відредаговано. Для підтвердження поштової адреси перейдіть по посиланню '
+							'яке було надіслано на адресу: ' + form.email.data, 'success')
 						print()
 						print(
-							colored("User new name: " + form.username.data + " , old email : " + form.email.data,
+							colored("User new name: " + form.username.data + " , changed email to: " + form.email.data,
 									'blue'))
+						print(colored("token: " + token, 'blue'))
 						print()
 						return redirect(url_for('account'))
+					# catch GMAIL/SMTP error here
+					except SMTPException:
+						#  https://stackoverflow.com/a/16120288/10103803 - add logging here !!
+						print(
+							colored(
+								"User: " + form.username.data + " , email: " + form.email.data + " didn't change account",
+								'red'))
+						print(colored("SMTP error ", 'red'))
+						flash('Щось пішло не так, спробуйте пізніше або зверніться до адміністратора!', 'danger')
+				# just change username
+				else:
+					current_user.username = form.username.data
+					db.session.commit()
+					flash(
+						'Обліковий запис успішно відредаговано.', 'success')
+					print()
+					print(
+						colored("User new name: " + form.username.data + " , old email : " + form.email.data,
+								'blue'))
+					print()
+					return redirect(url_for('account'))
 
 		elif request.method == 'GET':
 			return render_template('update_account.html', title='Редагувати профіль',

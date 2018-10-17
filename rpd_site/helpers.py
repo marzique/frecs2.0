@@ -41,7 +41,7 @@ def password_check(password):
 def save_picture(form_picture, size_crop, is_avatar):
 	'''
 	Uploads square-cropped image with randomised
-    filename and returns it's filename + input extension
+    filename and returns it'signature filename + input extension
     '''
 	random_hex = secrets.token_hex(8)
 	# get image extension

@@ -21,7 +21,7 @@ app.config['RECAPTCHA_PRIVATE_KEY'] = '6LcPZ3UUAAAAAFN3SdsrsEAk9xsslHQHW_byLYmg'
 mail = Mail(app)
 
 # mail secret
-s = URLSafeTimedSerializer(VAR_SAFE_TIMED_KEY)
+signature = URLSafeTimedSerializer(VAR_SAFE_TIMED_KEY)
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
