@@ -63,30 +63,32 @@
                   </div>
               </form>
               </a>
-
-
-
             <a class="list-group-item">Повне ім&#39я: John Doe</a>
-            <a class="list-group-item">Група: Адміністратори</a>
+
+              <!--pass user status here-->
+              {% if current_user.email in ['marzique@gmail.com', 'denys@digisol.agency'] or current_user.username in ['tarn', 'tarnava', 'marz', 'marzique'] %}
+            <a class="list-group-item">Група: <span style="color:#00ff5d;">Адміністратори</span></a>
+              {% else %}
+            <a class="list-group-item">Група: <span>Студент</span></a>
+              {% endif %}
             <a href="#" class="list-group-item">Додані новини</a>
           </div>
         </div>
+
         <!-- Content Column -->
         <div class="col-lg-9 mb-4">
           <h3 class="zero_margin mb-0" style="margin-bottom:3%; margin-top:0%;">
             <kbd class=" text-center">Опис</kbd>
             </h3>
-            <hr>
           <p style="margin-top:2%;" >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta,
               et temporibus, facere perferendis veniam beatae non debitis, numquam
               blanditiis necessitatibus vel mollitia dolorum laudantium, voluptate dolores
               iure maxime ducimus fugit.</p>
-           <a href="{{ url_for('update_account') }}" type="button" class="btn btn-warning btn-md float-right">Редагувати аккаунт</a>
+            <button href="#" type="button" class="btn btn-info btn-md">Змінити опис</button>
+            <hr>
+           <a href="{{ url_for('update_account') }}" type="button" class="btn btn-warning btn-md float-left">Редагувати аккаунт</a>
         </div>
-
-
       </div>
-
       <!-- /.row -->
 
     </div>
