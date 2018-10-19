@@ -6,9 +6,9 @@
 
       <!-- Page Heading/Breadcrumbs -->
       <h1 class="zero_margin mb-0" style="margin-bottom:2%; margin-top:2%;">
-        <kbd class="display-4 text-center ">Останні новини
+        <kbd class="display-4 text-center ">Останні новини<br>
             {% if user %}
-            <small style="color:rgba(255,255,255,.5)">{{user}}</small>
+            <small style="color:rgba(255,255,255,.5)">{{user}}  </small> - ({{posts.total}})
             {% endif %}
         </kbd>
 

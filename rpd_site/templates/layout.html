@@ -42,151 +42,154 @@
         {% if menuitem == 'index' %}
         <a class="navbar-brand" style="color:white;" href="{{ url_for('index') }}">
             {% else %}
-        <a class="navbar-brand" style="color:rgba(255,255,255,.5);" href="{{ url_for('index') }}">
-            {% endif %}
-            <img src="{{ url_for('static', filename='img/' + 'knu.jpg') }}" width="50" height="50"
-                 alt="Логотип Радіофізичного факультету">
-        </a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
-                    {% if menuitem in ['history',] %}
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false" style="color:white;">
-                        Про Нас
-                    </a>
-                    {% else %}
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        Про Нас
-                    </a>
-                    {% endif %}
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                        <a class="dropdown-item" href="#">Склад кафедри</a>
-                        <a class="dropdown-item" href="{{url_for('news')}}">Конференції</a>
-                        <a class="dropdown-item" href="{{url_for('history')}}">Історія кафедри</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    {% if menuitem in ['news',] %}
-                    <a class="nav-link" style="color:white;" href="{{url_for('news')}}">Новини</a>
-                    {% else %}
-                    <a class="nav-link" href="{{url_for('news')}}">Новини</a>
-                    {% endif %}
-                </li>
-                <li class="nav-item dropdown">
-                    {% if menuitem in ['schedule',] %}
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false" style="color:white;">
-                        Студенту
-                    </a>
-                    {% else %}
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        Студенту
-                    </a>
-                    {% endif %}
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-
-                        <a class="dropdown-item" href="{{url_for('schedule')}}">Розклад</a>
-                        <a class="dropdown-item" href="#">Навчальні матеріали</a>
-                        <a class="dropdown-item" href="#">Вступ</a>
-                        <a class="dropdown-item" href="#">Інша вкладка</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    {% if menuitem in ['contacts',] %}
-                    <a class="nav-link" style="color:white;" href="#">Контакти</a>
-                    {% else %}
-                    <a class="nav-link" href="#">Контакти</a>
-                    {% endif %}
-                </li>
-
-                <!-- User profile -->
-                <li class="nav-item dropdown">
-                    {% if current_user.is_authenticated: %}
-                    <a class="nav-link" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false">
-                        <img src="{{ url_for('static', filename='img/avatars/' + current_user.image_file) }}" width="30"
-                             height="30" class="rounded-circle" style="vertical-align: middle;"
-                             alt="Логотип Радіофізичного факультету">
-                        <!-- username + color -->
-                        <span class="text-info">{{ current_user.username }}</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-                        <a class="dropdown-item" href="{{ url_for('account') }}">Обліковий запис</a>
-
-                        <!-- show only if 'admin' permission/group/etc -->
-                        <a class="dropdown-item" href="{{ url_for('new_post') }}">Додати новину</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-danger" href="{{ url_for('logout') }}">Вийти</a>
-                    </div>
-                    {% else %}
-                    <a class="nav-link" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false">
-                        <i class="material-icons" style="margin-left:5%;">account_circle</i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-                        <a class="dropdown-item" href="{{ url_for('login') }}">Увійти</a>
-                        <a class="dropdown-item" href="{{ url_for('register') }}">Реєстрація</a>
-                    </div>
-                    {% endif %}
-
-                </li>
-
-                <!-- Language -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ url_for('static', filename='img/' + 'ukus.jpg') }}" alt="english"
-                             style="height: 16px; width: 25px; margin:0; padding:0;">
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right text-center"
-                         aria-labelledby="navbarDropdownPortfolio">
+            <a class="navbar-brand" style="color:rgba(255,255,255,.5);" href="{{ url_for('index') }}">
+                {% endif %}
+                <img src="{{ url_for('static', filename='img/' + 'knu.jpg') }}" width="50" height="50"
+                     alt="Логотип Радіофізичного факультету">
+            </a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                    data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        {% if menuitem in ['history',] %}
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false" style="color:white;">
+                            Про Нас
+                        </a>
+                        {% else %}
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
-                            <img src="{{ url_for('static', filename='img/' + 'ukr.png') }}" alt="ukranian_lang"
-                                 style="height: 16px; width: 25px;margin:0; padding:0;">
+                            Про Нас
                         </a>
-                    </div>
-                </li>
+                        {% endif %}
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                            <a class="dropdown-item" href="#">Склад кафедри</a>
+                            <a class="dropdown-item" href="{{url_for('news')}}">Конференції</a>
+                            <a class="dropdown-item" href="{{url_for('history')}}">Історія кафедри</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        {% if menuitem in ['news',] %}
+                            <a class="nav-link" style="color:white;" href="{{url_for('news')}}">Новини</a>
+                        {% else %}
+                            <a class="nav-link" href="{{url_for('news')}}">Новини</a>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item dropdown">
+                        {% if menuitem in ['schedule',] %}
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false" style="color:white;">
+                                Студенту
+                            </a>
+                        {% else %}
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                Студенту
+                            </a>
+                        {% endif %}
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
 
-                <!--<li class="nav-item dropdown">-->
-                <!--<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-                <!--Мова сайту-->
-                <!--</a>-->
-                <!--<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">-->
-                <!--<a class="dropdown-item" href="#">-->
-                <!--<img src="static/img/ukr.png" alt="ukranian_lang" style="height: 16px; width: 25px;">-->
-                <!--Українська-->
-                <!--</a>-->
-                <!--<a class="dropdown-item" href="#">-->
-                <!--<img src="static/img/uk.png" alt="english" style="height: 16px; width: 25px;">-->
-                <!--English-->
-                <!--</a>-->
-                <!--</div>-->
-                <!--</li>-->
-            </ul>
-        </div>
+                            <a class="dropdown-item" href="{{url_for('schedule')}}">Розклад</a>
+                            <a class="dropdown-item" href="#">Навчальні матеріали</a>
+                            <a class="dropdown-item" href="#">Вступ</a>
+                            <a class="dropdown-item" href="#">Інша вкладка</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        {% if menuitem in ['contacts',] %}
+                            <a class="nav-link" style="color:white;" href="#">Контакти</a>
+                        {% else %}
+                            <a class="nav-link" href="#">Контакти</a>
+                        {% endif %}
+                    </li>
+
+                    <!-- User profile -->
+                    <li class="nav-item dropdown">
+                        {% if current_user.is_authenticated: %}
+                            <a class="nav-link" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false">
+                                <img src="{{ url_for('static', filename='img/avatars/' + current_user.image_file) }}"
+                                     width="30"
+                                     height="30" class="rounded-circle" style="vertical-align: middle;"
+                                     alt="Логотип Радіофізичного факультету">
+                                <!-- username + color -->
+                                <span class="text-info">{{ current_user.username }}</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
+                                <a class="dropdown-item" href="{{ url_for('account') }}">Обліковий запис</a>
+
+                                <!-- show only if 'admin' permission/group/etc -->
+                                <a class="dropdown-item" href="{{ url_for('new_post') }}">Додати новину</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" href="{{ url_for('logout') }}">Вийти</a>
+                            </div>
+                        {% else %}
+                            <a class="nav-link" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false">
+                                <i class="material-icons" style="margin-left:5%;">account_circle</i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
+                                <a class="dropdown-item" href="{{ url_for('login') }}">Увійти</a>
+                                <a class="dropdown-item" href="{{ url_for('register') }}">Реєстрація</a>
+                            </div>
+                        {% endif %}
+
+                    </li>
+
+                    <!-- Language -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            <img src="{{ url_for('static', filename='img/' + 'ukus.jpg') }}" alt="english"
+                                 style="height: 16px; width: 25px; margin:0; padding:0;">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right text-center"
+                             aria-labelledby="navbarDropdownPortfolio">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio"
+                               data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                <img src="{{ url_for('static', filename='img/' + 'ukr.png') }}" alt="ukranian_lang"
+                                     style="height: 16px; width: 25px;margin:0; padding:0;">
+                            </a>
+                        </div>
+                    </li>
+
+                    <!--<li class="nav-item dropdown">-->
+                    <!--<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                    <!--Мова сайту-->
+                    <!--</a>-->
+                    <!--<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">-->
+                    <!--<a class="dropdown-item" href="#">-->
+                    <!--<img src="static/img/ukr.png" alt="ukranian_lang" style="height: 16px; width: 25px;">-->
+                    <!--Українська-->
+                    <!--</a>-->
+                    <!--<a class="dropdown-item" href="#">-->
+                    <!--<img src="static/img/uk.png" alt="english" style="height: 16px; width: 25px;">-->
+                    <!--English-->
+                    <!--</a>-->
+                    <!--</div>-->
+                    <!--</li>-->
+                </ul>
+            </div>
     </div>
 </nav>
 
 {% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-{% for category, message in messages %}
-<div class="container">
-    <div class="alert alert-{{ category }}" role="alert" style="margin-top:16px; margin-bottom:0; padding:20px;">
-        {{ message }}
-    </div>
-</div>
-{% endfor %}
-{% endif %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="container">
+                <div class="alert alert-{{ category }}" role="alert" style="margin-top:16px; margin-bottom:0; padding:20px;">
+                    {{ message }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endwith %}
+
 {% block body %}{% endblock %}
 
 <!-- Footer -->
@@ -215,7 +218,8 @@
         </div>
         <div class="d-inline-block">
             <a href="http://univ.kiev.ua" target="_blank"><img
-                    src="{{ url_for('static', filename='img/' + 'knu.jpg') }}" class="img-responsive" alt="University logo"
+                    src="{{ url_for('static', filename='img/' + 'knu.jpg') }}" class="img-responsive"
+                    alt="University logo"
                     width="130" height="130"></a>
         </div>
         <div class="d-inline-block">
