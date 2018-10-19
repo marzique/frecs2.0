@@ -41,7 +41,7 @@
         </div>
         <div class="card-footer text-muted">
           Додано {{article.date_posted.strftime('%Y-%m-%d')}} автором
-          <a href="#">{{article.author.username}}</a>
+          <a href="{{ url_for('user_id', user_id=article.author.id) }}">{{article.author.username}}</a>
         </div>
       </div>
       {% endfor %}
