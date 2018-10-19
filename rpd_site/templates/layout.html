@@ -39,7 +39,11 @@
 <!-- Navigation -->
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="{{ url_for('index') }}">
+        {% if menuitem == 'index' %}
+        <a class="navbar-brand" style="color:white;" href="{{ url_for('index') }}">
+            {% else %}
+        <a class="navbar-brand" style="color:rgba(255,255,255,.5);" href="{{ url_for('index') }}">
+            {% endif %}
             <img src="{{ url_for('static', filename='img/' + 'knu.jpg') }}" width="50" height="50"
                  alt="Логотип Радіофізичного факультету">
         </a>
@@ -51,10 +55,17 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
+                    {% if menuitem in ['history',] %}
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" style="color:white;">
+                        Про Нас
+                    </a>
+                    {% else %}
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         Про Нас
                     </a>
+                    {% endif %}
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
                         <a class="dropdown-item" href="#">Склад кафедри</a>
                         <a class="dropdown-item" href="{{url_for('news')}}">Конференції</a>
@@ -62,14 +73,26 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    {% if menuitem in ['news',] %}
+                    <a class="nav-link" style="color:white;" href="{{url_for('news')}}">Новини</a>
+                    {% else %}
                     <a class="nav-link" href="{{url_for('news')}}">Новини</a>
+                    {% endif %}
                 </li>
                 <li class="nav-item dropdown">
+                    {% if menuitem in ['schedule',] %}
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" style="color:white;">
+                        Студенту
+                    </a>
+                    {% else %}
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         Студенту
                     </a>
+                    {% endif %}
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+
                         <a class="dropdown-item" href="{{url_for('schedule')}}">Розклад</a>
                         <a class="dropdown-item" href="#">Навчальні матеріали</a>
                         <a class="dropdown-item" href="#">Вступ</a>
@@ -77,7 +100,11 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    {% if menuitem in ['contacts',] %}
+                    <a class="nav-link" style="color:white;" href="#">Контакти</a>
+                    {% else %}
                     <a class="nav-link" href="#">Контакти</a>
+                    {% endif %}
                 </li>
 
                 <!-- User profile -->

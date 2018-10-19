@@ -33,24 +33,24 @@ def index():
 		year = "1995"
 		time = "00:00:01"
 	return render_template('index.html', last_3_posts=last_3_posts, day=day, month=month_translation[month], year=year,
-						   time=time)
+						   time=time, menuitem="index")
 
 
 @app.route('/news')
 def news():
 	# LIFO list
 	posts = reversed(Post.query.all())
-	return render_template('news.html', posts=posts, title="Новини")
+	return render_template('news.html', posts=posts, title="Новини", menuitem='news')
 
 
 @app.route('/history')
 def history():
-	return render_template('history.html', title="Історія")
+	return render_template('history.html', title="Історія", menuitem='history')
 
 
 @app.route('/schedule')
 def schedule():
-	return render_template('schedule.html', title="Розклад")
+	return render_template('schedule.html', title="Розклад", menuitem='schedule')
 
 
 @app.route('/about')
