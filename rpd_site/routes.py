@@ -125,9 +125,8 @@ def confirm_email(token):
 
 		except BadSignature:
 			return '<h1>Посилання не є дійсним. Для підтвердження пошти перейдіть по посиланню надісланому вам на пошту \
-				    або зверніться до адміністратора.</h1><br> \
+					або зверніться до адміністратора.</h1><br> \
 							   <a href="' + url_for("index") + '">Повернутись на сайт</a>'
-
 
 		# confirm user
 		current_user.confirmed = 1
@@ -163,7 +162,6 @@ def login():
 
 @app.route('/logout')
 def logout():
-
 	print()
 	print(colored("User: " + str(current_user.username) + " logged out", 'red'))
 	print()
@@ -310,3 +308,28 @@ def update_account():
 
 	return render_template('update_account.html', title='Редагувати профіль',
 						   form=form, legend='Редагувати профіль')
+
+
+@app.route('/users', methods=['GET'])
+def users():
+	if current_user.is_authenticated:
+		users = User.query.all()
+		return render_template('users.html', users=users, title="Користувачі")
+
+	else:
+		flash("Спочатку увійдіть у свій обліковий запис", 'danger')
+		return redirect(url_for('login'))
+
+
+@app.route('/users/<int:user_id>', methods=['GET', 'POST'])
+def user_id(user_id):
+	if current_user.is_authenticated:
+		user = User.query.get_or_404(user_id)
+		image_file = url_for('static', filename='img/avatars/' + user.image_file)
+		if current_user.id == user.id:
+			return redirect('account')
+		else:
+			return render_template('user_page.html', user=user, image_file=image_file)
+
+
+
