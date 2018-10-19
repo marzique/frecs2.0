@@ -20,11 +20,11 @@
 
         <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
           <div class="card h-100">
-            <a href="#"><img class="card-img-top"
+            <a href="{{ url_for('user_id', user_id=user.id) }}"><img class="card-img-top"
                              src="{{ url_for('static', filename='img/avatars/' + user.image_file)}}" alt=""></a>
             <div class="card-body">
               <h4 class="card-title text-center">
-                <a href="#" >{{ user.username }}</a>
+                <a href="{{ url_for('user_id', user_id=user.id) }}" >{{ user.username }}</a>
               </h4>
               <div class="card-text">
                   <a class="list-group-item">Повне ім&#39я: John Doe</a>

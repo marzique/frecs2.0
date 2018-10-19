@@ -1,0 +1,81 @@
+ {% extends "layout.html" %}
+
+{% block body %}
+
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <!-- Page Heading/Breadcrumbs -->
+        <h1 class="zero_margin mb-0" style="margin-bottom:2%; margin-top:5%;">
+            <kbd class="display-4 text-center ">{{ user.username }} <br></kbd>
+        </h1>
+                <p class="text-secondary" style="margin-top:0">{{ user.email }}
+                {% if user.confirmed %}
+                    <span style="color:green;"> - адреса підтверджена</span>
+                {% else %}
+                    <span style="color:red;"> - адреса не підтверджена</span>
+                {% endif %}
+                </p>
+
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="index.html">Головна</a>
+        </li>
+        <li class="breadcrumb-item active"><a href="{{ url_for('users') }}">Користувачіпше </a></li>
+          <li class="breadcrumb-item active">{{ user.username }}</li>
+      </ol>
+
+      <!-- Content Row -->
+      <div class="row">
+        <!-- Sidebar Column -->
+        <div class="col-lg-3 mb-4">
+          <div class="list-group">
+
+           <!-- <a href="#" class="list-group-item text-center"><img src="static/img/default.jpg" class="rounded-circle""
+                                           width="150" height="150">
+            </a>-->
+
+              <!-- Avatar -->
+              <a class="list-group-item text-center">
+
+                  <form method="POST" action="" enctype="multipart/form-data">
+                  <fieldset class="form-group">
+                      <div class="form-group">
+
+                          <div class="img__wrap">
+                              <img class="rounded-circle" src="{{ image_file }}" width="150" height="150" alt="avatar">
+                          </div>
+                      </div>
+
+                  </fieldset>
+                  <div class="form-group text-center">
+                  </div>
+              </form>
+              </a>
+            <a class="list-group-item">Повне ім&#39я: John Doe</a>
+
+              <!--pass user status here-->
+            <a class="list-group-item">Група: <span>Студент</span></a>
+            <a href="#" class="list-group-item">Додані новини</a>
+          </div>
+        </div>
+
+        <!-- Content Column -->
+        <div class="col-lg-9 mb-4">
+          <h3 class="zero_margin mb-0" style="margin-bottom:3%; margin-top:0%;">
+            <kbd class=" text-center">Опис</kbd>
+            </h3>
+          <p style="margin-top:2%;" >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta,
+              et temporibus, facere perferendis veniam beatae non debitis, numquam
+              blanditiis necessitatibus vel mollitia dolorum laudantium, voluptate dolores
+              iure maxime ducimus fugit.</p>
+            <hr>
+        </div>
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+{% endblock body %}

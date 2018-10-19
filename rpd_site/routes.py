@@ -321,4 +321,15 @@ def users():
 		return redirect(url_for('login'))
 
 
+@app.route('/users/<int:user_id>', methods=['GET', 'POST'])
+def user_id(user_id):
+	if current_user.is_authenticated:
+		user = User.query.get_or_404(user_id)
+		image_file = url_for('static', filename='img/avatars/' + user.image_file)
+		if current_user.id == user.id:
+			return redirect('account')
+		else:
+			return render_template('user_page.html', user=user, image_file=image_file)
+
+
 
