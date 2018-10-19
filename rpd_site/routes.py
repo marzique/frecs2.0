@@ -38,8 +38,11 @@ def index():
 
 @app.route('/news')
 def news():
-	# LIFO list
-	posts = reversed(Post.query.all())
+	# check id injection here!
+	page = request.args.get('page', 1, type=int)
+	# LIFO
+	posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=VAR_POST_PER_PAGE)
+	print(page)
 	return render_template('news.html', posts=posts, title="Новини", menuitem='news')
 
 
