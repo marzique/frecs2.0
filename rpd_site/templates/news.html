@@ -48,18 +48,15 @@
           <a class="page-link" href="{{ url_for('news', page=posts.prev_num)}}">&larr; Старіші</a>
         </li>
         {% else %}
-        <li class="page-item disabled">
-          <a class="page-link" href="#">&larr; Старіші</a>
-        </li>
         {% endif %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#">{{ posts.page }}</a>
+        </li>
         {% if posts.has_next %}
         <li class="page-item">
           <a class="page-link" href="{{ url_for('news', page=posts.next_num)}}">Новіші &rarr;</a>
         </li>
         {% else %}
-        <li class="page-item disabled">
-          <a class="page-link" href="#">Новіші &rarr;</a>
-        </li>
         {% endif %}
       </ul>
     </div>
