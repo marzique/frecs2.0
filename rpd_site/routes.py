@@ -9,7 +9,7 @@ from flask_mail import Message
 from rpd_site.helpers import password_check, save_picture
 from rpd_site.constants import *
 from smtplib import SMTPException
-
+import os
 
 @app.route('/index')
 @app.route('/')
@@ -173,11 +173,15 @@ def logout():
 @login_required
 def account():
 	form = UpdatePicture()
+	file_to_delete = os.path.join(app.root_path, 'static/img/avatars', current_user.image_file)
+	print(file_to_delete)
 	if form.validate_on_submit():
+		# update profile picture + delete previous
 		if form.picture.data:
 			picture_file = save_picture(form.picture.data, VAR_AVATAR_SIZE, True)
 			current_user.image_file = picture_file
 			db.session.commit()
+			os.remove(file_to_delete)
 			flash('Фото оновлено', 'success')
 			return redirect(url_for('account'))
 
