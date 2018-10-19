@@ -338,4 +338,13 @@ def user_id(user_id):
 			return render_template('user_page.html', user=user, image_file=image_file)
 
 
-
+@app.route('/news/<string:username>')
+def username_news(username):
+	# check id injection here!
+	page = request.args.get('page', 1, type=int)
+	user = User.query.filter_by(username=username).first_or_404()
+	# LIFO
+	posts = Post.query.filter_by(author=user)\
+		.order_by(Post.date_posted.desc())\
+		.paginate(page=page, per_page=VAR_POST_PER_PAGE)
+	return render_template('news.html', posts=posts, title="Новини", menuitem='news', user=username)

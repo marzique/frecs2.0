@@ -71,7 +71,7 @@
               {% else %}
             <a class="list-group-item">Група: <span>Студент</span></a>
               {% endif %}
-            <a href="#" class="list-group-item">Додані новини</a>
+            <a href="{{ url_for('news') + '/' + current_user.username}}" class="list-group-item">Додані новини</a>
           </div>
         </div>
 
