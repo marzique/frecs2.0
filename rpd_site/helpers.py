@@ -3,6 +3,7 @@ import os
 import secrets
 from PIL import Image
 from rpd_site import app
+from flask import Flask, request
 
 """
 All useful functions for routes

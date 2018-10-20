@@ -17,6 +17,7 @@ app.config['DEBUG'] = VAR_DEBUG
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['RECAPTCHA_PUBLIC_KEY'] = '6LcPZ3UUAAAAAO_WGbcXUI9tsI-Ya8Sq89mePlAW'
 app.config['RECAPTCHA_PRIVATE_KEY'] = '6LcPZ3UUAAAAAFN3SdsrsEAk9xsslHQHW_byLYmg'
+app.config['RECAPTCHA_ENABLED'] = False
 
 mail = Mail(app)
 

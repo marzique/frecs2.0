@@ -266,7 +266,7 @@ def update_account():
 					full_link = request.url_root[:-1] + link
 					msg.html = render_template('emails/confirmation_email.html',
 											   full_link=full_link
-    											)
+											   )
 					try:
 						mail.send(msg)
 						current_user.username = form.username.data
@@ -353,3 +353,9 @@ def username_news(username):
 		.order_by(Post.date_posted.desc()) \
 		.paginate(page=page, per_page=VAR_POST_PER_PAGE)
 	return render_template('news.html', posts=posts, title="Новини", menuitem='news', user=username)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404
