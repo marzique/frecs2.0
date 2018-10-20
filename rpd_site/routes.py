@@ -9,6 +9,7 @@ from flask_mail import Message
 from rpd_site.helpers import password_check, save_picture
 from rpd_site.constants import *
 from smtplib import SMTPException
+import os
 
 
 @app.route('/index')
@@ -33,24 +34,26 @@ def index():
 		year = "1995"
 		time = "00:00:01"
 	return render_template('index.html', last_3_posts=last_3_posts, day=day, month=month_translation[month], year=year,
-						   time=time)
+						   time=time, menuitem="index")
 
 
 @app.route('/news')
 def news():
-	# LIFO list
-	posts = reversed(Post.query.all())
-	return render_template('news.html', posts=posts, title="Новини")
+	# check id injection here!
+	page = request.args.get('page', 1, type=int)
+	# LIFO
+	posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=VAR_POST_PER_PAGE)
+	return render_template('news.html', posts=posts, title="Новини", menuitem='news')
 
 
 @app.route('/history')
 def history():
-	return render_template('history.html', title="Історія")
+	return render_template('history.html', title="Історія", menuitem='history')
 
 
 @app.route('/schedule')
 def schedule():
-	return render_template('schedule.html', title="Розклад")
+	return render_template('schedule.html', title="Розклад", menuitem='schedule')
 
 
 @app.route('/about')
@@ -173,11 +176,15 @@ def logout():
 @login_required
 def account():
 	form = UpdatePicture()
+	file_to_delete = os.path.join(app.root_path, 'static/img/avatars', current_user.image_file)
+	print(file_to_delete)
 	if form.validate_on_submit():
+		# update profile picture + delete previous
 		if form.picture.data:
 			picture_file = save_picture(form.picture.data, VAR_AVATAR_SIZE, True)
 			current_user.image_file = picture_file
 			db.session.commit()
+			os.remove(file_to_delete)
 			flash('Фото оновлено', 'success')
 			return redirect(url_for('account'))
 
@@ -332,4 +339,13 @@ def user_id(user_id):
 			return render_template('user_page.html', user=user, image_file=image_file)
 
 
-
+@app.route('/news/<string:username>')
+def username_news(username):
+	# check id injection here!
+	page = request.args.get('page', 1, type=int)
+	user = User.query.filter_by(username=username).first_or_404()
+	# LIFO
+	posts = Post.query.filter_by(author=user) \
+		.order_by(Post.date_posted.desc()) \
+		.paginate(page=page, per_page=VAR_POST_PER_PAGE)
+	return render_template('news.html', posts=posts, title="Новини", menuitem='news', user=username)

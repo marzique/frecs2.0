@@ -6,8 +6,12 @@
 
       <!-- Page Heading/Breadcrumbs -->
       <h1 class="zero_margin mb-0" style="margin-bottom:2%; margin-top:2%;">
-        <kbd class="display-4 text-center ">Останні новини <br>
+        <kbd class="display-4 text-center ">Останні новини<br>
+            {% if user %}
+            <small style="color:rgba(255,255,255,.5)">{{user}}  </small> - ({{posts.total}})
+            {% endif %}
         </kbd>
+
     </h1>
       <hr>
       <ol class="breadcrumb">
@@ -18,7 +22,7 @@
         <li class="breadcrumb-item active">Новини</li>
       </ol>
 
-      {% for article in posts %}
+      {% for article in posts.items %}
       <!-- Blog Post -->
       <div class="card mb-4">
         <div class="card-body">
@@ -37,20 +41,28 @@
         </div>
         <div class="card-footer text-muted">
           Додано {{article.date_posted.strftime('%Y-%m-%d')}} автором
-          <a href="#">{{article.author.username}}</a>
+          <a href="{{ url_for('user_id', user_id=article.author.id) }}">{{article.author.username}}</a>
         </div>
       </div>
       {% endfor %}
 
       <ul class="pagination justify-content-center mb-4">
+        {% if posts.has_prev %}
         <li class="page-item">
-          <a class="page-link" href="#">&larr; Старіші</a>
+          <a class="page-link" href="{{ url_for('news', page=posts.prev_num)}}">&larr; Старіші</a>
         </li>
+        {% else %}
+        {% endif %}
         <li class="page-item disabled">
-          <a class="page-link" href="#">Новіші &rarr;</a>
+          <a class="page-link" href="#">{{ posts.page }}</a>
         </li>
+        {% if posts.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="{{ url_for('news', page=posts.next_num)}}">Новіші &rarr;</a>
+        </li>
+        {% else %}
+        {% endif %}
       </ul>
-
     </div>
     <!-- /.container -->
 {% endblock %}

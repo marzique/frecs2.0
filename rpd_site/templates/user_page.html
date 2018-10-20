@@ -57,7 +57,7 @@
 
               <!--pass user status here-->
             <a class="list-group-item">Група: <span>Студент</span></a>
-            <a href="#" class="list-group-item">Додані новини</a>
+            <a href="{{ url_for('news') + '/' + user.username}}" class="list-group-item">Додані новини</a>
           </div>
         </div>
 
