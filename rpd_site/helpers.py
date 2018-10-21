@@ -12,13 +12,13 @@ All useful functions for routes
 def password_check(password):
 	"""
 	Verify the strength of 'password'
-	Returns a dict indicating the wrong criteria
 	A password is considered strong if:
 		8 characters length or more
 		1 digit or more
 		1 symbol or more
 		1 uppercase letter or more
 		1 lowercase letter or more
+		returns True if all checks passed
 		https://stackoverflow.com/a/32542964/10103803
 	"""
 
