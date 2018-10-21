@@ -83,8 +83,10 @@ def register():
 					token = signature.dumps(email, salt=VAR_MAIL_SALT)
 					msg = Message('confirm email', sender='marzique@gmail.com', recipients=[email])
 					link = url_for('confirm_email', token=token)
-					msg.body = 'Для того щоб підтвердити цю електронну адресу перейдіть за цим посиланням: ' \
-							   + request.url_root[:-1] + link
+					full_link = request.url_root[:-1] + link
+					msg.html = render_template('emails/confirmation_email.html',
+											   full_link=full_link
+											   )
 					try:
 						mail.send(msg)
 						db.session.add(user)
@@ -261,8 +263,10 @@ def update_account():
 					token = signature.dumps(form.email.data, salt=VAR_MAIL_SALT)
 					msg = Message('confirm new email', sender='marzique@gmail.com', recipients=[form.email.data])
 					link = url_for('confirm_email', token=token)
-					msg.body = 'Для того щоб підтвердити цю електронну адресу перейдіть за цим посиланням: ' \
-							   + request.url_root[:-1] + link
+					full_link = request.url_root[:-1] + link
+					msg.html = render_template('emails/confirmation_email.html',
+											   full_link=full_link
+											   )
 					try:
 						mail.send(msg)
 						current_user.username = form.username.data
@@ -349,3 +353,9 @@ def username_news(username):
 		.order_by(Post.date_posted.desc()) \
 		.paginate(page=page, per_page=VAR_POST_PER_PAGE)
 	return render_template('news.html', posts=posts, title="Новини", menuitem='news', user=username)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404

@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+<!-- Page Content -->
+<div style="margin-top:2%;" class="container">
+
+    <!-- Page Heading/Breadcrumbs -->
+    <h1 class="zero_margin mb-0 text-center" style="margin-bottom:2%; margin-top:2%;">
+        <kbd class="display-4 text-center ">Сторінка не знайдена
+            <small>(404)</small>
+        </kbd>
+    </h1>
+    <div class="text-center" style="margin-top:20px;">
+        <a href="{{ url_for('index') }}" class="btn btn-outline-success btn-lg mt-1 mb-1 text-center">Повернутись на головну!</a>
+    </div>
+
+    <hr>
+    <img class="mx-auto img-thumbnail " width="100%" src="{{ url_for('static', filename='img/' + '404.jpg') }}"
+         alt="img"/><br>
+
+    <h2 class="text-center">Такого посилання не існує в нашій базі данних</h2>
+</div>
+<!-- /.container -->
+{% endblock %}
