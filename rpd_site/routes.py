@@ -2,7 +2,7 @@ from flask import render_template, url_for, flash, redirect, request, abort, sen
 from rpd_site import app, db, bcrypt, signature, mail
 from rpd_site.models import User, Post
 from rpd_site.forms import RegistrationForm, LoginForm, UpdateAccountForm, UpdatePicture, PostForm
-from flask_login import login_user, current_user, logout_user, login_required
+from flask_login import login_user, current_user, logout_user, login_required, fresh_login_required
 from termcolor import colored
 from itsdangerous import SignatureExpired, BadSignature
 from flask_mail import Message
@@ -252,6 +252,7 @@ def delete_post(post_id):
 
 
 @app.route('/account/update', methods=['GET', 'POST'])
+@fresh_login_required
 def update_account():
 	form = UpdateAccountForm()
 	if current_user.is_authenticated:
