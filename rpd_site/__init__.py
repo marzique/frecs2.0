@@ -2,10 +2,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-from rpd_site.constants import VAR_SAFE_TIMED_KEY
-
 from flask_mail import Mail
-from itsdangerous import URLSafeTimedSerializer
+
 from rpd_site.constants import VAR_APP_SECRET_KEY, VAR_DEBUG, VAR_CFG_FILE
 
 app = Flask(__name__)
@@ -21,8 +19,7 @@ app.config['RECAPTCHA_ENABLED'] = False
 
 mail = Mail(app)
 
-# mail secret
-signature = URLSafeTimedSerializer(VAR_SAFE_TIMED_KEY)
+
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)

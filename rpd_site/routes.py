@@ -1,12 +1,12 @@
 from flask import render_template, url_for, flash, redirect, request, abort, send_file
-from rpd_site import app, db, bcrypt, signature, mail
+from rpd_site import app, db, bcrypt, mail
 from rpd_site.models import User, Post
 from rpd_site.forms import RegistrationForm, LoginForm, UpdateAccountForm, UpdatePicture, PostForm
 from flask_login import login_user, current_user, logout_user, login_required, fresh_login_required
 from termcolor import colored
-from itsdangerous import SignatureExpired, BadSignature
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from flask_mail import Message
-from rpd_site.helpers import password_check, save_picture
+from rpd_site.helpers import password_check, save_picture, generate_confirmation_token
 from rpd_site.constants import *
 from smtplib import SMTPException
 import os
@@ -78,9 +78,7 @@ def register():
 					hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
 					user = User(username=form.username.data, email=form.email.data, password=hashed_password)
 					email = request.form['email']
-					# global unique confirmation link token
-					global token
-					token = signature.dumps(email, salt=VAR_MAIL_SALT+email)
+					token = generate_confirmation_token(email)
 					msg = Message('confirm email', sender='marzique@gmail.com', recipients=[email])
 					link = url_for('confirm_email', token=token)
 					full_link = request.url_root[:-1] + link
@@ -98,7 +96,8 @@ def register():
 									  'blue'))
 						print(colored("token: " + token, 'blue'))
 						print()
-						return redirect(url_for('login'))
+						login_user(user)
+						return redirect(url_for('account'))
 					# catch GMAIL/SMTP error here
 					except SMTPException:
 						#  https://stackoverflow.com/a/16120288/10103803 - add logging here !!
@@ -122,6 +121,7 @@ def register():
 def confirm_email(token):
 	if current_user.is_authenticated:
 		try:
+			signature = URLSafeTimedSerializer(VAR_SAFE_TIMED_KEY)
 			# check if URL correct and still valid
 			signature.loads(token, salt=VAR_MAIL_SALT+current_user.email, max_age=VAR_TOKEN_MAX_AGE)
 		except SignatureExpired:
@@ -260,14 +260,12 @@ def update_account():
 			if form.validate_on_submit():
 				# user changing email address
 				if current_user.email != form.email.data:
-					global token
-					token = signature.dumps(form.email.data, salt=VAR_MAIL_SALT+form.email.data)
+					token = generate_confirmation_token(form.email.data)
 					msg = Message('confirm new email', sender='marzique@gmail.com', recipients=[form.email.data])
 					link = url_for('confirm_email', token=token)
 					full_link = request.url_root[:-1] + link
 					msg.html = render_template('emails/confirmation_email.html',
-											   full_link=full_link
-											   )
+											   full_link=full_link)
 					try:
 						mail.send(msg)
 						current_user.username = form.username.data
