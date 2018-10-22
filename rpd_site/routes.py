@@ -80,7 +80,7 @@ def register():
 					email = request.form['email']
 					# global unique confirmation link token
 					global token
-					token = signature.dumps(email, salt=VAR_MAIL_SALT)
+					token = signature.dumps(email, salt=VAR_MAIL_SALT+email)
 					msg = Message('confirm email', sender='marzique@gmail.com', recipients=[email])
 					link = url_for('confirm_email', token=token)
 					full_link = request.url_root[:-1] + link
@@ -123,7 +123,7 @@ def confirm_email(token):
 	if current_user.is_authenticated:
 		try:
 			# check if URL correct and still valid
-			signature.loads(token, salt=VAR_MAIL_SALT, max_age=VAR_TOKEN_MAX_AGE)
+			signature.loads(token, salt=VAR_MAIL_SALT+current_user.email, max_age=VAR_TOKEN_MAX_AGE)
 		except SignatureExpired:
 			return '<h1>Старе посилання. Для підтвердження пошти зверніться до адміністратора.</h1><br> \
 				   <a href="' + url_for("index") + '">Повернутись на сайт</a>'
@@ -261,7 +261,7 @@ def update_account():
 				# user changing email address
 				if current_user.email != form.email.data:
 					global token
-					token = signature.dumps(form.email.data, salt=VAR_MAIL_SALT)
+					token = signature.dumps(form.email.data, salt=VAR_MAIL_SALT+form.email.data)
 					msg = Message('confirm new email', sender='marzique@gmail.com', recipients=[form.email.data])
 					link = url_for('confirm_email', token=token)
 					full_link = request.url_root[:-1] + link
