@@ -30,5 +30,8 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 
+# prevents CSRF (?)
+login_manager.session_protection = "strong"
+
 # mirror imports escape
 from rpd_site import routes
