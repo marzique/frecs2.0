@@ -266,7 +266,7 @@ def update_account():
 					msg = Message('confirm new email', sender='marzique@gmail.com', recipients=[email])
 					link = url_for('confirm_email', token=token)
 					full_link = request.url_root[:-1] + link
-					msg.html = render_template('emails/confirmation_email.html',
+					msg.html = render_template('emails/confirmation_email_change.html',
 											   full_link=full_link)
 					try:
 						mail.send(msg)
@@ -358,5 +358,5 @@ def username_news(username):
 
 @app.errorhandler(404)
 def page_not_found(e):
-    # note that we set the 404 status explicitly
+	# note that we set the 404 status explicitly
     return render_template('404.html'), 404
