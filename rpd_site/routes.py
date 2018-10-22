@@ -15,6 +15,7 @@ import os
 @app.route('/index')
 @app.route('/')
 def index():
+	# better than include other modules just for month translation
 	month_translation = {'January': 'Cічня', 'February': 'Лотого', 'March': 'Березня',
 						 'April': 'Квітня', 'May': 'Травня', 'June': 'Червня', 'July': 'Липня',
 						 'August': 'Серпня', 'September': 'Вересня', 'October': 'Жовтня',
@@ -34,7 +35,7 @@ def index():
 		year = "1995"
 		time = "00:00:01"
 	return render_template('index.html', last_3_posts=last_3_posts, day=day, month=month_translation[month], year=year,
-						   time=time, menuitem="index")
+							time=time, menuitem="index")
 
 
 @app.route('/news')
@@ -76,15 +77,14 @@ def register():
 				if password_check(form.password.data):
 					# store only hash of the password
 					hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+
 					# email is not case sensitive
 					email = form.email.data.lower()
 					user = User(username=form.username.data, email=email, password=hashed_password)
 					token = generate_confirmation_token(email)
-					msg = Message('confirm email', sender='marzique@gmail.com', recipients=[email])
-					link = url_for('confirm_email', token=token)
-					full_link = request.url_root[:-1] + link
-					msg.html = render_template('emails/confirmation_email.html',
-											   full_link=full_link)
+					msg = Message('Підтвердження скриньки', sender='marzique@gmail.com', recipients=[email])
+					confirm_url = url_for('confirm_email', token=token, _external=True)
+					msg.html = render_template('emails/confirmation_email.html', full_link=confirm_url)
 					try:
 						mail.send(msg)
 						db.session.add(user)
@@ -124,7 +124,7 @@ def confirm_email(token):
 		try:
 			signature = URLSafeTimedSerializer(VAR_SAFE_TIMED_KEY)
 			# check if URL correct and still valid
-			signature.loads(token, salt=VAR_MAIL_SALT+current_user.email, max_age=VAR_TOKEN_MAX_AGE)
+			signature.loads(token, salt=VAR_MAIL_SALT + current_user.email, max_age=VAR_TOKEN_MAX_AGE)
 		except SignatureExpired:
 			return '<h1>Старе посилання. Для підтвердження пошти зверніться до адміністратора.</h1><br> \
 				   <a href="' + url_for("index") + '">Повернутись на сайт</a>'
@@ -264,19 +264,16 @@ def update_account():
 				if current_user.email != email:
 					token = generate_confirmation_token(email)
 					msg = Message('confirm new email', sender='marzique@gmail.com', recipients=[email])
-					link = url_for('confirm_email', token=token)
-					full_link = request.url_root[:-1] + link
-					msg.html = render_template('emails/confirmation_email_change.html',
-											   full_link=full_link)
+					confirm_url = url_for('confirm_email', token=token, _external=True)
+					msg.html = render_template('emails/confirmation_email_change.html', full_link=confirm_url)
 					try:
 						mail.send(msg)
 						current_user.username = form.username.data
 						current_user.email = email
 						current_user.confirmed = 0
 						db.session.commit()
-						flash(
-							'Обліковий запис успішно відредаговано. Для підтвердження поштової адреси перейдіть по посиланню '
-							'яке було надіслано на адресу: ' + email, 'success')
+						flash('Обліковий запис успішно відредаговано. Для підтвердження поштової адреси перейдіть по посиланню \
+								яке було надіслано на адресу: ' + email, 'success')
 						print()
 						print(
 							colored("User new name: " + form.username.data + " , changed email to: " + email,
@@ -289,8 +286,7 @@ def update_account():
 						#  https://stackoverflow.com/a/16120288/10103803 - add logging here !!
 						print(
 							colored(
-								"User: " + form.username.data + " , email: " + email + " didn't change account",
-								'red'))
+								"User: " + form.username.data + " , email: " + email + " didn't change account", 'red'))
 						print(colored("SMTP error ", 'red'))
 						flash('Щось пішло не так, спробуйте пізніше або зверніться до адміністратора!', 'danger')
 
@@ -301,25 +297,20 @@ def update_account():
 				else:
 					current_user.username = form.username.data
 					db.session.commit()
-					flash(
-						'Обліковий запис успішно відредаговано.', 'success')
+					flash('Обліковий запис успішно відредаговано.', 'success')
 					print()
-					print(
-						colored("User new name: " + form.username.data + " , old email : " + email,
-								'blue'))
+					print(colored("User new name: " + form.username.data + " , old email : " + email, 'blue'))
 					print()
 					return redirect(url_for('account'))
 
 		elif request.method == 'GET':
-			return render_template('update_account.html', title='Редагувати профіль',
-								   form=form, legend='Редагувати профіль')
+			return render_template('update_account.html', title='Редагувати профіль', form=form, legend='Редагувати профіль')
 
 	else:
 		flash("Спочатку увійдіть у свій обліковий запис", 'danger')
 		return redirect(url_for('login'))
 
-	return render_template('update_account.html', title='Редагувати профіль',
-						   form=form, legend='Редагувати профіль')
+	return render_template('update_account.html', title='Редагувати профіль', form=form, legend='Редагувати профіль')
 
 
 @app.route('/users', methods=['GET'])
@@ -351,12 +342,12 @@ def username_news(username):
 	user = User.query.filter_by(username=username).first_or_404()
 	# LIFO
 	posts = Post.query.filter_by(author=user) \
-		.order_by(Post.date_posted.desc()) \
-		.paginate(page=page, per_page=VAR_POST_PER_PAGE)
+				.order_by(Post.date_posted.desc()) \
+				.paginate(page=page, per_page=VAR_POST_PER_PAGE)
 	return render_template('news.html', posts=posts, title="Новини", menuitem='news', user=username)
 
 
 @app.errorhandler(404)
 def page_not_found(e):
 	# note that we set the 404 status explicitly
-    return render_template('404.html'), 404
+	return render_template('404.html'), 404
