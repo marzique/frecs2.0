@@ -72,21 +72,3 @@ def generate_confirmation_token(email):
 	serializer = URLSafeTimedSerializer(VAR_SAFE_TIMED_KEY)
 	return serializer.dumps(email, salt=VAR_MAIL_SALT+email)
 
-
-def confirm_token(token, email_to_confirm, expiration=3600):
-	serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
-	try:
-		email = serializer.loads(
-			token,
-			salt=VAR_MAIL_SALT+email_to_confirm,
-            max_age=expiration
-        )
-	except SignatureExpired:
-		return '<h1>Старе посилання. Для підтвердження пошти зверніться до адміністратора.</h1><br> \
-        		   <a href="' + url_for("index") + '">Повернутись на сайт</a>'
-
-	except BadSignature:
-		return '<h1>Посилання не є дійсним. Для підтвердження пошти перейдіть по посиланню надісланому вам на пошту \
-        			або зверніться до адміністратора.</h1><br> \
-        					   <a href="' + url_for("index") + '">Повернутись на сайт</a>'
-	return email

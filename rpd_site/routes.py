@@ -76,23 +76,24 @@ def register():
 				if password_check(form.password.data):
 					# store only hash of the password
 					hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-					user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-					email = request.form['email']
+					# email is not case sensitive
+					email = form.email.data.lower()
+					user = User(username=form.username.data, email=email, password=hashed_password)
 					token = generate_confirmation_token(email)
 					msg = Message('confirm email', sender='marzique@gmail.com', recipients=[email])
 					link = url_for('confirm_email', token=token)
 					full_link = request.url_root[:-1] + link
 					msg.html = render_template('emails/confirmation_email.html',
-											   full_link=full_link
-											   )
+											   full_link=full_link)
 					try:
 						mail.send(msg)
 						db.session.add(user)
 						db.session.commit()
 						flash('Ваш обліковий запис створено. Для підтвердження поштової адреси перейдіть по посиланню '
-							  'яке було надіслано на адресу: ' + form.email.data, 'success')
+							  'яке було надіслано на адресу: ' + email, 'success')
+						# change it to logging
 						print()
-						print(colored("User: " + form.username.data + " , email: " + form.email.data + " registered",
+						print(colored("User: " + form.username.data + " , email: " + email + " registered",
 									  'blue'))
 						print(colored("token: " + token, 'blue'))
 						print()
@@ -102,13 +103,13 @@ def register():
 					except SMTPException:
 						#  https://stackoverflow.com/a/16120288/10103803 - add logging here !!
 						print(
-							colored("User: " + form.username.data + " , email: " + form.email.data + " not registered",
+							colored("User: " + form.username.data + " , email: " + email + " not registered",
 									'red'))
 						print(colored("SMTP error ", 'red'))
 						flash('Щось пішло не так, спробуйте пізніше або зверніться до адміністратора!', 'danger')
 				else:
 					print(
-						colored("User: " + form.username.data + " , email: " + form.email.data + " used weak password",
+						colored("User: " + form.username.data + " , email: " + email + " used weak password",
 								'red'))
 					flash(
 						'Ваш пароль дуже слабкий, спробуйте додати Великі, малі літери, цифри, та спеціальні символи. '
@@ -151,7 +152,7 @@ def login():
 	else:
 		form = LoginForm()
 		if form.validate_on_submit():
-			user = User.query.filter_by(email=form.email.data).first()
+			user = User.query.filter_by(email=form.email.data.lower()).first()
 			if user and bcrypt.check_password_hash(user.password, form.password.data):
 				login_user(user, remember=form.remember.data)
 				next_page = request.args.get('next')
@@ -258,10 +259,11 @@ def update_account():
 	if current_user.is_authenticated:
 		if request.method == 'POST':
 			if form.validate_on_submit():
+				email = form.email.data.lower()
 				# user changing email address
-				if current_user.email != form.email.data:
-					token = generate_confirmation_token(form.email.data)
-					msg = Message('confirm new email', sender='marzique@gmail.com', recipients=[form.email.data])
+				if current_user.email != email:
+					token = generate_confirmation_token(email)
+					msg = Message('confirm new email', sender='marzique@gmail.com', recipients=[email])
 					link = url_for('confirm_email', token=token)
 					full_link = request.url_root[:-1] + link
 					msg.html = render_template('emails/confirmation_email.html',
@@ -269,15 +271,15 @@ def update_account():
 					try:
 						mail.send(msg)
 						current_user.username = form.username.data
-						current_user.email = form.email.data
+						current_user.email = email
 						current_user.confirmed = 0
 						db.session.commit()
 						flash(
 							'Обліковий запис успішно відредаговано. Для підтвердження поштової адреси перейдіть по посиланню '
-							'яке було надіслано на адресу: ' + form.email.data, 'success')
+							'яке було надіслано на адресу: ' + email, 'success')
 						print()
 						print(
-							colored("User new name: " + form.username.data + " , changed email to: " + form.email.data,
+							colored("User new name: " + form.username.data + " , changed email to: " + email,
 									'blue'))
 						print(colored("token: " + token, 'blue'))
 						print()
@@ -287,13 +289,13 @@ def update_account():
 						#  https://stackoverflow.com/a/16120288/10103803 - add logging here !!
 						print(
 							colored(
-								"User: " + form.username.data + " , email: " + form.email.data + " didn't change account",
+								"User: " + form.username.data + " , email: " + email + " didn't change account",
 								'red'))
 						print(colored("SMTP error ", 'red'))
 						flash('Щось пішло не так, спробуйте пізніше або зверніться до адміністратора!', 'danger')
 
 				# user provided same email and username
-				elif current_user.username == form.username.data and current_user.email == form.email.data:
+				elif current_user.username == form.username.data and current_user.email == email:
 					flash('Ви ввели старе ім\'я та адресу, змініть хоча б шось одне з двох!', 'danger')
 				# just change username
 				else:
@@ -303,7 +305,7 @@ def update_account():
 						'Обліковий запис успішно відредаговано.', 'success')
 					print()
 					print(
-						colored("User new name: " + form.username.data + " , old email : " + form.email.data,
+						colored("User new name: " + form.username.data + " , old email : " + email,
 								'blue'))
 					print()
 					return redirect(url_for('account'))
