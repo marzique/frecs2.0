@@ -34,6 +34,7 @@
             {% if post.author == current_user %}
             <div>
                 <a class="btn btn-warning btn-bg mt-1 mb-1" href="{{ url_for('update_post', post_id=post.id) }}">Редагувати</a>
+                <!--modal window appears on click-->
                 <button type="button" class="btn btn-danger btn-bg m-1" data-toggle="modal" data-target="#deleteModal">
                     Видалити
                 </button>
