@@ -4,7 +4,7 @@ import secrets
 from PIL import Image
 from rpd_site import app
 from itsdangerous import URLSafeTimedSerializer
-from rpd_site.constants import VAR_MAIL_SALT, VAR_SAFE_TIMED_KEY, VAR_PASSWORD_SALT
+from .constants import VAR_MAIL_SALT, VAR_SAFE_TIMED_KEY, VAR_PASSWORD_SALT
 
 """
 All useful functions for routes

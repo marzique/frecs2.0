@@ -1,14 +1,14 @@
 from flask import render_template, url_for, flash, redirect, request, abort, send_file
 from rpd_site import app, db, bcrypt, mail
-from rpd_site.models import User, Post
-from rpd_site.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
+from .models import User, Post
+from .forms import (RegistrationForm, LoginForm, UpdateAccountForm,
 							UpdatePicture, PostForm, ResetRequest, ResetPassword)
 from flask_login import login_user, current_user, logout_user, login_required, fresh_login_required
 from termcolor import colored
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from flask_mail import Message
-from rpd_site.helpers import password_check, save_picture, generate_confirmation_token, generate_password_token
-from rpd_site.constants import *
+from .helpers import password_check, save_picture, generate_confirmation_token, generate_password_token
+from .constants import *
 from smtplib import SMTPException
 import os
 
