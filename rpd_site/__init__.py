@@ -18,9 +18,6 @@ app.config['RECAPTCHA_PRIVATE_KEY'] = '6LcPZ3UUAAAAAFN3SdsrsEAk9xsslHQHW_byLYmg'
 app.config['RECAPTCHA_ENABLED'] = False
 
 mail = Mail(app)
-
-
-
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)

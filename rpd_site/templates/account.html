@@ -32,10 +32,6 @@
         <div class="col-lg-3 mb-4">
           <div class="list-group">
 
-           <!-- <a href="#" class="list-group-item text-center"><img src="static/img/default.jpg" class="rounded-circle""
-                                           width="150" height="150">
-            </a>-->
-
               <!-- Avatar -->
               <a class="list-group-item text-center">
 
@@ -46,8 +42,8 @@
 
                           <div class="img__wrap">
                               <img class="img__img rounded-circle" src="{{ image_file }}" width="150" height="150" alt="avatar">
-                              <div class="img__description_layer text-center rounded-circle" style="width:150px; height: 150px; margin:auto;>
-                                <p class="img__description ">{{ form.picture(class="form-control-file") }}</p>
+                              <div class="img__description_layer rounded-circle" style="width:150px; height: 150px; margin:auto;>
+                                    <p class="img__description"> {{ form.picture(class="form-control-file") }} </p>
                               </div>
                           </div>
                           {% if form.picture.errors %}
