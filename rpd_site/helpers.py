@@ -4,7 +4,7 @@ import secrets
 from PIL import Image
 from rpd_site import app
 from itsdangerous import URLSafeTimedSerializer
-from rpd_site.constants import VAR_MAIL_SALT, VAR_SAFE_TIMED_KEY
+from rpd_site.constants import VAR_MAIL_SALT, VAR_SAFE_TIMED_KEY, VAR_PASSWORD_SALT
 
 """
 All useful functions for routes
@@ -42,8 +42,8 @@ def password_check(password):
 
 def save_picture(form_picture, size_crop, is_avatar):
 	'''
-	Uploads square-cropped image with randomised
-    filename and returns it'signature filename + input extension
+	Uploads cropped image with randomised
+    filename and returns it's filename + input extension
     '''
 	random_hex = secrets.token_hex(8)
 	# get image extension
@@ -69,6 +69,16 @@ def save_picture(form_picture, size_crop, is_avatar):
 
 
 def generate_confirmation_token(email):
+	'''
+	Creates unique token for each email passed
+	:param email: email to create token for, used as part of the salt to make each token different.
+	:return: token
+	'''
 	serializer = URLSafeTimedSerializer(VAR_SAFE_TIMED_KEY)
 	return serializer.dumps(email, salt=VAR_MAIL_SALT+email)
+
+
+def generate_password_token(email):
+	serializer = URLSafeTimedSerializer(VAR_SAFE_TIMED_KEY)
+	return serializer.dumps(email, salt=VAR_PASSWORD_SALT)
 

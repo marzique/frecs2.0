@@ -3,7 +3,8 @@ App variables for API
 '''
 
 VAR_MIN_PASS_LEN = 8
-VAR_MAIL_SALT = "h4ck m3 ju57 n0w"
+VAR_MAIL_SALT = 'h4ck m3 ju57 n0w'
+VAR_PASSWORD_SALT = 'h4ck my p@$sw0Rd @g@1N'
 VAR_TOKEN_MAX_AGE = 500  # seconds
 VAR_AVATAR_SIZE = (150, 150)
 VAR_POST_PIC_SIZE = (750, 600)

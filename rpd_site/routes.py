@@ -1,12 +1,13 @@
 from flask import render_template, url_for, flash, redirect, request, abort, send_file
 from rpd_site import app, db, bcrypt, mail
 from rpd_site.models import User, Post
-from rpd_site.forms import RegistrationForm, LoginForm, UpdateAccountForm, UpdatePicture, PostForm
+from rpd_site.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
+							UpdatePicture, PostForm, ResetRequest, ResetPassword)
 from flask_login import login_user, current_user, logout_user, login_required, fresh_login_required
 from termcolor import colored
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from flask_mail import Message
-from rpd_site.helpers import password_check, save_picture, generate_confirmation_token
+from rpd_site.helpers import password_check, save_picture, generate_confirmation_token, generate_password_token
 from rpd_site.constants import *
 from smtplib import SMTPException
 import os
@@ -351,3 +352,62 @@ def username_news(username):
 def page_not_found(e):
 	# note that we set the 404 status explicitly
 	return render_template('404.html'), 404
+
+
+@app.route('/account/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request():
+	if current_user.is_authenticated:
+		flash('Ви вже залогінені як ' + current_user.username, 'warning')
+	else:
+		form = ResetRequest()
+		if form.validate_on_submit():
+			user = User.query.filter_by(email=form.email.data.lower()).first()
+			if user:
+				pass_token = generate_password_token(user.email)
+				msg = Message('Зміна паролю', sender='marzique@gmail.com', recipients=[user.email])
+				reset_url = url_for('reset_password', reset_token=pass_token, _external=True)
+				msg.html = render_template('emails/reset_password_email.html', full_link=reset_url)
+				try:
+					mail.send(msg)
+					flash('На вказану адресу ' + user.email + ' були вислані інструкції по зміні пароля,\
+						  якщо ви не маєте доступу до цієї адреси зверніться до адміністратора', 'success')
+					return redirect(url_for('login'))
+				# catch GMAIL/SMTP error here
+				except SMTPException:
+					flash('Щось пішло не так, спробуйте пізніше або зверніться до адміністратора!', 'danger')
+			else:
+				flash('Користувач з такою поштовою скринькою не зареєстрований', 'danger')
+
+		return render_template('reset_password_request.html', form=form, title="Змінити пароль")
+
+
+@app.route('/account/reset_password/<reset_token>', methods=['GET', 'POST'])
+def reset_password(reset_token):
+	try:
+		signature = URLSafeTimedSerializer(VAR_SAFE_TIMED_KEY)
+		# check if URL correct and still valid
+		email = signature.loads(reset_token, salt=VAR_PASSWORD_SALT, max_age=VAR_TOKEN_MAX_AGE)
+	except SignatureExpired:
+		return '<h1>Старе посилання. Для підтвердження пошти зверніться до адміністратора.</h1><br> \
+			   <a href="' + url_for("index") + '">Повернутись на сайт</a>'
+
+	except BadSignature:
+		return '<h1>Посилання не є дійсним. Для підтвердження пошти перейдіть по посиланню надісланому вам на пошту \
+				або зверніться до адміністратора.</h1><br> \
+						   <a href="' + url_for("index") + '">Повернутись на сайт</a>'
+
+	form = ResetPassword()
+	if form.validate_on_submit():
+		if password_check(form.password.data):
+			user = User.query.filter_by(email=email).first_or_404()
+			user.password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+			db.session.commit()
+			flash('Новий пароль встановлено!', 'success')
+		else:
+			flash(
+				'Ваш пароль дуже слабкий, спробуйте додати Великі, малі літери, цифри, та спеціальні символи. '
+				'Пароль має складатись з щонайменше ' + str(VAR_MIN_PASS_LEN) + ' символів', 'danger')
+
+	return render_template('reset_password.html', form=form, title="Змінити пароль")
+
+

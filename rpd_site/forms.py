@@ -67,3 +67,19 @@ class PostForm(FlaskForm):
     content = TextAreaField('Зміст', validators=[DataRequired()])
     picture = FileField('Зображення', validators=[FileAllowed(['jpg', 'jpeg', 'png'])])
     submit = SubmitField('Додати новину')
+
+
+class ResetRequest(FlaskForm):
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()])
+    recaptcha = RecaptchaField()
+    submit = SubmitField('Надіслати')
+
+
+class ResetPassword(FlaskForm):
+    password = PasswordField('Новый пароль', validators=[DataRequired()])
+    confirm_password = PasswordField('Пароль ще раз',
+                                     validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Змінити пароль')
+
+
