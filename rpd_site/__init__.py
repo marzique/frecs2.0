@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
+from termcolor import colored
 from os import environ
 
 from rpd_site.constants import VAR_APP_SECRET_KEY, VAR_DEBUG, VAR_CFG_FILE
@@ -16,7 +17,7 @@ if 'IS_HEROKU' in environ:
 	app.config['MAIL_USERNAME'] = environ.get('MAIL_USERNAME')
 	app.config['MAIL_PASSWORD'] = environ.get('MAIL_PASSWORD')
 else:
-	print('LOADED DEVELOPMENT SETTINGS')
+	print(colored('LOADED DEVELOPMENT SETTINGS', 'green'))
 
 # Initialize extension with your app.
 app.config.from_pyfile(VAR_CFG_FILE)
