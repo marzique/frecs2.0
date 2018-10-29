@@ -334,6 +334,9 @@ def user_id(user_id):
 			return redirect('account')
 		else:
 			return render_template('user_page.html', user=user, image_file=image_file)
+	else:
+		flash("Спочатку увійдіть у свій обліковий запис", 'danger')
+		return redirect(url_for('login'))
 
 
 @app.route('/news/<string:username>')
