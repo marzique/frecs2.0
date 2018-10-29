@@ -347,9 +347,15 @@ def user_id(user_id):
 @app.route("/user/<int:user_id>/delete", methods=['POST'])
 @login_required
 def delete_user(user_id):
+	'''
+	delete user including all of his posts to avoid integrity DB errors
+	:param user_id:
+	:return:
+	'''
 	user = User.query.get_or_404(user_id)
 	posts = Post.query.filter_by(author=user)
-	if user != current_user and current_user.email == 'marzique@gmail.com':
+	# temp admin check
+	if current_user.email == 'marzique@gmail.com':
 		for post in posts:
 			db.session.delete(post)
 		db.session.delete(user)
@@ -357,7 +363,7 @@ def delete_user(user_id):
 		flash('Користувача і всі його новини видалено', 'success')
 		return redirect(url_for('users'))
 	else:
-		abort(403)
+		flash('У вас немає прав доступу!', 'danger')
 
 
 @app.route('/news/<string:username>')
