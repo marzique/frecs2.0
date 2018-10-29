@@ -11,8 +11,6 @@ from .helpers import password_check, save_picture, generate_confirmation_token, 
 from .constants import *
 from smtplib import SMTPException
 import os
-
-
 import psutil
 
 @app.route('/index')
