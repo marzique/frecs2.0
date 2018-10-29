@@ -49,13 +49,12 @@
             <small class="text-muted ml-2">
                 <a href="{{ url_for('reset_password_request') }}">Відновлення паролю</a>
             </small>
-        </form>
-    </div>
-    <div class="pt-3">
-        <small class="text-muted">
-            Не зареєстровані? <a class="ml-2" href="{{ url_for('register') }}">Реєстрація</a>
-        </small>
+            <br>
+            <small class="text-muted ml-2">
+                Не зареєстровані? <a class="ml-2" href="{{ url_for('register') }}">Реєстрація</a>
+            </small>
         <hr>
+        </form>
     </div>
               </div>
 {% endblock body %}

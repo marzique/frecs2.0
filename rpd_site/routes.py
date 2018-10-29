@@ -339,6 +339,23 @@ def user_id(user_id):
 		return redirect(url_for('login'))
 
 
+# role required
+@app.route("/user/<int:user_id>/delete", methods=['POST'])
+@login_required
+def delete_user(user_id):
+	user = User.query.get_or_404(user_id)
+	posts = Post.query.filter_by(author=user)
+	if user != current_user and current_user.email == 'marzique@gmail.com':
+		for post in posts:
+			db.session.delete(post)
+		db.session.delete(user)
+		db.session.commit()
+		flash('Користувача і всі його новини видалено', 'success')
+		return redirect(url_for('users'))
+	else:
+		abort(403)
+
+
 @app.route('/news/<string:username>')
 def username_news(username):
 	# check id injection here!
