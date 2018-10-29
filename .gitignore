@@ -107,4 +107,4 @@ venv.bak/
 .idea/
 .idea
 
-rpd_site/config.cfg
+/rpd_site/config.cfg
