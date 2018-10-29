@@ -4,18 +4,21 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
 from termcolor import colored
-from os import environ
-
 from rpd_site.constants import VAR_APP_SECRET_KEY, VAR_DEBUG, VAR_CFG_FILE
+import os
 
 app = Flask(__name__)
 
 # check if heroku env
 on_heroku = False
-if 'IS_HEROKU' in environ:
+if 'IS_HEROKU' in os.environ:
 	on_heroku = True
-	app.config['MAIL_USERNAME'] = environ.get('MAIL_USERNAME')
-	app.config['MAIL_PASSWORD'] = environ.get('MAIL_PASSWORD')
+	# create empty cfg file in cwd
+	dir_path = os.path.dirname(os.path.realpath(__file__))
+	f = open(os.path.join(dir_path, 'config.cfg'), 'w')
+	f.close()
+	app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+	app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 else:
 	print(colored('LOADED DEVELOPMENT SETTINGS', 'green'))
 
