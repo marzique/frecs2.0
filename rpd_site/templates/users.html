@@ -33,11 +33,13 @@
                   {% else %}
                       <a class="list-group-item" style="color:red">{{ user.email }}</a>
                   {% endif %}
-
-                  {% if current_user.email == 'marzique@gmail.com' %}
+                    <!-- PASS IS_ADMIN HERE-->
+                  {% if current_user.email == 'marzique@gmail.com' and user.email != 'marzique@gmail.com' %}
                       <form action="{{ url_for('delete_user', user_id=user.id) }}" method="POST">
-                            <input class="btn btn-danger" type="submit" value="Видалити">
-                        </form>
+                      <div class="text-center">
+                            <input style="margin-top:2%;" class="btn btn-danger" type="submit" value="Видалити">
+                      </div>
+                      </form>
                   {% endif %}
               </div>
             </div>

@@ -15,6 +15,8 @@ if 'IS_HEROKU' in environ:
 	on_heroku = True
 	app.config['MAIL_USERNAME'] = environ.get('MAIL_USERNAME')
 	app.config['MAIL_PASSWORD'] = environ.get('MAIL_PASSWORD')
+else:
+	print('LOADED DEVELOPMENT SETTINGS')
 
 # Initialize extension with your app.
 app.config.from_pyfile(VAR_CFG_FILE)
