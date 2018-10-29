@@ -13,9 +13,13 @@ from smtplib import SMTPException
 import os
 
 
+import psutil
+
 @app.route('/index')
 @app.route('/')
 def index():
+	print(psutil.cpu_percent())
+	print(psutil.virtual_memory()[2])
 	# better than include other modules just for month translation
 	month_translation = {'January': 'Cічня', 'February': 'Лотого', 'March': 'Березня',
 						 'April': 'Квітня', 'May': 'Травня', 'June': 'Червня', 'July': 'Липня',
