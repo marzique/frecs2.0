@@ -33,7 +33,7 @@ app.config['MAIL_USE_SSL'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # recaptcha disable for offline/development
-app.config['RECAPTCHA_DISABLE'] = True
+RECAPTCHA_DISABLE = True
 
 
 

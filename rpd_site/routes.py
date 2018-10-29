@@ -339,7 +339,7 @@ def user_id(user_id):
 		return redirect(url_for('login'))
 
 
-# role required
+# Higher role must be required
 @app.route("/user/<int:user_id>/delete", methods=['POST'])
 @login_required
 def delete_user(user_id):
