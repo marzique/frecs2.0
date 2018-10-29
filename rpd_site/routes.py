@@ -110,7 +110,7 @@ def register():
 						flash('Щось пішло не так, спробуйте пізніше або зверніться до адміністратора!', 'danger')
 				else:
 					print(
-						colored("User: " + form.username.data + " , email: " + email + " used weak password",
+						colored("User: " + form.username.data + " , email: " + form.email.data.lower() + " used weak password",
 								'red'))
 					flash(
 						'Ваш пароль дуже слабкий, спробуйте додати Великі, малі літери, цифри, та спеціальні символи. '
