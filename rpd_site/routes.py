@@ -18,8 +18,10 @@ import psutil
 @app.route('/index')
 @app.route('/')
 def index():
-	print(psutil.cpu_percent())
-	print(psutil.virtual_memory()[2])
+	resources = {90: 'red', 75: 'orange', 60: 'yellow', 30: 'green', 15: 'blue'}
+
+	print('CPU usage: ' + str(psutil.cpu_percent()) + ' %')
+	print('CPU usage: ' + str(psutil.virtual_memory()[2]) + ' %')
 	# better than include other modules just for month translation
 	month_translation = {'January': 'Cічня', 'February': 'Лотого', 'March': 'Березня',
 						 'April': 'Квітня', 'May': 'Травня', 'June': 'Червня', 'July': 'Липня',
