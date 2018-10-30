@@ -16,10 +16,8 @@ import psutil
 @app.route('/index')
 @app.route('/')
 def index():
-	resources = {90: 'red', 75: 'orange', 60: 'yellow', 30: 'green', 15: 'blue'}
-
 	print('CPU usage: ' + str(psutil.cpu_percent()) + ' %')
-	print('CPU usage: ' + str(psutil.virtual_memory()[2]) + ' %')
+	print('RAM usage: ' + str(psutil.virtual_memory()[2]) + ' %')
 	# better than include other modules just for month translation
 	month_translation = {'January': 'Cічня', 'February': 'Лотого', 'March': 'Березня',
 						 'April': 'Квітня', 'May': 'Травня', 'June': 'Червня', 'July': 'Липня',
@@ -348,7 +346,7 @@ def user_id(user_id):
 @login_required
 def delete_user(user_id):
 	'''
-	delete user including all of his posts to avoid integrity DB errors
+	delete user including all of his posts to avoid DB integrity errors
 	:param user_id:
 	:return:
 	'''
@@ -439,5 +437,3 @@ def reset_password(reset_token):
 				'Пароль має складатись з щонайменше ' + str(VAR_MIN_PASS_LEN) + ' символів', 'danger')
 
 	return render_template('reset_password.html', form=form, title="Змінити пароль")
-
-
