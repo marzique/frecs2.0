@@ -37,7 +37,7 @@ pygame==1.9.3
 PyJWT==1.3.0
 pyserial==3.0.1
 PyYAML==3.11
-requests==2.19.1
+requests==2.20.0
 rsa==3.4.2
 six==1.11.0
 slackclient==1.2.1
