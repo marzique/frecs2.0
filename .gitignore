@@ -110,4 +110,5 @@ venv.bak/
 # all credentials go here
 /rpd_site/config.cfg
 
+# Mac trash
 .DS_Store
