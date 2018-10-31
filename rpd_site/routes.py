@@ -7,11 +7,12 @@ from flask_login import login_user, current_user, logout_user, login_required, f
 from termcolor import colored
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from flask_mail import Message
-from .helpers import password_check, save_picture, generate_confirmation_token, generate_password_token
+from .helpers import password_check, save_picture, generate_confirmation_token, generate_password_token, month_translation
 from .constants import *
 from smtplib import SMTPException
 import os
 import psutil
+
 
 @app.route('/index')
 @app.route('/')
@@ -19,10 +20,6 @@ def index():
 	print('CPU usage: ' + str(psutil.cpu_percent()) + ' %')
 	print('RAM usage: ' + str(psutil.virtual_memory()[2]) + ' %')
 	# better than include other modules just for month translation
-	month_translation = {'January': 'Cічня', 'February': 'Лотого', 'March': 'Березня',
-						 'April': 'Квітня', 'May': 'Травня', 'June': 'Червня', 'July': 'Липня',
-						 'August': 'Серпня', 'September': 'Вересня', 'October': 'Жовтня',
-						 'November': 'Листопада', 'December': 'Грудня'}
 	last_3_posts = Post.query.all()[-3:]
 	# at least 1 post exists
 	if last_3_posts:
@@ -37,7 +34,7 @@ def index():
 		month = "August"
 		year = "1995"
 		time = "00:00:01"
-	return render_template('index.html', last_3_posts=last_3_posts, day=day, month=month_translation[month], year=year,
+	return render_template('index.html', last_3_posts=last_3_posts, day=day, month=month_translation(month), year=year,
 							time=time, menuitem="index")
 
 

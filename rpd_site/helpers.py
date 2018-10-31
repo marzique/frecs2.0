@@ -7,9 +7,15 @@ from itsdangerous import URLSafeTimedSerializer
 from .constants import VAR_MAIL_SALT, VAR_SAFE_TIMED_KEY, VAR_PASSWORD_SALT
 
 """
-All useful functions for routes
+All useful functions and objects for routes
 """
-
+def month_translation(eng_month):
+	month_translations = {'January': 'Cічня', 'February': 'Лотого', 'March': 'Березня',
+						 'April': 'Квітня', 'May': 'Травня', 'June': 'Червня', 'July': 'Липня',
+						 'August': 'Серпня', 'September': 'Вересня', 'October': 'Жовтня',
+						 'November': 'Листопада', 'December': 'Грудня'}
+	ukranian_month = month_translations[eng_month]
+	return ukranian_month
 
 def password_check(password):
 	"""
