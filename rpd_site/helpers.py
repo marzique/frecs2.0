@@ -11,7 +11,7 @@ All useful functions and objects for routes
 """
 def month_translation(eng_month):
 	'''
-	Translates mmonth name to Ukranian
+	Translates month name to Ukranian
 	'''
 	month_translations = {'January': 'Cічня', 'February': 'Лотого', 'March': 'Березня',
 						 'April': 'Квітня', 'May': 'Травня', 'June': 'Червня', 'July': 'Липня',
