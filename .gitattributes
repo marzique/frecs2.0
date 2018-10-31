@@ -1,5 +1,3 @@
 /rpd_site/templates/* linguist-vendored
-/rpd_site/static/css* linguist-vendored
-/rpd_site/static/js* linguist-vendored
-/rpd_site/static/vendor* linguist-vendored
+/rpd_site/static/* linguist-vendored
 
