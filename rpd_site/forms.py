@@ -83,3 +83,8 @@ class ResetPassword(FlaskForm):
     submit = SubmitField('Змінити пароль')
 
 
+class NewRole(FlaskForm):
+    role = StringField('Role',
+                        validators=[DataRequired(), Length(min=4, max=15)])
+    submit = SubmitField('Додати')
+

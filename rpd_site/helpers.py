@@ -2,13 +2,43 @@ import re
 import os
 import secrets
 from PIL import Image
-from rpd_site import app
+from rpd_site import app, db
 from itsdangerous import URLSafeTimedSerializer
 from .constants import VAR_MAIL_SALT, VAR_SAFE_TIMED_KEY, VAR_PASSWORD_SALT
+from .models import Role
 
-"""
-All useful functions and objects for routes
-"""
+
+def create_role(role_name):
+	'''
+	adds new role to database
+	'''
+	role_search = Role.query.filter_by(name=role_name).first()
+	if not role_search:
+		role = Role(name=role_name)
+		db.session.add(role)
+		db.session.commit()
+		return True
+		print('New role ' + role_name + ' added!')
+	else:
+		return False
+
+
+def delete_role(role_name):
+	'''
+	delete new role from database
+	'''
+	role = Role.query.filter_by(name=role_name).first()
+	if role:
+		db.session.delete(role)
+		db.session.commit()
+		print('Role ' + role_name + ' deleted!')
+	else:
+		print('Role ' + role_name + " doesn't exist!")
+
+
+
+# All useful functions and objects for routes
+
 def month_translation(eng_month):
 	'''
 	Translates month name to Ukranian

@@ -2,12 +2,13 @@ from flask import render_template, url_for, flash, redirect, request, abort, sen
 from rpd_site import app, db, bcrypt, mail
 from .models import User, Post
 from .forms import (RegistrationForm, LoginForm, UpdateAccountForm,
-							UpdatePicture, PostForm, ResetRequest, ResetPassword)
+							UpdatePicture, PostForm, ResetRequest, ResetPassword, NewRole)
 from flask_login import login_user, current_user, logout_user, login_required, fresh_login_required
 from termcolor import colored
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from flask_mail import Message
-from .helpers import password_check, save_picture, generate_confirmation_token, generate_password_token, month_translation
+from .helpers import password_check, save_picture, generate_confirmation_token,\
+	generate_password_token, month_translation, create_role
 from .constants import *
 from smtplib import SMTPException
 import os
@@ -434,3 +435,21 @@ def reset_password(reset_token):
 				'Пароль має складатись з щонайменше ' + str(VAR_MIN_PASS_LEN) + ' символів', 'danger')
 
 	return render_template('reset_password.html', form=form, title="Змінити пароль")
+
+
+@app.route('/add_role', methods=['GET', 'POST'])
+def add_role():
+	if current_user.is_authenticated:
+		form = NewRole()
+		if form.validate_on_submit():
+			role_name = form.role.data.lower()
+			if create_role(role_name):
+				flash('Нова Роль додана!', 'success')
+				return redirect(url_for('account'))
+			else:
+				flash('Така роль вже існує!', 'danger')
+	else:
+		flash("Спочатку увійдіть у свій обліковий запис", 'danger')
+		return redirect(url_for('login'))
+
+	return render_template('add_role.html', form=form, title="Додати Роль")
