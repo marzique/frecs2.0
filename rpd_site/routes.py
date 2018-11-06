@@ -94,6 +94,9 @@ def register():
 						mail.send(msg)
 						db.session.add(user)
 						db.session.commit()
+						# also commiting here
+						user.add_role('student')
+
 						flash('Ваш обліковий запис створено. Для підтвердження поштової адреси перейдіть по посиланню '
 							  'яке було надіслано на адресу: ' + email, 'success')
 						# change it to logging

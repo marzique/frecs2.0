@@ -35,14 +35,22 @@ class User(db.Model, UserMixin):
 							backref=db.backref('users', lazy='joined'))
 
 	def add_role(self, role_name):
-		role = Role(name=role_name)
-		self.roles.append(role)
-		db.session.commit()
+		role_search = Role.query.filter_by(name=role_name).first()
+		if role_search:
+			self.roles.append(role_search)
+			db.session.commit()
+		else:
+			print(role_name + " doesn't exist!")
+			return False
 
 	def delete_role(self, role_name):
-		role = Role(name=role_name)
-		self.roles.remove(role)
-		db.session.commit()
+		role = Role.query.filter_by(name=role_name).first()
+		if role:
+			role.users.remove(self)
+			db.session.commit()
+		else:
+			print(self.username + " doesn't have role " + role_name)
+			return False
 
 
 	def __repr__(self):
