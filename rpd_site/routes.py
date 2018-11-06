@@ -1,3 +1,8 @@
+# TODO
+'''
+https://stackoverflow.com/questions/1523427/what-is-the-common-header-format-of-python-files
+'''
+
 from flask import render_template, url_for, flash, redirect, request, abort, send_file
 from rpd_site import app, db, bcrypt, mail
 from .models import User, Post
