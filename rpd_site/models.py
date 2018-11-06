@@ -34,12 +34,25 @@ class User(db.Model, UserMixin):
 	roles = db.relationship('Role', secondary=roles_users,
 							backref=db.backref('users', lazy='joined'))
 
+	def add_role(self, role_name):
+		role = Role(name=role_name)
+		self.roles.append(role)
+		db.session.commit()
+
+	def delete_role(self, role_name):
+		role = Role(name=role_name)
+		self.roles.remove(role)
+		db.session.commit()
+
+
 	def __repr__(self):
 		return f"User('{self.username}', '{self.email}', '{self.confirmed}')"
 
 
-# Posts table
 class Post(db.Model):
+	'''
+	Posts table
+	'''
 	id = db.Column(db.Integer, primary_key=True)
 	title = db.Column(db.String(100), nullable=False)
 	date_posted = db.Column(db.DateTime, nullable=False, default=datetime.now)  # current local time instead of .utcnow
@@ -61,6 +74,5 @@ class Role(db.Model, RoleMixin):
 
 	def __str__(self):
 		return self.name
-
 
 

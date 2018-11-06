@@ -25,7 +25,7 @@ def create_role(role_name):
 
 def delete_role(role_name):
 	'''
-	delete new role from database
+	deletes new role from database
 	'''
 	role = Role.query.filter_by(name=role_name).first()
 	if role:
@@ -120,4 +120,3 @@ def generate_confirmation_token(email):
 def generate_password_token(email):
 	serializer = URLSafeTimedSerializer(VAR_SAFE_TIMED_KEY)
 	return serializer.dumps(email, salt=VAR_PASSWORD_SALT)
-
