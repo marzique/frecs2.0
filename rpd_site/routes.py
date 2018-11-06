@@ -96,7 +96,6 @@ def register():
 						db.session.commit()
 						# also commiting here
 						user.add_role('student')
-
 						flash('Ваш обліковий запис створено. Для підтвердження поштової адреси перейдіть по посиланню '
 							  'яке було надіслано на адресу: ' + email, 'success')
 						# change it to logging
@@ -357,8 +356,8 @@ def delete_user(user_id):
 	'''
 	user = User.query.get_or_404(user_id)
 	posts = Post.query.filter_by(author=user)
-	# temp admin check
-	if current_user.email == 'marzique@gmail.com':
+	# temp admin check TODO: (should make decorator out of it!!)
+	if 'admin' in current_user.roles:
 		for post in posts:
 			db.session.delete(post)
 		db.session.delete(user)
@@ -455,6 +454,9 @@ def add_role():
 				return redirect(url_for('account'))
 			else:
 				flash('Така роль вже існує!', 'danger')
+		else:
+			flash('Назва ролі введена не вірно!', 'danger')
+
 	else:
 		flash("Спочатку увійдіть у свій обліковий запис", 'danger')
 		return redirect(url_for('login'))

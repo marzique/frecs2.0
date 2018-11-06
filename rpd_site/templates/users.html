@@ -34,7 +34,7 @@
                       <a class="list-group-item" style="color:red">{{ user.email }}</a>
                   {% endif %}
                     <!-- PASS IS_ADMIN HERE-->
-                  {% if current_user.email == 'marzique@gmail.com' and user.email != 'marzique@gmail.com' %}
+                  {% if 'admin' in current_user.roles and user.email != 'marzique@gmail.com' %}
                       <form action="{{ url_for('delete_user', user_id=user.id) }}" method="POST">
                       <div class="text-center">
                             <input style="margin-top:2%;" class="btn btn-danger" type="submit" value="Видалити">
