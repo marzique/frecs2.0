@@ -20,7 +20,6 @@ import os
 import psutil
 
 
-@app.route('/index')
 @app.route('/')
 def index():
 	print('CPU usage: ' + str(psutil.cpu_percent()) + ' %')
