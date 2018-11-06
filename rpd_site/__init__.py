@@ -9,7 +9,7 @@ import os
 
 app = Flask(__name__)
 
-# check if heroku env
+# local or enterprise
 on_heroku = False
 if 'IS_HEROKU' in os.environ:
 	on_heroku = True
@@ -35,14 +35,20 @@ app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# recaptcha disable for offline/development
-app.config['RECAPTCHA_DISABLE']= True
+# recaptcha disable for offline/development (it's still works smh)
+app.config['RECAPTCHA_ENABLE'] = False
 
+# gmail
 mail = Mail(app)
-db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)
-login_manager = LoginManager(app)
 
+# SQLite
+db = SQLAlchemy(app)
+
+# pass hasher
+bcrypt = Bcrypt(app)
+
+# ??
+login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 

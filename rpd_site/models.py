@@ -4,13 +4,13 @@ from flask_login import UserMixin
 from flask_security import RoleMixin
 
 
-# []
+# TODO comment here!
 @login_manager.user_loader
 def load_user(user_id):
 	return User.query.get(int(user_id))
 
 
-# may to many association table between User and Role
+# M2M association table between User and Role
 roles_users = db.Table(
 	'roles_users',
 	db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
@@ -18,8 +18,10 @@ roles_users = db.Table(
 )
 
 
-# Main site account table
 class User(db.Model, UserMixin):
+	'''
+	Main site account table
+	'''
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String(20), unique=True, nullable=False)
 	email = db.Column(db.String(120), unique=True, nullable=False)
@@ -27,6 +29,8 @@ class User(db.Model, UserMixin):
 	password = db.Column(db.String(60), nullable=False)
 	confirmed = db.Column(db.Boolean, nullable=False, default=0)
 	posts = db.relationship('Post', backref='author', lazy=True)
+	
+	# user can have multiple roles
 	roles = db.relationship('Role', secondary=roles_users,
 							backref=db.backref('users', lazy='joined'))
 
@@ -48,6 +52,9 @@ class Post(db.Model):
 
 
 class Role(db.Model, RoleMixin):
+	'''
+	Multiple users can have the same role
+	'''
 	__tablename__ = 'role'
 	id = db.Column(db.Integer(), primary_key=True)
 	name = db.Column(db.String(50), unique=True)
