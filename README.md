@@ -7,16 +7,10 @@ ON AIR: https://rt-rpd.herokuapp.com/
 ![image](https://user-images.githubusercontent.com/25755345/44602615-c4c07a80-a7e8-11e8-8494-25e3fbb80c22.png)
 
 # RBAC (Role Based Access Control)
-
 User --> Role --> Permissions(Rights)
-
-User
-####
-(int)  (string)   (string) (string)    (bool)     (string)   _rel_
-| id | username |  email  | picture | confirmed | passhash | posts |
---------------------------
-
-Role
-####
-(int)
-| id | name |
+- fresh users will have 'not-confirmed' role with limited rights until they confirm their email address.
+- after email confirmation users will have 'confirmed' role with a little more rights and views
+- next step is 2 branches 'student' or 'teacher', both will be assigned by colleagues. 
+  student - by the head of the group, teacher by another 'teacher'. (Also there's option to give tokens which can be used when registering to confirm either role)
+- next we should have 'editor' role for those who can add new posts/conferences and delete them.
+- 'admin' and 'moderator' roles for those who will support website.
