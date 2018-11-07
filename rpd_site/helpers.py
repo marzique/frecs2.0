@@ -131,4 +131,4 @@ def role_label(role_name):
 					 'moderator': 'btn-danger'
 					 }
 
-	return '<span class="btn btn-sm ' + label_classes[role_name] + '">' + role_name + '</span>'
+	return '<span style="padding: 2px;" class="btn btn-sm ' + label_classes[role_name] + '">' + role_name + '</span>'
