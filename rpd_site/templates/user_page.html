@@ -56,7 +56,11 @@
             <a class="list-group-item">Повне ім&#39я: John Doe</a>
 
               <!--pass user status here-->
-            <a class="list-group-item">Група: <span>Студент</span></a>
+            <a class="list-group-item">Група: {% for role in spans %}
+                                                        {{ role|safe }}
+                                                    {% endfor %}
+
+                </a>
             <a href="{{ url_for('news') + '/' + user.username}}" class="list-group-item">Додані новини</a>
           </div>
         </div>

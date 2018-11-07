@@ -62,11 +62,12 @@
             <a class="list-group-item">Повне ім&#39я: John Doe</a>
 
               <!--pass user status here-->
-              {% if current_user.email in ['marzique@gmail.com', 'denys@digisol.agency'] or current_user.username in ['tarn', 'tarnava', 'marz', 'marzique'] %}
-            <a class="list-group-item">Група: <span style="color:#00ff5d;">Адміністратори</span></a>
-              {% else %}
-            <a class="list-group-item">Група: <span>Студент</span></a>
-              {% endif %}
+                <a class="list-group-item">Група: {% for role in spans %}
+                                                        {{ role|safe }}
+                                                    {% endfor %}
+
+                </a>
+
             <a href="{{ url_for('news') + '/' + current_user.username}}" class="list-group-item">Додані новини</a>
           </div>
         </div>

@@ -36,7 +36,6 @@ def delete_role(role_name):
 		print('Role ' + role_name + " doesn't exist!")
 
 
-
 # All useful functions and objects for routes
 
 def month_translation(eng_month):
@@ -44,11 +43,12 @@ def month_translation(eng_month):
 	Translates month name to Ukranian
 	'''
 	month_translations = {'January': 'Cічня', 'February': 'Лотого', 'March': 'Березня',
-						 'April': 'Квітня', 'May': 'Травня', 'June': 'Червня', 'July': 'Липня',
-						 'August': 'Серпня', 'September': 'Вересня', 'October': 'Жовтня',
-						 'November': 'Листопада', 'December': 'Грудня'}
+						  'April': 'Квітня', 'May': 'Травня', 'June': 'Червня', 'July': 'Липня',
+						  'August': 'Серпня', 'September': 'Вересня', 'October': 'Жовтня',
+						  'November': 'Листопада', 'December': 'Грудня'}
 	ukranian_month = month_translations[eng_month]
 	return ukranian_month
+
 
 def password_check(password):
 	"""
@@ -114,9 +114,21 @@ def generate_confirmation_token(email):
 	:return: token
 	'''
 	serializer = URLSafeTimedSerializer(VAR_SAFE_TIMED_KEY)
-	return serializer.dumps(email, salt=VAR_MAIL_SALT+email)
+	return serializer.dumps(email, salt=VAR_MAIL_SALT + email)
 
 
 def generate_password_token(email):
 	serializer = URLSafeTimedSerializer(VAR_SAFE_TIMED_KEY)
 	return serializer.dumps(email, salt=VAR_PASSWORD_SALT)
+
+
+def role_label(role_name):
+	label_classes = {'unconfirmed': 'btn-default',
+					'confirmed': 'btn-primary',
+					 'admin': 'btn-success',
+					 'student': 'btn-info',
+					 'teacher': 'btn-warning',
+					 'moderator': 'btn-danger'
+					 }
+
+	return '<span class="btn btn-sm ' + label_classes[role_name] + '">' + role_name + '</span>'

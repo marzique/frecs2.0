@@ -13,7 +13,7 @@ from termcolor import colored
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from flask_mail import Message
 from .helpers import password_check, save_picture, generate_confirmation_token,\
-	generate_password_token, month_translation, create_role
+	generate_password_token, month_translation, create_role, role_label
 from .constants import *
 from smtplib import SMTPException
 import os
@@ -95,7 +95,7 @@ def register():
 						db.session.add(user)
 						db.session.commit()
 						# standart role when just registered
-						user.add_role('student')
+						user.add_role('unconfirmed')
 						flash('Ваш обліковий запис створено. Для підтвердження поштової адреси перейдіть по посиланню '
 							  'яке було надіслано на адресу: ' + email, 'success')
 						# change it to logging
@@ -143,6 +143,8 @@ def confirm_email(token):
 
 		# confirm user
 		current_user.confirmed = 1
+		current_user.add_role('confirmed')
+		current_user.delete_role('unconfirmed')
 		db.session.commit()
 		flash("Пошта " + current_user.email + " прив'язана до аккаунту - " + current_user.username, 'success')
 		return redirect(url_for('account'))
@@ -186,6 +188,14 @@ def logout():
 @login_required
 def account():
 	form = UpdatePicture()
+	# roles labels
+	spans = []
+	roles = current_user.all_roles()
+	for role in roles:
+		span = role_label(role)
+		spans.append(span)
+
+
 	file_to_delete = os.path.join(app.root_path, 'static/img/avatars', current_user.image_file)
 	print(file_to_delete)
 	if form.validate_on_submit():
@@ -199,7 +209,7 @@ def account():
 			return redirect(url_for('account'))
 
 	image_file = url_for('static', filename='img/avatars/' + current_user.image_file)
-	return render_template('account.html', title='Обліковий запис', form=form, image_file=image_file)
+	return render_template('account.html', title='Обліковий запис', form=form, image_file=image_file, spans=spans)
 
 
 @app.route('/post/new', methods=['GET', 'POST'])
@@ -335,11 +345,17 @@ def users():
 def user_id(user_id):
 	if current_user.is_authenticated:
 		user = User.query.get_or_404(user_id)
+		spans = []
+		roles = user.all_roles()
+		for role in roles:
+			span = role_label(role)
+			spans.append(span)
+
 		image_file = url_for('static', filename='img/avatars/' + user.image_file)
 		if current_user.id == user.id:
 			return redirect('account')
 		else:
-			return render_template('user_page.html', user=user, image_file=image_file)
+			return render_template('user_page.html', user=user, image_file=image_file, spans=spans)
 	else:
 		flash("Спочатку увійдіть у свій обліковий запис", 'danger')
 		return redirect(url_for('login'))
