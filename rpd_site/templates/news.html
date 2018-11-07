@@ -5,6 +5,8 @@
     <div style="margin-top:2%;" class="container" >
 
       <!-- Page Heading/Breadcrumbs -->
+      <div class="row">
+    <div class="col">
       <h1 class="zero_margin mb-0" style="margin-bottom:2%; margin-top:2%;">
         <kbd class="display-4 text-center ">Останні новини<br>
             {% if user %}
@@ -12,12 +14,19 @@
             {% endif %}
         </kbd>
     </h1>
+    </div>
+    {% if 'admin' in current_user.roles %}
+    <div class="col">
+      <button onclick="location.href='{{ url_for('new_post') }}'" type="button" class="btn btn-success float-right" 
+      style="margin-top: 5%;">Додати новину</button>
+    </div>
+    {% endif %}
+  </div>
       <hr>
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <a href="{{ url_for('index') }} ">Головна</a>
         </li>
-
         <li class="breadcrumb-item active">Новини</li>
       </ol>
       {% for article in posts.items %}
