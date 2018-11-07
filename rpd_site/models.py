@@ -29,7 +29,7 @@ class User(db.Model, UserMixin):
 	password = db.Column(db.String(60), nullable=False)
 	confirmed = db.Column(db.Boolean, nullable=False, default=0)
 	posts = db.relationship('Post', backref='author', lazy=True)
-	
+
 	# user can have multiple roles
 	roles = db.relationship('Role', secondary=roles_users,
 							backref=db.backref('users', lazy='joined'))
@@ -52,9 +52,28 @@ class User(db.Model, UserMixin):
 			print(self.username + " doesn't have role " + role_name)
 			return False
 
+	def all_roles(self):
+		roles = []
+		for role in self.roles:
+			roles.append(role.name)
+		return roles
+
+
 
 	def __repr__(self):
 		return f"User('{self.username}', '{self.email}', '{self.confirmed}')"
+
+
+class Role(db.Model, RoleMixin):
+	'''
+	Multiple users can have the same role
+	'''
+	__tablename__ = 'role'
+	id = db.Column(db.Integer(), primary_key=True)
+	name = db.Column(db.String(50), unique=True)
+
+	def __str__(self):
+		return self.name
 
 
 class Post(db.Model):
@@ -70,17 +89,3 @@ class Post(db.Model):
 
 	def __repr__(self):
 		return f"Post('{self.title}', '{self.date_posted}', '{self.content[:15]}')"
-
-
-class Role(db.Model, RoleMixin):
-	'''
-	Multiple users can have the same role
-	'''
-	__tablename__ = 'role'
-	id = db.Column(db.Integer(), primary_key=True)
-	name = db.Column(db.String(50), unique=True)
-
-	def __str__(self):
-		return self.name
-
-
