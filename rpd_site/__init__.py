@@ -12,15 +12,15 @@ app = Flask(__name__)
 # local or enterprise
 on_heroku = False
 if 'IS_HEROKU' in os.environ:
-	on_heroku = True
-	# create empty cfg file in cwd
-	dir_path = os.path.dirname(os.path.realpath(__file__))
-	f = open(os.path.join(dir_path, 'config.cfg'), 'w')
-	f.close()
-	app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
-	app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+    on_heroku = True
+    # create empty cfg file in cwd
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    f = open(os.path.join(dir_path, 'config.cfg'), 'w')
+    f.close()
+    app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+    app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 else:
-	print(colored('LOADED DEVELOPMENT SETTINGS', 'green'))
+    print(colored('LOADED DEVELOPMENT SETTINGS', 'green'))
 
 # Initialize extension with your app.
 app.config.from_pyfile(VAR_CFG_FILE)

@@ -15,16 +15,18 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField('Пароль ще раз',
                                      validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Підтвердити')
-    
+
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user:
-            raise ValidationError('Користувач з таким іменем вже зареєстрований')
-        
+            raise ValidationError(
+                'Користувач з таким іменем вже зареєстрований')
+
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user:
-            raise ValidationError('Користувач з такою поштовою скринькою вже зареєстрований')
+            raise ValidationError(
+                'Користувач з такою поштовою скринькою вже зареєстрований')
 
 
 # Email+password authentication model
@@ -42,30 +44,36 @@ class UpdateAccountForm(FlaskForm):
                            validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
-    
+
     submit = SubmitField('Змінити')
-    
+
     def validate_username(self, username):
         if username.data != current_user.username:
             user = User.query.filter_by(username=username.data).first()
             if user:
-                raise ValidationError('Користувач з таким іменем вже зареєстрований')
-    
+                raise ValidationError(
+                    'Користувач з таким іменем вже зареєстрований')
+
     def validate_email(self, email):
         if email.data != current_user.email:
             user = User.query.filter_by(email=email.data).first()
             if user:
-                raise ValidationError('Користувач з такою поштовою скринькою вже зареєстрований')
+                raise ValidationError(
+                    'Користувач з такою поштовою скринькою вже зареєстрований')
 
 
 class UpdatePicture(FlaskForm):
-    picture = FileField('Змінити зображення користувача', validators=[FileAllowed(['jpg', 'jpeg', 'png'])])
+    picture = FileField('Змінити зображення користувача', validators=[
+                        FileAllowed(['jpg', 'jpeg', 'png'])])
     submit = SubmitField('Змінити')
-    
+
+
 class PostForm(FlaskForm):
-    title = StringField('Назва', validators=[DataRequired(), Length(min=5, max=100)])
+    title = StringField('Назва', validators=[
+                        DataRequired(), Length(min=5, max=100)])
     content = TextAreaField('Зміст', validators=[DataRequired()])
-    picture = FileField('Зображення', validators=[FileAllowed(['jpg', 'jpeg', 'png'])])
+    picture = FileField('Зображення', validators=[
+                        FileAllowed(['jpg', 'jpeg', 'png'])])
     submit = SubmitField('Додати новину')
 
 
@@ -85,6 +93,5 @@ class ResetPassword(FlaskForm):
 
 class NewRole(FlaskForm):
     role = StringField('Role',
-                        validators=[DataRequired(), Length(min=4, max=15)])
+                       validators=[DataRequired(), Length(min=4, max=15)])
     submit = SubmitField('Додати')
-
