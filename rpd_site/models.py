@@ -58,8 +58,6 @@ class User(db.Model, UserMixin):
 			roles.append(role.name)
 		return roles
 
-
-
 	def __repr__(self):
 		return f"User('{self.username}', '{self.email}', '{self.confirmed}')"
 
