@@ -187,11 +187,12 @@ def login():
 
 @app.route('/logout')
 def logout():
-    print()
-    print(colored("User: " + str(current_user.username) + " logged out", 'red'))
-    print()
-    logout_user()
-    return redirect(url_for('login'))
+	if current_user.is_authenticated:
+	    print()
+	    print(colored("User: " + str(current_user.username) + " logged out", 'red'))
+	    print()
+	    logout_user()
+	return redirect(url_for('login'))
 
 
 @app.route('/account', methods=['GET', 'POST'])
