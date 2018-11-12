@@ -207,7 +207,7 @@ def account():
     form = UpdatePicture()
     # roles labels
     spans = []
-    roles = current_user.all_roles()
+    roles = current_user.get_roles()
     for role in roles:
         span = role_label(role)
         spans.append(span)
