@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html lang="ua">
+<html lang="en">
+
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -12,38 +14,18 @@
     <title>Головна - Кафедра радіотехніки та радіоелектронних систем </title>
     {% endif %}
 
-    <!-- GitHub button -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-
-    <!-- SITE LOGO -->
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/' + 'bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="{{ url_for('static', filename='css/' + 'modern-business.css') }}" rel="stylesheet">
-
-    <!-- dashboard -->
     <link href="{{ url_for('static', filename='css/' + 'simple-sidebar.css') }}" rel="stylesheet">
 
-    <!-- Icons  -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-    <!-- Google fonts  -->
-    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
-    <link href="https://fonts.googleapis.com/css?family=Miriam+Libre" rel="stylesheet">
-
-    <!-- Font awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
-          integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-    <script src='https://www.google.com/recaptcha/api.js?hl=uk'></script>
 </head>
 
 <body>
 
-<!-- Navigation -->
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <!-- Navigation -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top" style="z-index: 0;">
     <div class="container">
         {% if menuitem == 'index' %}
         <a class="navbar-brand" style="color:white;" href="{{ url_for('index') }}">
@@ -130,7 +112,7 @@
                                 <div class="dropdown-divider"></div>
                                 <!-- ADMIN OPTIONS -->
                                 {% if 'admin' in current_user.roles %}
-                                <a class="dropdown-item" style="color:#0C5815;" href="{{ url_for('admin') }}">Панель адміністратора</a>
+                                <a class="dropdown-item" style="color:#0C5815;" href="#">Панель адміністратора</a>
                                 <a class="dropdown-item" style="color:#0C5815;" href="{{ url_for('new_post') }}">Додати новину</a>
                                 {% endif %}
                                 <div class="dropdown-divider"></div>
@@ -187,83 +169,68 @@
     </div>
 </nav>
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-            <div class="container">
-                <div class="alert alert-{{ category }}" role="alert" style="margin-top:16px; margin-bottom:0; padding:20px;">
-                    {{ message }}
-                </div>
+    <div id="wrapper" style="margin-top:75px;">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="{{ url_for('index') }}">
+                        Головна
+                    </a>
+                </li>
+                <li>
+                    <a href="#">Dashboard</a>
+                </li>
+                <li>
+                    <a href="#">Shortcuts</a>
+                </li>
+                <li>
+                    <a href="#">Overview</a>
+                </li>
+                <li>
+                    <a href="#">Events</a>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li>
+                    <a href="#">Services</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <h1>Simple Sidebar</h1>
+                <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
+                <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
+                <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
             </div>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
-
-{% block body %}{% endblock %}
-
-<!-- Footer -->
-<footer class="py-3 bg-dark">
-
-    <div class="row" style="padding-top:1%">
-        <div class="col-md-4">
-            <p class="ml-3 text-white text-left">Кафедра радіотехніки та радіоелектронних систем <br>
-                Україна, 03022, м.Київ, проспект Глушкова, 4-г
         </div>
-        <div class="col-md-4">
-            <p class="ml-3 text-center text-white">Київський Національний університет імені Тараса Шевченка
-        </div>
-        <div class="col-md-4">
-            <p class="ml-3 text-right text-white" style="padding-right:20px;">Факультет радіофізики, електроніки та
-                комп’ютерних систем </p>
-        </div>
-    </div>
-
-
-    <div class="container text-center">
-        <div class="d-inline-block">
-            <a href="{{ url_for('index') }}"><img src="http://placehold.it/130x130" class="rounded-circle"
-                                                  alt="Department logo"
-                                                  width="130" height="130"></a>
-        </div>
-        <div class="d-inline-block">
-            <a href="http://univ.kiev.ua" target="_blank"><img
-                    src="{{ url_for('static', filename='img/' + 'knu.jpg') }}" class="img-responsive"
-                    alt="University logo"
-                    width="130" height="130"></a>
-        </div>
-        <div class="d-inline-block">
-            <a href="http://rex.knu.ua" target="_blank"><img
-                    src="{{ url_for('static', filename='img/' + 'frecs.png') }}" class="img-responsive"
-                    alt="Faculty logo"
-                    width="130" height="130"></a>
-        </div>
+        <!-- /#page-content-wrapper -->
 
     </div>
-    <p class="ml-3 text-muted text-center" style="padding-top:50px;">© Всі права захищені 1995-2018 <br>
-{#        Developed by#}
-{#        <a href="https://github.com/marzique" target="_blank">tarnava</a> <a#}
-{#                href="https://github.com/marzique" target="_blank">#}
-{#            <svg style="width:32px;height:32px; vertical-align: middle;" viewBox="0 0 24 24">#}
-{#                <path fill="#ffffff" d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27#}
-{#    9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88#}
-{#    5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67#}
-{#    10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15#}
-{#    7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88#}
-{#    17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32#}
-{#    16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27#}
-{#    14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"></path>#}
-{#            </svg>#}
-{#        </a>#}
-        <!-- Place this tag where you want the button to render. -->
-<a class="github-button" style="vertical-align: middle;" href="https://github.com/marzique" aria-label="Follow @marzique on GitHub">Follow @marzique</a>
-    </p>
+    <!-- /#wrapper -->
 
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ url_for('static', filename='vendor/jquery/' + 'jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/' + 'bootstrap.bundle.min.js') }}"></script>
 
-    <!-- /.container -->
-</footer>
+    <!-- Menu Toggle Script -->
+    <script>
+    // disabled toogling to make static sidebar
+    // $("#menu-toggle").click(function(e) {
+    //     e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    // });
+    </script>
 
-<!-- Bootstrap core JavaScript -->
-<script src="{{ url_for('static', filename='vendor/jquery/' + 'jquery.min.js') }}"></script>
-<script src="{{ url_for('static', filename='vendor/bootstrap/js/' + 'bootstrap.bundle.min.js') }}"></script>
 </body>
+
 </html>
