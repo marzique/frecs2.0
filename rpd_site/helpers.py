@@ -1,15 +1,23 @@
+#!/usr/bin/env python
+'''Helping functions'''
+__author__ = "Denys Tarnavskyi"
+__copyright__ = "Copyright 2018, RPD site project"
+__license__ = "MIT"
+__version__ = "1.0"
+__email__ = "marzique@gmail.com"
+__status__ = "Development"
+
 import re
 import os
 import secrets
 from PIL import Image
-from rpd_site import app, db
 from itsdangerous import URLSafeTimedSerializer
+from rpd_site import app, db
 from .constants import VAR_MAIL_SALT, VAR_SAFE_TIMED_KEY, VAR_PASSWORD_SALT
 from .models import Role
 
 
 def create_role(role_name):
-
     '''
     adds new role to database
     '''
@@ -45,7 +53,6 @@ def get_all_roles():
     roles = Role.query.all()
     for role in roles:
         names.append(role.name)
-
     return names
 
 
@@ -56,9 +63,9 @@ def month_translation(eng_month):
     Translates month name to Ukranian
     '''
     month_translations = {'January': 'Cічня', 'February': 'Лотого', 'March': 'Березня',
-                                              'April': 'Квітня', 'May': 'Травня', 'June': 'Червня', 'July': 'Липня',
-                                              'August': 'Серпня', 'September': 'Вересня', 'October': 'Жовтня',
-                                              'November': 'Листопада', 'December': 'Грудня'}
+                          'April': 'Квітня', 'May': 'Травня', 'June': 'Червня', 'July': 'Липня',
+                          'August': 'Серпня', 'September': 'Вересня', 'October': 'Жовтня',
+                          'November': 'Листопада', 'December': 'Грудня'}
     ukranian_month = month_translations[eng_month]
     return ukranian_month
 
@@ -75,20 +82,13 @@ def password_check(password):
             returns True if all checks passed
             https://stackoverflow.com/a/32542964/10103803
     """
-
-    # length
-    length_error = len(password) < 8
-    # digits
-    digit_error = re.search(r"\d", password) is None
-    # uppercase
-    uppercase_error = re.search(r"[A-Z]", password) is None
-    # lowercase
-    lowercase_error = re.search(r"[a-z]", password) is None
-    # symbols
-    symbol_error = re.search(r"\W", password) is None
-    # overall result
+    length_error = len(password) < 8                                                        # length
+    digit_error = re.search(r"\d", password) is None                                        # digits
+    uppercase_error = re.search(r"[A-Z]", password) is None                                 # uppercase
+    lowercase_error = re.search(r"[a-z]", password) is None                                 # lowercase
+    symbol_error = re.search(r"\W", password) is None                                       # symbols
     password_ok = not (
-        length_error or digit_error or uppercase_error or lowercase_error or symbol_error)
+        length_error or digit_error or uppercase_error or lowercase_error or symbol_error)  # overall result
 
     return password_ok
 

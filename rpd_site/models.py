@@ -1,7 +1,16 @@
+#!/usr/bin/env python
+'''Database models and tables'''
+__author__ = "Denys Tarnavskyi"
+__copyright__ = "Copyright 2018, RPD site project"
+__license__ = "MIT"
+__version__ = "1.0"
+__email__ = "marzique@gmail.com"
+__status__ = "Development"
+
 from datetime import datetime
-from rpd_site import db, login_manager
 from flask_login import UserMixin
 from flask_security import RoleMixin
+from rpd_site import db, login_manager
 
 
 # TODO comment here!

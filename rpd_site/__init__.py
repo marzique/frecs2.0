@@ -1,11 +1,21 @@
+#!/usr/bin/env python
+'''Package wrapper'''
+__author__ = "Denys Tarnavskyi"
+__copyright__ = "Copyright 2018, RPD site project"
+__license__ = "MIT"
+__version__ = "1.0"
+__email__ = "marzique@gmail.com"
+__status__ = "Development"
+
+import os
+from termcolor import colored
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
-from termcolor import colored
 from rpd_site.constants import VAR_APP_SECRET_KEY, VAR_DEBUG, VAR_CFG_FILE
-import os
+
 
 app = Flask(__name__)
 

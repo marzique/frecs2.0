@@ -1,23 +1,29 @@
-# TODO
-'''
-https://stackoverflow.com/questions/1523427/what-is-the-common-header-format-of-python-files
-'''
+#!/usr/bin/env python
+'''All website views'''
+__author__ = "Denys Tarnavskyi"
+__copyright__ = "Copyright 2018, RPD site project"
+__license__ = "MIT"
+__version__ = "1.0"
+__email__ = "marzique@gmail.com"
+__status__ = "Development"
 
+import os
+import psutil
+from termcolor import colored
+from smtplib import SMTPException
 from flask import render_template, url_for, flash, redirect, request, abort, send_file
+from flask_login import login_user, current_user, logout_user, login_required, fresh_login_required
+from flask_mail import Message
 from rpd_site import app, db, bcrypt, mail
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from .models import User, Post
 from .forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                     UpdatePicture, PostForm, ResetRequest, ResetPassword, NewRole)
-from flask_login import login_user, current_user, logout_user, login_required, fresh_login_required
-from termcolor import colored
-from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
-from flask_mail import Message
 from .helpers import password_check, save_picture, generate_confirmation_token,\
     generate_password_token, month_translation, create_role, role_label, get_all_roles
 from .constants import *
-from smtplib import SMTPException
-import os
-import psutil
+
+
 
 
 @app.route('/')

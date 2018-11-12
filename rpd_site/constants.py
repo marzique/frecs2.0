@@ -1,6 +1,12 @@
-'''
-App variables for API
-'''
+#!/usr/bin/env python
+'''App variables for API'''
+__author__ = "Denys Tarnavskyi"
+__copyright__ = "Copyright 2018, RPD site project"
+__license__ = "MIT"
+__version__ = "1.0"
+__email__ = "marzique@gmail.com"
+__status__ = "Development"
+
 
 VAR_MIN_PASS_LEN = 8
 VAR_MAIL_SALT = 'h4ck m3 ju57 n0w'
