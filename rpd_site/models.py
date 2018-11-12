@@ -53,7 +53,7 @@ class User(db.Model, UserMixin):
             print(self.username + " doesn't have role " + role_name)
             return False
 
-    def all_roles(self):
+    def get_roles(self):
         roles = []
         for role in self.roles:
             roles.append(role.name)

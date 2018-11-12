@@ -13,7 +13,7 @@ from termcolor import colored
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from flask_mail import Message
 from .helpers import password_check, save_picture, generate_confirmation_token,\
-    generate_password_token, month_translation, create_role, role_label
+    generate_password_token, month_translation, create_role, role_label, get_all_roles
 from .constants import *
 from smtplib import SMTPException
 import os
@@ -171,7 +171,7 @@ def login():
     else:
         form = LoginForm()
         if form.validate_on_submit():
-            user = User.query.filter_by(email=form.email.data.lower()).first()
+            user = User.query.filter_by(email=form.email.data.lower()).first()  
             if user and bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user, remember=form.remember.data)
                 next_page = request.args.get('next')
@@ -369,7 +369,7 @@ def user_id(user_id):
     if current_user.is_authenticated:
         user = User.query.get_or_404(user_id)
         spans = []
-        roles = user.all_roles()
+        roles = user.get_roles()
         for role in roles:
             span = role_label(role)
             spans.append(span)

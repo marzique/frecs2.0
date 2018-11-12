@@ -9,6 +9,7 @@ from .models import Role
 
 
 def create_role(role_name):
+
     '''
     adds new role to database
     '''
@@ -34,6 +35,18 @@ def delete_role(role_name):
         print('Role ' + role_name + ' deleted!')
     else:
         print('Role ' + role_name + " doesn't exist!")
+
+
+def get_all_roles():
+    '''
+    get's all role names from db table
+    '''
+    names = []
+    roles = Role.query.all()
+    for role in roles:
+        names.append(role.name)
+
+    return names
 
 
 # All useful functions and objects for routes
@@ -83,8 +96,8 @@ def password_check(password):
 def save_picture(form_picture, size_crop, is_avatar):
     '''
     Uploads cropped image with randomised
-filename and returns it's filename + input extension
-'''
+    filename and returns it's filename + input extension
+    '''
     random_hex = secrets.token_hex(8)
     # get image extension
     _, f_ext = os.path.splitext(form_picture.filename)
@@ -126,7 +139,7 @@ def generate_password_token(email):
 
 def role_label(role_name):
     label_classes = {'unconfirmed': 'btn-default',
-                                    'confirmed': 'btn-primary',
+                      'confirmed': 'btn-primary',
                      'admin': 'btn-success',
                      'student': 'btn-info',
                      'teacher': 'btn-warning',
