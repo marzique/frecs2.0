@@ -14,7 +14,7 @@ from PIL import Image
 from itsdangerous import URLSafeTimedSerializer
 from rpd_site import app, db
 from .constants import VAR_MAIL_SALT, VAR_SAFE_TIMED_KEY, VAR_PASSWORD_SALT
-from .models import Role, User
+from .models import Role, User, Post
 
 
 def create_role(role_name):
@@ -57,6 +57,9 @@ def get_all_roles():
 
 def get_number_of_users():
     return len(User.query.all())
+
+def get_number_of_posts():
+    return len(Post.query.all())
 
 
 # All useful functions and objects for routes

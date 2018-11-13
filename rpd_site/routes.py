@@ -19,11 +19,8 @@ from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from .models import User, Post
 from .forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                     UpdatePicture, PostForm, ResetRequest, ResetPassword, NewRole)
-from .helpers import password_check, save_picture, generate_confirmation_token,\
-    generate_password_token, month_translation, create_role, role_label, get_all_roles, get_number_of_users
+from .helpers import *
 from .constants import *
-
-
 
 
 @app.route('/')
@@ -519,4 +516,7 @@ def add_role():
 
 @app.route('/admin')
 def admin():
-    return render_template('dashboard.html', title="Панель Керування", number_of_users=get_number_of_users())
+    return render_template('dashboard.html', title="Панель Керування", 
+                            number_of_users=get_number_of_users(),
+                            number_of_posts=get_number_of_posts()
+                            )
