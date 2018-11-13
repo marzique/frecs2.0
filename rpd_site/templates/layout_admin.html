@@ -193,7 +193,7 @@
     </div>
 </nav>
 
-    <div id="wrapper" style="margin-top: 20px;">  <!-- to be exactly underneath-->
+    <div id="wrapper" class="toggled" style="margin-top: 20px;">  <!-- to be exactly underneath-->
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
@@ -249,12 +249,12 @@
     <script src="{{ url_for('static', filename='vendor/jquery/' + 'jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/js/' + 'bootstrap.bundle.min.js') }}"></script>
 
-    <!-- Menu Toggle Script -->
+    <!-- Menu Toggle Script (maybe will play around with it later). If so remove toggled class wrom #wrapper -->
     <script>
     // disabled toogling to make static sidebar
     // $("#menu-toggle").click(function(e) {
     //     e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
+        // $("#wrapper").toggleClass("toggled");
     // });
     </script>
 
