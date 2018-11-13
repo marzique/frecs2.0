@@ -198,7 +198,15 @@
                     <a href="{{ url_for('index') }}"><i class="fas fa-home"></i> &nbsp;Сайт</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fas fa-tachometer-alt"></i>&nbsp;Панель Керування</a>
+                    <a href="#" class=" 
+
+                        {% if title == 'Панель Керування' %} 
+                            chosen 
+                        {% endif %}
+                        
+                        "><i class="fas fa-tachometer-alt">
+                            
+                        </i>&nbsp;Панель Керування</a>
                 </li>
                 <li>
                     <a href="#"><i class="fas fa-newspaper"></i>&nbsp;Новини</a>
