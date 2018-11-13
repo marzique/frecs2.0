@@ -9,7 +9,7 @@ body {
 }
 
 #wrapper {
-  padding-left: 0;
+  padding-left: 250px;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
@@ -17,14 +17,15 @@ body {
 }
 
 #wrapper.toggled {
-  padding-left: 250px;
+  padding-left: 0px;
+  
 }
 
 #sidebar-wrapper {
   z-index: 1000;
   position: fixed;
   left: 250px;
-  width: 0;
+  width: 250px;
   height: 100%;
   margin-left: -250px;
   overflow-y: auto;
@@ -36,7 +37,7 @@ body {
 }
 
 #wrapper.toggled #sidebar-wrapper {
-  width: 250px;
+  width: 0;
 }
 
 #page-content-wrapper {
@@ -73,15 +74,9 @@ body {
   color: #999999;
 }
 
-.sidebar-nav li a:hover {
+.sidebar-nav li a:hover, .chosen {
   text-decoration: none;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.chosen{
-  text-decoration: none;
-  color: #fff;
+  color: #fff !important;
   background: rgba(255, 255, 255, 0.2);
 }
 

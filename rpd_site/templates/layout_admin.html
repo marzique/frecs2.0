@@ -203,7 +203,7 @@
                         {% if title == 'Панель Керування' %} 
                             chosen 
                         {% endif %}
-                        
+
                         "><i class="fas fa-tachometer-alt">
                             
                         </i>&nbsp;Панель Керування</a>
@@ -249,13 +249,18 @@
     <script src="{{ url_for('static', filename='vendor/jquery/' + 'jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/js/' + 'bootstrap.bundle.min.js') }}"></script>
 
-    <!-- Menu Toggle Script (maybe will play around with it later). If so remove toggled class wrom #wrapper -->
+    <!-- toggle class (has class at the beginning) -->
     <script>
-    // disabled toogling to make static sidebar
-    // $("#menu-toggle").click(function(e) {
-    //     e.preventDefault();
-        // $("#wrapper").toggleClass("toggled");
-    // });
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        if ($( "#menu-toggle" ).hasClass( "toggled" )){
+            $("#wrapper").removeClass("toggled");
+        }
+        else{
+            $("#wrapper").toggleClass("toggled");
+        }
+        
+    });
     </script>
 </body>
 </html>
