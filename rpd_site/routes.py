@@ -515,3 +515,8 @@ def add_role():
         return redirect(url_for('login'))
 
     return render_template('add_role.html', form=form, title="Додати Роль")
+
+
+@app.route('/admin')
+def admin():
+    return render_template('dashboard.html', title="панель Керування")
