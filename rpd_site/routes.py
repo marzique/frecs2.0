@@ -519,4 +519,4 @@ def add_role():
 
 @app.route('/admin')
 def admin():
-    return render_template('dashboard.html', title="панель Керування")
+    return render_template('dashboard.html', title="Панель Керування")
