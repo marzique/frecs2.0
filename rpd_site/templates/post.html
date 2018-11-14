@@ -31,7 +31,7 @@
         <div class="article-metadata float-right">
             <a class="mr-2" href="{{ url_for('user_id', user_id=post.author.id) }}">{{ post.author.username }}</a>
             <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
-            {% if post.author == current_user %}
+            {% if post.author == current_user or 'admin' in current_user.roles %}
             <div>
                 <a class="btn btn-warning btn-bg mt-1 mb-1" href="{{ url_for('update_post', post_id=post.id) }}">Редагувати</a>
                 <!--modal window appears on click-->
