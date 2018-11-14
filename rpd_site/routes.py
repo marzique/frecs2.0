@@ -202,7 +202,7 @@ def logout():
 @login_required
 def account():
     form = UpdatePicture()
-    # roles labels
+    # html snippets for role labels 
     spans = []
     roles = current_user.get_roles()
     for role in roles:
@@ -210,10 +210,9 @@ def account():
         spans.append(span)
 
     old_image_file = current_user.image_file
-    file_to_delete = os.path.join(
-        app.root_path, 'static/img/avatars', old_image_file)
+    file_to_delete = os.path.join(app.root_path, 'static/img/avatars', old_image_file)
     if form.validate_on_submit():
-        # update profile picture + delete previous
+        # update profile picture + delete previous (if it's not default)
         if form.picture.data:
             picture_file = save_picture(
                 form.picture.data, VAR_AVATAR_SIZE, True)
@@ -520,4 +519,13 @@ def admin():
     return render_template('dashboard.html', title="Панель Керування", 
                             number_of_users=get_number_of_users(),
                             number_of_posts=get_number_of_posts()
+                            )
+
+@app.route('/admin/news')
+def admin_news():
+    posts = Post.query.order_by(Post.date_posted.desc())
+    return render_template('dashboard_news.html', title="Новини", 
+                            number_of_users=get_number_of_users(),
+                            number_of_posts=get_number_of_posts(),
+                            posts=posts
                             )

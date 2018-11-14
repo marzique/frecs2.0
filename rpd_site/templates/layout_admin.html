@@ -198,7 +198,7 @@
                     <a href="{{ url_for('index') }}"><i class="fas fa-home"></i> &nbsp;Сайт</a>
                 </li>
                 <li>
-                    <a href="#" class=" 
+                    <a href="{{ url_for('admin') }}" class=" 
 
                         {% if title == 'Панель Керування' %} 
                             chosen 
@@ -209,7 +209,19 @@
                         </i>&nbsp;Панель Керування</a>
                 </li>
                 <li>
-                    <a href="{{ url_for('news') }}"><i class="fas fa-newspaper"></i>&nbsp;Новини&nbsp;<small style="color:white; background-color: #666; text-align: center; border-radius: 60%; padding-left:2%; padding-right:2%;">{{number_of_posts}}</small></a>
+                    <a href="{{ url_for('admin_news') }}" class=" 
+
+                        {% if title == 'Новини' %} 
+                            chosen 
+                        {% endif %}
+
+                        "><i class="fas fa-newspaper"></i>&nbsp;Новини&nbsp;<small style="color:white; background-color: #666; text-align: center; border-radius: 60%; padding-left:2%; padding-right:2%;">{{number_of_posts}}</small>&nbsp;<i class="fas fa-caret-down"></i></a>
+
+                        {% if title == 'Новини' %} 
+                                <a href="{{ url_for('news') }}" class="collapsed_item">Усі новини</a>
+                                <a href="{{ url_for('new_post') }}" class="collapsed_item">Додати новину</a>
+                        {% endif %}
+                        
                 </li>
                 <li>
                     <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" 
