@@ -209,9 +209,9 @@ def account():
         span = role_label(role)
         spans.append(span)
 
+    old_image_file = current_user.image_file
     file_to_delete = os.path.join(
-        app.root_path, 'static/img/avatars', current_user.image_file)
-    print(file_to_delete)
+        app.root_path, 'static/img/avatars', old_image_file)
     if form.validate_on_submit():
         # update profile picture + delete previous
         if form.picture.data:
@@ -219,7 +219,8 @@ def account():
                 form.picture.data, VAR_AVATAR_SIZE, True)
             current_user.image_file = picture_file
             db.session.commit()
-            os.remove(file_to_delete)
+            if old_image_file != 'default.jpg':
+                os.remove(file_to_delete)
             flash('Фото оновлено', 'success')
             return redirect(url_for('account'))
 
@@ -382,7 +383,7 @@ def user_id(user_id):
         if current_user.id == user.id:
             return redirect('account')
         else:
-            return render_template('user_page.html', user=user, image_file=image_file, spans=spans)
+            return render_template('user_page.html', user=user, image_file=image_file, spans=spans, title=user.username)
     else:
         flash("Спочатку увійдіть у свій обліковий запис", 'danger')
         return redirect(url_for('login'))
