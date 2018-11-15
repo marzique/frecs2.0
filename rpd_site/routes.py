@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 '''All website views'''
-__author__ = "Denys Tarnavskyi"
-__copyright__ = "Copyright 2018, RPD site project"
-__license__ = "MIT"
-__version__ = "1.0"
-__email__ = "marzique@gmail.com"
-__status__ = "Development"
+__author__ = 'Denys Tarnavskyi'
+__copyright__ = 'Copyright 2018, RPD site project'
+__license__ = 'MIT'
+__version__ = '1.0'
+__email__ = 'marzique@gmail.com'
+__status__ = 'Development'
 
 import os
 import psutil
@@ -37,12 +37,12 @@ def index():
         time = last_3_posts[-1].date_posted.strftime('%X')
     # in case of 0 posts
     else:
-        day = "26"
-        month = "August"
-        year = "1995"
-        time = "00:00:01"
+        day = '26'
+        month = 'August'
+        year = '1995'
+        time = '00:00:01'
     return render_template('index.html', last_3_posts=last_3_posts, day=day, month=month_translation(month), year=year,
-                           time=time, menuitem="index")
+                           time=time, menuitem='index')
 
 
 @app.route('/news')
@@ -52,22 +52,22 @@ def news():
     # LIFO
     posts = Post.query.order_by(Post.date_posted.desc()).paginate(
         page=page, per_page=VAR_POST_PER_PAGE)
-    return render_template('news.html', posts=posts, title="Новини", menuitem='news')
+    return render_template('news.html', posts=posts, title='Новини', menuitem='news')
 
 
 @app.route('/history')
 def history():
-    return render_template('history.html', title="Історія", menuitem='history')
+    return render_template('history.html', title='Історія', menuitem='history')
 
 
 @app.route('/schedule')
 def schedule():
-    return render_template('schedule.html', title="Розклад", menuitem='schedule')
+    return render_template('schedule.html', title='Розклад', menuitem='schedule')
 
 
 @app.route('/about')
 def about():
-    return render_template('news_old.html', articles=articles, title="Про Нас")
+    return render_template('news_old.html', articles=articles, title='Про Нас')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -78,7 +78,7 @@ def register():
     else:
         form = RegistrationForm()
         if request.method == 'GET':
-            return render_template('register.html', form=form, title="Реєстрація")
+            return render_template('register.html', form=form, title='Реєстрація')
         elif request.method == 'POST':
             if form.validate_on_submit():
                 # check password weakness first
@@ -108,9 +108,9 @@ def register():
                               'яке було надіслано на адресу: ' + email, 'success')
                         # change it to logging
                         print()
-                        print(colored("User: " + form.username.data + " , email: " + email + " registered",
+                        print(colored('User: ' + form.username.data + ' , email: ' + email + ' registered',
                                       'blue'))
-                        print(colored("token: " + token, 'blue'))
+                        print(colored('token: ' + token, 'blue'))
                         print()
                         login_user(user)
                         return redirect(url_for('account'))
@@ -119,20 +119,20 @@ def register():
                         # https://stackoverflow.com/a/16120288/10103803 - add
                         # logging here !!
                         print(
-                            colored("User: " + form.username.data + " , email: " + email + " not registered",
+                            colored('User: ' + form.username.data + ' , email: ' + email + ' not registered',
                                     'red'))
                         print(colored("SMTP error ", 'red'))
                         flash(
                             'Щось пішло не так, спробуйте пізніше або зверніться до адміністратора!', 'danger')
                 else:
                     print(
-                        colored("User: " + form.username.data + " , email: " + form.email.data.lower() + " used weak password",
+                        colored('User: ' + form.username.data + ' , email: ' + form.email.data.lower() + ' used weak password',
                                 'red'))
                     flash(
                         'Ваш пароль дуже слабкий, спробуйте додати Великі, малі літери, цифри, та спеціальні символи. '
                         'Пароль має складатись з щонайменше ' + str(VAR_MIN_PASS_LEN) + ' символів', 'danger')
 
-            return render_template('register.html', form=form, title="Реєстрація")
+            return render_template('register.html', form=form, title='Реєстрація')
 
 
 @app.route('/confirm_email/<token>', methods=['GET', 'POST'])
@@ -145,23 +145,23 @@ def confirm_email(token):
                             current_user.email, max_age=VAR_TOKEN_MAX_AGE)
         except SignatureExpired:
             return '<h1>Старе посилання. Для підтвердження пошти зверніться до адміністратора.</h1><br> \
-				   <a href="' + url_for("index") + '">Повернутись на сайт</a>'
+				   <a href="' + url_for('index') + '">Повернутись на сайт</a>'
 
         except BadSignature:
             return '<h1>Посилання не є дійсним. Для підтвердження пошти перейдіть по посиланню надісланому вам на пошту \
 					або зверніться до адміністратора.</h1><br> \
-							   <a href="' + url_for("index") + '">Повернутись на сайт</a>'
+							   <a href="' + url_for('index') + '">Повернутись на сайт</a>'
 
         # confirm user
         current_user.confirmed = 1
         current_user.add_role('confirmed')
         current_user.delete_role('unconfirmed')
         db.session.commit()
-        flash("Пошта " + current_user.email +
-              " прив'язана до аккаунту - " + current_user.username, 'success')
+        flash('Пошта ' + current_user.email +
+              ' прив\'язана до аккаунту - ' + current_user.username, 'success')
         return redirect(url_for('account'))
     else:
-        flash("Спочатку авторизуйтесь!", 'danger')
+        flash('Спочатку авторизуйтесь!', 'danger')
         return redirect(url_for('login'))
 
 
@@ -178,20 +178,20 @@ def login():
                 login_user(user, remember=form.remember.data)
                 next_page = request.args.get('next')
                 print()
-                print(colored(str(user) + " logged in", 'green'))
+                print(colored(str(user) + ' logged in', 'green'))
                 print()
                 return redirect(next_page) if next_page else redirect(url_for('index'))
             else:
                 flash('Неправильний email або пароль!', 'danger')
                 return redirect(url_for('login'))
-    return render_template('login.html', form=form, title="Увійти")
+    return render_template('login.html', form=form, title='Увійти')
 
 
 @app.route('/logout')
 def logout():
 	if current_user.is_authenticated:
 	    print()
-	    print(colored("User: " + str(current_user.username) + " logged out", 'red'))
+	    print(colored('User: ' + str(current_user.username) + ' logged out', 'red'))
 	    print()
 	    logout_user()
 	return redirect(url_for('login'))
@@ -241,13 +241,13 @@ def new_post():
     return render_template('new_post.html', title='Додати новину', form=form, legend='Додати новину')
 
 
-@app.route("/post/<int:post_id>")
+@app.route('/post/<int:post_id>')
 def post(post_id):
     post = Post.query.get_or_404(post_id)
     return render_template('post.html', title=post.title, post=post)
 
 
-@app.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
+@app.route('/post/<int:post_id>/update', methods=['GET', 'POST'])
 @login_required
 def update_post(post_id):
     post = Post.query.get_or_404(post_id)
@@ -271,7 +271,7 @@ def update_post(post_id):
                            form=form, legend='Редагувати новину')
 
 
-@app.route("/post/<int:post_id>/delete", methods=['POST'])
+@app.route('/post/<int:post_id>/delete', methods=['POST'])
 @login_required
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
@@ -310,9 +310,9 @@ def update_account():
 								яке було надіслано на адресу: ' + email, 'success')
                         print()
                         print(
-                            colored("User new name: " + form.username.data + " , changed email to: " + email,
+                            colored('User new name: ' + form.username.data + ' , changed email to: ' + email,
                                     'blue'))
-                        print(colored("token: " + token, 'blue'))
+                        print(colored('token: ' + token, 'blue'))
                         print()
                         return redirect(url_for('account'))
                     # catch GMAIL/SMTP error here
@@ -321,7 +321,7 @@ def update_account():
                         # logging here !!
                         print(
                             colored(
-                                "User: " + form.username.data + " , email: " + email + " didn't change account", 'red'))
+                                'User: ' + form.username.data + ' , email: ' + email + ' didn\'t change account', 'red'))
                         print(colored("SMTP error ", 'red'))
                         flash(
                             'Щось пішло не так, спробуйте пізніше або зверніться до адміністратора!', 'danger')
@@ -345,7 +345,7 @@ def update_account():
             return render_template('update_account.html', title='Редагувати профіль', form=form, legend='Редагувати профіль')
 
     else:
-        flash("Спочатку увійдіть у свій обліковий запис", 'danger')
+        flash('Спочатку увійдіть у свій обліковий запис', 'danger')
         return redirect(url_for('login'))
 
     return render_template('update_account.html', title='Редагувати профіль', form=form, legend='Редагувати профіль')
@@ -355,10 +355,10 @@ def update_account():
 def users():
     if current_user.is_authenticated:
         users = User.query.all()
-        return render_template('users.html', users=users, title="Користувачі")
+        return render_template('users.html', users=users, title='Користувачі')
 
     else:
-        flash("Спочатку увійдіть у свій обліковий запис", 'danger')
+        flash('Спочатку увійдіть у свій обліковий запис', 'danger')
         return redirect(url_for('login'))
 
 
@@ -372,16 +372,16 @@ def user_id(user_id):
         image_file = url_for('static', filename='img/avatars/' + user.image_file)
         form = AddRole()
         if form.validate_on_submit():
-            pass
+            flash(form.role.data, 'success')
     else:
-        flash("Спочатку увійдіть у свій обліковий запис", 'danger')
+        flash('Спочатку увійдіть у свій обліковий запис', 'danger')
         return redirect(url_for('login'))
 
     return render_template('user_page.html', user=user, image_file=image_file, spans=spans, title=user.username, form=form)
 
 
 # Higher role must be required
-@app.route("/user/<int:user_id>/delete", methods=['POST'])
+@app.route('/user/<int:user_id>/delete', methods=['POST'])
 @login_required
 def delete_user(user_id):
     '''
@@ -412,7 +412,7 @@ def username_news(username):
     posts = Post.query.filter_by(author=user) \
         .order_by(Post.date_posted.desc()) \
         .paginate(page=page, per_page=VAR_POST_PER_PAGE)
-    return render_template('news.html', posts=posts, title="Новини", menuitem='news', user=username)
+    return render_template('news.html', posts=posts, title='Новини', menuitem='news', user=username)
 
 
 @app.errorhandler(404)
