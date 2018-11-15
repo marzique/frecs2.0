@@ -372,7 +372,9 @@ def user_id(user_id):
         image_file = url_for('static', filename='img/avatars/' + user.image_file)
         form = AddRole()
         if form.validate_on_submit() and request.method == 'POST':
-            flash(form.role.data, 'success')
+            user.add_role(form.role.data)
+            user.delete_role('confirmed')
+            user.delete_role('unconfirmed')
             return redirect(url_for('user_id', user_id=user.id))
     else:
         flash('Спочатку увійдіть у свій обліковий запис', 'danger')

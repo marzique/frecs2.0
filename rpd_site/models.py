@@ -8,6 +8,7 @@ __email__ = "marzique@gmail.com"
 __status__ = "Development"
 
 from datetime import datetime
+from flask import flash
 from flask_login import UserMixin
 from flask_security import RoleMixin
 from rpd_site import db, login_manager
@@ -49,14 +50,16 @@ class User(db.Model, UserMixin):
         if role_search and role_name not in self.roles:
             self.roles.append(role_search)
             db.session.commit()
+            flash('Роль додана ', 'success')
             return True
         else:
             print(role_name + " doesn't exist or user already has it!")
+            flash('Ця роль вже додана', 'warning')
             return False
 
     def delete_role(self, role_name):
         role = Role.query.filter_by(name=role_name).first()
-        if role:
+        if role and role in self.roles:
             role.users.remove(self)
             db.session.commit()
         else:
