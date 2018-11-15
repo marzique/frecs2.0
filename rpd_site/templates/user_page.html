@@ -1,8 +1,5 @@
- {% extends "layout.html" %}
-
+{% extends "layout.html" %}
 {% block body %}
-
-
     <!-- Page Content -->
     <div class="container">
 
@@ -75,9 +72,22 @@
               blanditiis necessitatibus vel mollitia dolorum laudantium, voluptate dolores
               iure maxime ducimus fugit.</p>
             <hr>
+
+            <form method="POST" action="">
+              {{ form.hidden_tag() }}
+              <fieldset class="form-group">
+                  <legend class="border-bottom mb-4">Додати роль</legend>
+                  <div class="form-group">
+                      {{ form.role.label(class="form-control-label") }}
+                      {{ form.role(class="form-control form-control-lg") }}
+
+                  </div>
+              </fieldset>
+              <div class="form-group">
+                  {{ form.submit(class="btn btn-outline-info") }}
+              </div>
+            </form>
         </div>
-
-
       </div>
       <!-- /.row -->
 

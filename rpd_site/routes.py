@@ -17,8 +17,7 @@ from flask_mail import Message
 from rpd_site import app, db, bcrypt, mail
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from .models import User, Post
-from .forms import (RegistrationForm, LoginForm, UpdateAccountForm,
-                    UpdatePicture, PostForm, ResetRequest, ResetPassword, NewRole)
+from .forms import *
 from .helpers import *
 from .constants import *
 
@@ -367,18 +366,18 @@ def users():
 def user_id(user_id):
     if current_user.is_authenticated:
         user = User.query.get_or_404(user_id)
-        # html snippets of each role
-        spans = role_spans(user)
-
-        image_file = url_for(
-            'static', filename='img/avatars/' + user.image_file)
         if current_user.id == user.id:
             return redirect('account')
-        else:
-            return render_template('user_page.html', user=user, image_file=image_file, spans=spans, title=user.username)
+        spans = role_spans(user) # html snippets of each role
+        image_file = url_for('static', filename='img/avatars/' + user.image_file)
+        form = AddRole()
+        if form.validate_on_submit():
+            pass
     else:
         flash("Спочатку увійдіть у свій обліковий запис", 'danger')
         return redirect(url_for('login'))
+
+    return render_template('user_page.html', user=user, image_file=image_file, spans=spans, title=user.username, form=form)
 
 
 # Higher role must be required

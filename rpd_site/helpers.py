@@ -162,3 +162,4 @@ def role_spans(user):
         span = role_label(role)
         spans.append(span)
     return spans
+    

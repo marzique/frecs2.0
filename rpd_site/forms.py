@@ -97,7 +97,11 @@ class NewRole(FlaskForm):
                        validators=[DataRequired(), Length(min=4, max=15)])
     submit = SubmitField('Додати')
 
+role_tuples = []
+tuppy = zip(get_all_roles(), get_all_roles())
+for item1, item2 in tuppy:
+    role_tuples.append((item1, item2))
 
 class AddRole(FlaskForm):
-    role = SelectField(label='Роль', choices=get_all_roles())
+    role = SelectField(label='Роль', choices=role_tuples)
     submit = SubmitField('Додати')
