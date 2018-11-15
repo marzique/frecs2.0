@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 '''Helping functions'''
-__author__ = "Denys Tarnavskyi"
-__copyright__ = "Copyright 2018, RPD site project"
-__license__ = "MIT"
-__version__ = "1.0"
-__email__ = "marzique@gmail.com"
-__status__ = "Development"
+__author__ = 'Denys Tarnavskyi'
+__copyright__ = 'Copyright 2018, RPD site project'
+__license__ = 'MIT'
+__version__ = '1.0'
+__email__ = 'marzique@gmail.com'
+__status__ = 'Development'
 
 import re
 import os
@@ -42,7 +42,7 @@ def delete_role(role_name):
         db.session.commit()
         print('Role ' + role_name + ' deleted!')
     else:
-        print('Role ' + role_name + " doesn't exist!")
+        print('Role ' + role_name + ' doesn\'t exist!')
 
 
 def get_all_roles():

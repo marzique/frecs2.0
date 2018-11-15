@@ -72,9 +72,10 @@
               blanditiis necessitatibus vel mollitia dolorum laudantium, voluptate dolores
               iure maxime ducimus fugit.</p>
 
+            {% if 'admin' in current_user.roles %}
             <form method="POST" action="">
               {{ form.hidden_tag() }}
-              <legend class="border-bottom mb-4">Додати роль</legend>
+              <legend class="border-bottom mb-4">Керування доступом</legend>
               <div class="form-group">
                 <div class="col-4">
                           {{ form.role(class="form-control") }}
@@ -84,6 +85,7 @@
                 {{ form.submit(class="btn btn-outline-info btn-sm") }}
               </div>
             </form>
+            {% endif %}
         </div>
       </div>
       <!-- /.row -->

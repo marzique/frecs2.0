@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+'''All form models'''
+__author__ = 'Denys Tarnavskyi'
+__copyright__ = 'Copyright 2018, RPD site project'
+__license__ = 'MIT'
+__version__ = '1.0'
+__email__ = 'marzique@gmail.com'
+__status__ = 'Development'
+
 from flask_wtf import FlaskForm, RecaptchaField
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
@@ -97,11 +106,19 @@ class NewRole(FlaskForm):
                        validators=[DataRequired(), Length(min=4, max=15)])
     submit = SubmitField('Додати')
 
-role_tuples = []
-tuppy = zip(get_all_roles(), get_all_roles())
-for item1, item2 in tuppy:
-    role_tuples.append((item1, item2))
+
+def get_role_tuples():
+        '''make tuples duplicating role names for SelectField choices'''
+        role_tuples = []
+        tuppy = zip(get_all_roles(), get_all_roles())
+        for item1, item2 in tuppy:
+            if item1 not in ['unconfirmed', 'confirmed']:
+                role_tuples.append((item1, item2))
+        return role_tuples
+
 
 class AddRole(FlaskForm):
-    role = SelectField(label='Роль', choices=role_tuples)
-    submit = SubmitField('Додати')
+    role = SelectField(label='Роль', choices=get_role_tuples())
+    submit = SubmitField('Надати роль')
+
+    

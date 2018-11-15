@@ -46,11 +46,12 @@ class User(db.Model, UserMixin):
 
     def add_role(self, role_name):
         role_search = Role.query.filter_by(name=role_name).first()
-        if role_search:
+        if role_search and role_name not in self.roles:
             self.roles.append(role_search)
             db.session.commit()
+            return True
         else:
-            print(role_name + " doesn't exist!")
+            print(role_name + " doesn't exist or user already has it!")
             return False
 
     def delete_role(self, role_name):
