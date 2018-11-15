@@ -202,13 +202,9 @@ def logout():
 @login_required
 def account():
     form = UpdatePicture()
-    # html snippets for role labels 
-    spans = []
-    roles = current_user.get_roles()
-    for role in roles:
-        span = role_label(role)
-        spans.append(span)
-
+    # get html snippets for role labels 
+    spans = role_spans(current_user)
+    # store current image to delete it after updating
     old_image_file = current_user.image_file
     file_to_delete = os.path.join(app.root_path, 'static/img/avatars', old_image_file)
     if form.validate_on_submit():
@@ -371,11 +367,8 @@ def users():
 def user_id(user_id):
     if current_user.is_authenticated:
         user = User.query.get_or_404(user_id)
-        spans = []
-        roles = user.get_roles()
-        for role in roles:
-            span = role_label(role)
-            spans.append(span)
+        # html snippets of each role
+        spans = role_spans(user)
 
         image_file = url_for(
             'static', filename='img/avatars/' + user.image_file)
@@ -497,14 +490,13 @@ def reset_password(reset_token):
 def add_role():
     if current_user.is_authenticated:
         form = NewRole()
-        if request.method == 'POST':
-            if form.validate_on_submit():
-                role_name = form.role.data.lower()
-                if create_role(role_name):
-                    flash('Нова Роль додана!', 'success')
-                    return redirect(url_for('account'))
-                else:
-                    flash('Така роль вже існує!', 'danger')
+        if form.validate_on_submit():
+            role_name = form.role.data.lower()
+            if create_role(role_name):
+                flash('Нова Роль додана!', 'success')
+                return redirect(url_for('account'))
+            else:
+                flash('Така роль вже існує!', 'danger')
     else:
         flash("Спочатку увійдіть у свій обліковий запис", 'danger')
         return redirect(url_for('login'))

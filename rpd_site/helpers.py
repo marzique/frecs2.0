@@ -153,3 +153,12 @@ def role_label(role_name):
                      }
 
     return '<span style="padding: 2px;" class="btn btn-sm ' + label_classes[role_name] + '">' + role_name + '</span>'
+
+
+def role_spans(user):
+    spans = []
+    roles = user.get_roles()
+    for role in roles:
+        span = role_label(role)
+        spans.append(span)
+    return spans
