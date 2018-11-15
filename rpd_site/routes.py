@@ -497,21 +497,20 @@ def reset_password(reset_token):
 def add_role():
     if current_user.is_authenticated:
         form = NewRole()
-        if form.validate_on_submit():
-            role_name = form.role.data.lower()
-            if create_role(role_name):
-                flash('Нова Роль додана!', 'success')
-                return redirect(url_for('account'))
-            else:
-                flash('Така роль вже існує!', 'danger')
-        else:
-            flash('Назва ролі введена не вірно!', 'danger')
-
+        if request.method == 'POST':
+            if form.validate_on_submit():
+                role_name = form.role.data.lower()
+                if create_role(role_name):
+                    flash('Нова Роль додана!', 'success')
+                    return redirect(url_for('account'))
+                else:
+                    flash('Така роль вже існує!', 'danger')
     else:
         flash("Спочатку увійдіть у свій обліковий запис", 'danger')
         return redirect(url_for('login'))
 
     return render_template('add_role.html', form=form, title="Додати Роль")
+    
 
 
 @app.route('/admin')

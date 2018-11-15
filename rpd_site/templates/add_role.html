@@ -8,7 +8,18 @@
                 <legend class="border-bottom mb-4">Додати роль</legend>
                 <div class="form-group">
                     {{ form.role.label(class="form-control-label") }}
-                    {{ form.role(class="form-control form-control-lg") }}
+
+                    {% if form.role.errors %}
+                        {{ form.role(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.role.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.role(class="form-control form-control-lg") }}
+                    {% endif %}
+
                 </div>
             </fieldset>
             <div class="form-group">
