@@ -371,8 +371,9 @@ def user_id(user_id):
         spans = role_spans(user) # html snippets of each role
         image_file = url_for('static', filename='img/avatars/' + user.image_file)
         form = AddRole()
-        if form.validate_on_submit():
+        if form.validate_on_submit() and request.method == 'POST':
             flash(form.role.data, 'success')
+            return redirect(url_for('user_id', user_id=user.id))
     else:
         flash('Спочатку увійдіть у свій обліковий запис', 'danger')
         return redirect(url_for('login'))
@@ -505,6 +506,7 @@ def add_role():
 
 
 @app.route('/admin')
+@login_required
 def admin():
     return render_template('dashboard.html', title="Панель Керування", 
                             number_of_users=get_number_of_users(),
@@ -512,6 +514,7 @@ def admin():
                             )
 
 @app.route('/admin/news')
+@login_required
 def admin_news():
     posts = Post.query.order_by(Post.date_posted.desc())
     return render_template('dashboard_news.html', title="Новини", 
