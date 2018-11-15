@@ -134,8 +134,8 @@
                                 {% if 'admin' in current_user.roles %}
                                 <a class="dropdown-item" style="color:#0C5815;" href="{{ url_for('admin') }}">Панель адміністратора</a>
                                 <a class="dropdown-item" style="color:#0C5815;" href="{{ url_for('new_post') }}">Додати новину</a>
-                                {% endif %}
                                 <div class="dropdown-divider"></div>
+                                {% endif %}
                                 <a class="dropdown-item text-danger" href="{{ url_for('logout') }}">Вийти</a>
                             </div>
                         {% else %}
