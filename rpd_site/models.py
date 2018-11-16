@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 '''Database models and tables'''
-__author__ = "Denys Tarnavskyi"
-__copyright__ = "Copyright 2018, RPD site project"
-__license__ = "MIT"
-__version__ = "1.0"
-__email__ = "marzique@gmail.com"
-__status__ = "Development"
+__author__ = 'Denys Tarnavskyi'
+__copyright__ = 'Copyright 2018, RPD site project'
+__license__ = 'MIT'
+__version__ = '1.0'
+__email__ = 'marzique@gmail.com'
+__status__ = 'Development'
 
 from datetime import datetime
 from flask import flash
@@ -53,7 +53,7 @@ class User(db.Model, UserMixin):
             flash('Роль додана ', 'success')
             return True
         else:
-            print(role_name + " doesn't exist or user already has it!")
+            print(role_name + ' doesn\'t exist or user already has it!')
             flash('Ця роль вже додана', 'warning')
             return False
 
@@ -63,7 +63,7 @@ class User(db.Model, UserMixin):
             role.users.remove(self)
             db.session.commit()
         else:
-            print(self.username + " doesn't have role " + role_name)
+            print(self.username + ' doesn\'t have role ' + role_name)
             return False
 
     def get_roles(self):

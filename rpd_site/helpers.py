@@ -144,6 +144,7 @@ def generate_password_token(email):
 
 
 def role_label(role_name):
+    '''generate HTML button snippet for role'''
     label_classes = {'unconfirmed': 'btn-default',
                       'confirmed': 'btn-primary',
                      'admin': 'btn-success',
@@ -152,10 +153,13 @@ def role_label(role_name):
                      'moderator': 'btn-danger'
                      }
 
-    return '<span style="padding: 2px;" class="btn btn-sm ' + label_classes[role_name] + '">' + role_name + '</span>'
+    return '<button type="button" style="padding: 2px;" data-whatever="' + role_name + '"\
+    data-toggle="modal" data-target="#deleteModal" class="btn btn-sm '\
+     + label_classes[role_name] + '">' + role_name + '</button>'
 
-
+# TODO: rename span to button (figure out how to refactor variable across all files like in PyCharm)
 def role_spans(user):
+    '''Generate list of role spans(buttons!) for specific user'''
     spans = []
     roles = user.get_roles()
     for role in roles:

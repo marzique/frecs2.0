@@ -93,4 +93,26 @@
     </div>
     <!-- /.container -->
 
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Видалити роль?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Закрити">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Повернутися</button>
+                    <form action="#" method="POST" id="action_form">
+                        <a class="btn btn-danger" id="bitch" type="submit" value="Видалити" href="">Видалити</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
 {% endblock body %}

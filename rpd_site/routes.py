@@ -275,7 +275,7 @@ def update_post(post_id):
 @login_required
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
-    if post.author != current_user or 'admin' not in current_user.roles:
+    if 'admin' not in current_user.roles:
         abort(403)
     db.session.delete(post)
     db.session.commit()
@@ -524,3 +524,17 @@ def admin_news():
                             number_of_posts=get_number_of_posts(),
                             posts=posts
                             )
+
+
+# Higher role must be required
+@app.route('/users/<int:user_id>/delete_role/<string:role>', methods=['POST'])
+@login_required
+def delete_user_role(user_id, role):
+    user = User.query.get_or_404(user_id)
+    try: 
+        user.delete_role(role)
+        flash('Роль видалено', 'warning')
+    except:
+        flash('якась хуйня', 'danger')
+    return redirect(url_for('users', user_id=user_id))
+

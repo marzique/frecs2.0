@@ -267,5 +267,24 @@
 <!-- Bootstrap core JavaScript -->
 <script src="{{ url_for('static', filename='vendor/jquery/' + 'jquery.min.js') }}"></script>
 <script src="{{ url_for('static', filename='vendor/bootstrap/js/' + 'bootstrap.bundle.min.js') }}"></script>
+
+<!-- Detect which button was pressed for modal show (Role) -->
+<script type="text/javascript">
+        $('#deleteModal').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget) // Button that triggered the modal
+          var url = $(location).attr('href')
+          var user_id = /[^/]*$/.exec(url)[0] // get everything after last 'slash'
+          var role = button.data('whatever') // Extract info from data-* attributes
+          var action_url = '/users/' + user_id + '/delete_role/' + role
+
+          // $('#action_form').get(0).setAttribute('action', action_url);
+
+          $("a[href]").attr('href','https://www.google.com.ua/search?q=' + role + user_id)
+          // $("a[href]").attr('href', action_url)
+        })
+
+
+</script>
+
 </body>
 </html>
