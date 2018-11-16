@@ -536,5 +536,5 @@ def delete_user_role(user_id, role):
         flash('Роль видалено', 'warning')
     except:
         flash('якась хуйня', 'danger')
-    return redirect(url_for('users', user_id=user_id))
+    return redirect(url_for('user_id', user_id=user_id))
 
