@@ -531,10 +531,7 @@ def admin_news():
 @login_required
 def delete_user_role(user_id, role):
     user = User.query.get_or_404(user_id)
-    try: 
-        user.delete_role(role)
-        flash('Роль видалено', 'warning')
-    except:
-        flash('якась хуйня', 'danger')
+    user.delete_role(role)
+    flash('Роль видалено', 'warning')
     return redirect(url_for('user_id', user_id=user_id))
 
