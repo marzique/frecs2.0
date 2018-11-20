@@ -45,6 +45,12 @@ class User(db.Model, UserMixin):
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='joined'))
 
+    # def is_superadmin(self):
+    #     if self.id == 1:
+    #         return True
+    #     else:
+    #         return False
+
     def add_role(self, role_name):
         role_search = Role.query.filter_by(name=role_name).first()
         if role_search and role_name not in self.roles:
@@ -54,7 +60,7 @@ class User(db.Model, UserMixin):
             return True
         else:
             print(role_name + ' doesn\'t exist or user already has it!')
-            flash('Ця роль вже додана', 'warning')
+            flash('Ця роль не існує або вже була додана!', 'warning')
             return False
 
     def delete_role(self, role_name):
@@ -117,3 +123,5 @@ class Post(db.Model):
 
     def __int__(self):
         return self.id
+
+
