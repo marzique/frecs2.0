@@ -51,7 +51,7 @@ class User(db.Model, UserMixin):
     #     else:
     #         return False
 
-    def add_role(self, *args):
+    def add_roles(self, *args):
         added_roles = list(args)
         for role_name in args:
             role_search = Role.query.filter_by(name=role_name).first()

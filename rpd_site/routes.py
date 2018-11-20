@@ -103,7 +103,7 @@ def register():
                         db.session.add(user)
                         db.session.commit()
                         # standart role when just registered
-                        user.add_role('unconfirmed')
+                        user.add_roles('unconfirmed')
                         flash('Ваш обліковий запис створено. Для підтвердження поштової адреси перейдіть по посиланню '
                               'яке було надіслано на адресу: ' + email, 'success')
                         # change it to logging
@@ -154,7 +154,7 @@ def confirm_email(token):
 
         # confirm user
         current_user.confirmed = 1
-        current_user.add_role('confirmed')
+        current_user.add_roles('confirmed')
         current_user.delete_role('unconfirmed')
         db.session.commit()
         flash('Пошта ' + current_user.email +
@@ -372,7 +372,7 @@ def user_id(user_id):
         image_file = url_for('static', filename='img/avatars/' + user.image_file)
         form = AddRole()
         if form.validate_on_submit() and request.method == 'POST':
-            user.add_role(form.role.data)
+            user.add_roles(form.role.data)
             user.delete_role('confirmed')
             user.delete_role('unconfirmed')
             return redirect(url_for('user_id', user_id=user.id))

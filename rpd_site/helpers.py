@@ -170,4 +170,4 @@ def role_spans(user):
 
 # def add_superadmin():
 #     user = User.query.filter_by(id=1).first()
-#     user.add_role('superadmin')
+#     user.add_roles('superadmin')
