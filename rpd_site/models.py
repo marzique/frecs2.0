@@ -75,6 +75,12 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.confirmed}')"
 
+    def __str__(self):
+        return self.username
+
+    def __int__(self):
+        return self.id
+
 
 class Role(db.Model, RoleMixin):
     '''
@@ -87,6 +93,8 @@ class Role(db.Model, RoleMixin):
     def __str__(self):
         return self.name
 
+    def __int__(self):
+        return self.id
 
 class Post(db.Model):
     '''
@@ -103,3 +111,9 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}', '{self.content[:15]}')"
+
+    def __str__(self):
+        return self.title
+
+    def __int__(self):
+        return self.id
