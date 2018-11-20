@@ -14,9 +14,9 @@
                   <thead>
                     <tr>
                       <th scope="col"></th>
+                      <th scope="col" style="width:5%">Фото</th>
                       <th scope="col">Ім\'я</th>
                       <th scope="col">email</th>
-                      <th scope="col">Додано</th>
                       <th scope="col"></th>
                     </tr>
                   </thead>
@@ -35,10 +35,10 @@
                       
                       <td>
                         {% if current_user.username != user.username %}
-                        <a class="btn btn-success btn-sm" href="{{ url_for('user_id', user_id=user.id) }}"><i class="fas fa-book-open"></i></a>
+                        <a class="btn btn-success btn-sm" href="{{ url_for('user_id', user_id=user.id) }}"><i class="fas fa-user"></i></a>
                         <form action="{{ url_for('delete_user', user_id=user.id) }}" method="POST">
                          <!-- <input class="btn btn-danger btn-sm" type="submit" value=""> -->
-                         <button class="btn btn-danger btn-sm" type="submit" value="" style="padding: 3px 10px 3px 10px; margin-top: 5px;"><i class="fas fa-trash-alt"></i></button>
+                         <button class="btn btn-danger btn-sm" type="submit" value="" style="margin-top: 5px;"><i class="fas fa-trash-alt"></i></button>
                          {% endif %}
                         </form>
                       </td>
