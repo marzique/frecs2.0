@@ -272,18 +272,12 @@
 <script type="text/javascript">
         $('#deleteModal').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget) // Button that triggered the modal
-          var url = $(location).attr('href')
+          var url = $(location).attr('href')  // current url to get user id
           var user_id = /[^/]*$/.exec(url)[0] // get everything after last 'slash'
-          var role = button.data('whatever') // Extract info from data-* attributes
+          var role = button.data('whatever')  // Extract info from data-* attributes
           var action_url = '/users/' + user_id + '/delete_role/' + role
-
-          // $('#action_form').get(0).setAttribute('action', action_url);
-
-          $("a[href]").attr('href','https://www.google.com.ua/search?q=' + role + user_id)
-          // $("a[href]").attr('href', action_url)
+          $("#action_form").attr('action', action_url) // set delete action for specific role
         })
-
-
 </script>
 
 </body>

@@ -13,7 +13,7 @@ import secrets
 from PIL import Image
 from itsdangerous import URLSafeTimedSerializer
 from rpd_site import app, db
-from .constants import VAR_MAIL_SALT, VAR_SAFE_TIMED_KEY, VAR_PASSWORD_SALT
+from .constants import VAR_MAIL_SALT, VAR_SAFE_TIMED_KEY, VAR_PASSWORD_SALT, VAR_MIN_PASS_LEN
 from .models import Role, User, Post
 
 
@@ -88,7 +88,7 @@ def password_check(password):
             returns True if all checks passed
             https://stackoverflow.com/a/32542964/10103803
     """
-    length_error = len(password) < 8                                                        # length
+    length_error = len(password) < VAR_MIN_PASS_LEN                                         # length
     digit_error = re.search(r"\d", password) is None                                        # digits
     uppercase_error = re.search(r"[A-Z]", password) is None                                 # uppercase
     lowercase_error = re.search(r"[a-z]", password) is None                                 # lowercase
