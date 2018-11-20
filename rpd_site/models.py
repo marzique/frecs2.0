@@ -51,17 +51,24 @@ class User(db.Model, UserMixin):
     #     else:
     #         return False
 
-    def add_role(self, role_name):
-        role_search = Role.query.filter_by(name=role_name).first()
-        if role_search and role_name not in self.roles:
-            self.roles.append(role_search)
-            db.session.commit()
-            flash('Роль додана ', 'success')
+    def add_role(self, *args):
+        added_roles = list(args)
+        for role_name in args:
+            role_search = Role.query.filter_by(name=role_name).first()
+            if role_search and role_name not in self.roles:
+                self.roles.append(role_search)
+                db.session.commit()
+            else:
+                print(role_name + ' doesn\'t exist or user already has it!')
+                added_roles.remove(role_name)
+
+        if added_roles:
+            flash('Ролі які були додані: ' + ', '.join(added_roles), 'success')
             return True
         else:
-            print(role_name + ' doesn\'t exist or user already has it!')
-            flash('Ця роль не існує або вже була додана!', 'warning')
+            flash('Ці ролі не існують або вже були додані' + ', '.join(added_roles), 'warning')
             return False
+
 
     def delete_role(self, role_name):
         role = Role.query.filter_by(name=role_name).first()
