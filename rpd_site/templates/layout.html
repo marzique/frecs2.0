@@ -276,8 +276,7 @@
           var user_id = /[^/]*$/.exec(url)[0] // get everything after last 'slash'
           var role = button.data('whatever')  // Extract info from data-* attributes
           var action_url = '/users/' + user_id + '/delete_role/' + role
-          // var action_url = '/users/' + user_id + '/delete_role/' + role
-          $('#action_form').attr('action', action_url) // set delete action for specific role
+          $("#action_form").attr('action', action_url) // set delete action for specific role
         })
 </script>
 

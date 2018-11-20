@@ -464,12 +464,11 @@ def reset_password(reset_token):
         email = signature.loads(
             reset_token, salt=VAR_PASSWORD_SALT, max_age=VAR_TOKEN_MAX_AGE)
     except SignatureExpired:
-        return '<h1>Старе посилання. Для підтвердження пошти зверніться до адміністратора.</h1><br> \
-			   <a href="' + url_for("index") + '">Повернутись на сайт</a>'
+        return '<h1>Старе посилання. Спробуйте відновити пароль ще раз!.</h1><br> \
+			   <a href="' + url_for("reset_password_request") + '">Новий запит</a>'
 
     except BadSignature:
-        return '<h1>Посилання не є дійсним. Для підтвердження пошти перейдіть по посиланню надісланому вам на пошту \
-				або зверніться до адміністратора.</h1><br> \
+        return '<h1>Посилання не є дійсним.</h1><br> \
 						   <a href="' + url_for("index") + '">Повернутись на сайт</a>'
 
     form = ResetPassword()
@@ -480,6 +479,7 @@ def reset_password(reset_token):
                 form.password.data).decode('utf-8')
             db.session.commit()
             flash('Новий пароль встановлено!', 'success')
+            return redirect(url_for('login'))
         else:
             flash(
                 'Ваш пароль дуже слабкий, спробуйте додати Великі, малі літери, цифри, та спеціальні символи. '
@@ -534,4 +534,3 @@ def delete_user_role(user_id, role):
     user.delete_role(role)
     flash('Роль видалено', 'warning')
     return redirect(url_for('user_id', user_id=user_id))
-
