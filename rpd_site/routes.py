@@ -526,10 +526,21 @@ def admin_news():
                             )
 
 
+@app.route('/admin/users')
+@login_required
+def admin_users():
+    users = User.query.all()
+    return render_template('dashboard_users.html', title="Користувачі", 
+                            number_of_users=get_number_of_users(),
+                            number_of_posts=get_number_of_posts(),
+                            users=users
+                            )
+
 # Higher role must be required
 @app.route('/users/<int:user_id>/delete_role/<string:role>', methods=['POST'])
 @login_required
 def delete_user_role(user_id, role):
+    '''Deletes role from user by POST request'''
     user = User.query.get_or_404(user_id)
     user.delete_role(role)
     flash('Роль видалено', 'warning')

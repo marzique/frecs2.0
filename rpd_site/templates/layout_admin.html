@@ -52,9 +52,9 @@
     <div class="container">
         {% if menuitem == 'index' %}
         <a class="navbar-brand" style="color:white;" href="{{ url_for('index') }}">
-            {% else %}
-            <a class="navbar-brand" style="color:rgba(255,255,255,.5);" href="{{ url_for('index') }}">
-                {% endif %}
+        {% else %}
+        <a class="navbar-brand" style="color:rgba(255,255,255,.5);" href="{{ url_for('index') }}">
+        {% endif %}
                 <img src="{{ url_for('static', filename='img/' + 'knu.jpg') }}" width="50" height="50"
                      alt="Логотип Радіофізичного факультету">
             </a>
@@ -209,6 +209,20 @@
                         </i>&nbsp;Панель Керування</a>
                 </li>
                 <li>
+                    <a href="{{ url_for('admin_users') }}" class="
+
+                    {% if title == 'Користувачі' %} 
+                        chosen 
+                    {% endif %}
+
+                    "><i class="fas fa-users"></i>&nbsp;Користувачі&nbsp;<small style="color:white; background-color: #666; text-align: center; border-radius: 60%; padding-left:2%; padding-right:2%;">{{number_of_users}}</small>&nbsp;<i class="fas fa-caret-down"></i></a>
+
+                    {% if title == 'Користувачі' %} 
+                                <a href="{{ url_for('users') }}" class="collapsed_item">Усі Користувачі</a>
+                                <a href="#" class="collapsed_item">Ролі</a>
+                    {% endif %}
+                </li>
+                <li>
                     <a href="{{ url_for('admin_news') }}" class=" 
 
                         {% if title == 'Новини' %} 
@@ -233,9 +247,6 @@
                 </li>
                 <li>
                     <a href="#"><i class="fas fa-chart-line"></i>&nbsp;Статистика</a>
-                </li>
-                <li>
-                    <a href="{{ url_for('users') }}"><i class="fas fa-users"></i>&nbsp;Користувачі&nbsp;<small style="color:white; background-color: #666; text-align: center; border-radius: 60%; padding-left:2%; padding-right:2%;">{{number_of_users}}</small></a>
                 </li>
                 <li>
                     <a href="#"><i class="fas fa-chalkboard-teacher"></i>&nbsp;Конференції</a>
