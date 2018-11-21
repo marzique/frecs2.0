@@ -112,3 +112,6 @@ venv.bak/
 
 # Mac trash
 .DS_Store
+
+# editor
+.vscode/
