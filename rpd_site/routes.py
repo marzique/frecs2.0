@@ -16,7 +16,7 @@ from flask_login import login_user, current_user, logout_user, login_required, f
 from flask_mail import Message
 from rpd_site import app, db, bcrypt, mail
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
-from .models import User, Post
+from .models import User, Post, Conference
 from .forms import *
 from .helpers import *
 from .constants import *
@@ -549,6 +549,6 @@ def delete_user_role(user_id, role):
 @app.route('/conferences')
 def conferences():
     conferences = Conference.query.all()
-    return render_template('dashboard_roles.html', title="Конференції",
+    return render_template('conferences.html', title="Конференції",
                             conferences=conferences
                             )

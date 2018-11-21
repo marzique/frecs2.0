@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <!-- Page Content -->
+    <div style="margin-top:2%;" class="container" >
+
+      <!-- Page Heading/Breadcrumbs -->
+      <div class="row">
+    <div class="col">
+      <h1 class="zero_margin mb-0" style="margin-bottom:2%; margin-top:2%;">
+        <kbd class="display-4 text-center ">Конференції<br>
+        </kbd>
+    </h1>
+    </div>
+    {% if 'admin' in current_user.roles %}
+    <div class="col">
+      <button onclick="location.href='#' type="button" class="btn btn-success float-right" 
+      style="margin-top: 5%;">Додати конференцію</button>
+    </div>
+    {% endif %}
+  </div>
+      <hr>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{{ url_for('index') }} ">Головна</a>
+        </li>
+        <li class="breadcrumb-item active">Конференції</li>
+      </ol>
+      {% for conf in conferences %}
+
+      <!-- Blog Post -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-6">
+              <a href="#">
+                <img class="img-fluid rounded" src="{{ url_for('static', filename='img/' + conf.image_file) }}" alt="">
+              </a>
+            </div>
+            <div class="col-lg-6">
+              <h2 class="card-title">{{conf.title}}</h2>
+              <p class="card-text">{{ conf.content[:375] }}...</p>
+              <a href="#" class="btn btn-primary">Читати опис &rarr;</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer text-muted">
+          Додано {{conf.date_posted.strftime('%Y-%m-%d')}} автором
+          <a href="{{ url_for('user_id', user_id=conf.author.id) }}">{{conf.author.username}}</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <!-- /.container -->
+{% endblock %}
