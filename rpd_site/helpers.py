@@ -56,6 +56,12 @@ def get_all_roles():
     return names
 
 def get_number_of_users():
+    '''[returns amount of all registered users]
+    
+    Returns:
+        [int] 
+    '''
+
     return len(User.query.all())
 
 def get_number_of_posts():
@@ -139,6 +145,13 @@ def generate_confirmation_token(email):
 
 
 def generate_password_token(email):
+    '''[summary]
+    
+    Arguments:
+        email {string} -- [email to make token for]
+    
+    '''
+
     serializer = URLSafeTimedSerializer(VAR_SAFE_TIMED_KEY)
     return serializer.dumps(email, salt=VAR_PASSWORD_SALT)
 

@@ -173,7 +173,7 @@ def login():
     else:
         form = LoginForm()
         if form.validate_on_submit():
-            user = User.query.filter_by(email=form.email.data.lower()).first()  
+            user = User.query.filter_by(email=form.email.data.lower()).first()
             if user and bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user, remember=form.remember.data)
                 next_page = request.args.get('next')
@@ -201,7 +201,7 @@ def logout():
 @login_required
 def account():
     form = UpdatePicture()
-    # get html snippets for role labels 
+    # get html snippets for role labels
     spans = role_spans(current_user)
     # store current image to delete it after updating
     old_image_file = current_user.image_file
@@ -504,13 +504,13 @@ def add_role():
         return redirect(url_for('login'))
 
     return render_template('add_role.html', form=form, title="Додати Роль")
-    
+
 
 
 @app.route('/admin')
 @login_required
 def admin():
-    return render_template('dashboard.html', title="Панель Керування", 
+    return render_template('dashboard.html', title="Панель Керування",
                             number_of_users=get_number_of_users(),
                             number_of_posts=get_number_of_posts()
                             )
@@ -519,7 +519,7 @@ def admin():
 @login_required
 def admin_news():
     posts = Post.query.order_by(Post.date_posted.desc())
-    return render_template('dashboard_news.html', title="Новини", 
+    return render_template('dashboard_news.html', title="Новини",
                             number_of_users=get_number_of_users(),
                             number_of_posts=get_number_of_posts(),
                             posts=posts
@@ -530,7 +530,7 @@ def admin_news():
 @login_required
 def admin_users():
     users = User.query.all()
-    return render_template('dashboard_users.html', title="Користувачі", 
+    return render_template('dashboard_users.html', title="Користувачі",
                             number_of_users=get_number_of_users(),
                             number_of_posts=get_number_of_posts(),
                             users=users
@@ -545,3 +545,10 @@ def delete_user_role(user_id, role):
     user.delete_role(role)
     flash('Роль видалено', 'warning')
     return redirect(url_for('user_id', user_id=user_id))
+
+@app.route('/conferences')
+def conferences():
+    conferences = Conference.query.all()
+    return render_template('dashboard_roles.html', title="Конференції",
+                            conferences=conferences
+                            )

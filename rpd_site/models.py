@@ -40,11 +40,13 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     confirmed = db.Column(db.Boolean, nullable=False, default=0)
     posts = db.relationship('Post', backref='author', lazy=True)
+    conferences = db.relationship('Conference', backref='author', lazy=True)
 
     # user can have multiple roles
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='joined'))
 
+    # TODO: sortout "superadmin" creation
     # def is_superadmin(self):
     #     if self.id == 1:
     #         return True
@@ -130,5 +132,24 @@ class Post(db.Model):
 
     def __int__(self):
         return self.id
+
+class Conference(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    date_start = db.Column(db.DateTime, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    image_file = db.Column(db.String(20), nullable=False,
+                           default='default_conference.png')
+
+    def __str__(self):
+        return self.title
+
+    def __int__(self):
+        return self.id
+
+    def __repr__(self):
+        return f"Conference('{self.title}', '{self.date_start}', '{self.user_id}')"
 
 
