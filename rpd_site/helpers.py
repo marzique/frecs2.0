@@ -55,6 +55,19 @@ def get_all_roles():
         names.append(role.name)
     return names
 
+
+def get_role_tuples():
+        '''
+        make tuples duplicating role names for SelectField choices
+        '''
+        role_tuples = []
+        tuppy = zip(get_all_roles(), get_all_roles())
+        for item1, item2 in tuppy:
+            if item1 not in ['unconfirmed', 'confirmed']:
+                role_tuples.append((item1, item2))
+        return role_tuples
+
+
 def get_number_of_users():
     '''[returns amount of all registered users]
     

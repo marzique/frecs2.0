@@ -13,7 +13,7 @@ from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from .models import User
-from .helpers import get_all_roles
+from .helpers import get_all_roles, get_role_tuples
 
 
 class RegistrationForm(FlaskForm):
@@ -107,18 +107,6 @@ class NewRole(FlaskForm):
     submit = SubmitField('Додати')
 
 
-def get_role_tuples():
-        '''
-        make tuples duplicating role names for SelectField choices
-        '''
-        role_tuples = []
-        tuppy = zip(get_all_roles(), get_all_roles())
-        for item1, item2 in tuppy:
-            if item1 not in ['unconfirmed', 'confirmed']:
-                role_tuples.append((item1, item2))
-        return role_tuples
-
-
 class AddRole(FlaskForm):
     role = SelectField(label='Роль', choices=get_role_tuples())
     submit = SubmitField('Надати роль')
@@ -132,6 +120,7 @@ class UploadFile(FlaskForm):
                         DataRequired(), Length(min=5, max=100)])
     course = StringField('Предмет', validators=[
                         DataRequired(), Length(min=5, max=100)])
+    # TODO: what extensions we will allow here?
     file = FileField('Файл', validators=[
                         FileAllowed(['jpg', 'jpeg', 'png'])])
 
