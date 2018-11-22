@@ -124,5 +124,5 @@ class UploadFile(FlaskForm):
     file_uploaded = FileField('Файл', validators=[
                         FileAllowed(['jpg', 'jpeg', 'png'])])
 
-    submit = SubmitField('Додати роль')
+    submit = SubmitField('Завантажити')
 

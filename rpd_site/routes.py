@@ -576,5 +576,8 @@ def upload_file():
         new_file = Upload(name=name, data=data, course=course, author=current_user)
         db.session.add(new_file)
         db.session.commit()
-        return 'Saved ' + filename + ' to Database'
+
+        # TODO: redirect to uploads page
+        flash(f'Файл {filename} додано' , 'success')
+        return redirect(url_for('upload_file'))
     return render_template('new_upload.html', form=form, title='Додати файл')
