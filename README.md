@@ -14,3 +14,4 @@ User --> Role --> Permissions(Rights)
   student - by the head of the group, teacher by another 'teacher'. (Also there's option to give tokens which can be used when registering to confirm either role)
 - next we should have 'editor' role for those who can add new posts/conferences and delete them.
 - 'admin' and 'moderator' roles for those who will support website.
+

@@ -41,7 +41,7 @@ class User(db.Model, UserMixin):
     confirmed = db.Column(db.Boolean, nullable=False, default=0)
     posts = db.relationship('Post', backref='author', lazy=True)
     conferences = db.relationship('Conference', backref='author', lazy=True)
-
+    uploads = db.relationship('Upload', backref='author', lazy=True)
     # user can have multiple roles
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='joined'))
@@ -152,4 +152,24 @@ class Conference(db.Model):
     def __repr__(self):
         return f"Conference('{self.title}', '{self.date_start}', '{self.user_id}')"
 
+
+class Upload(db.Model):
+    '''
+    Uploaded file model.
+    Each file can have only one author.
+    '''
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    data = db.Column(db.LargeBinary)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    course = db.Column(db.String(100), nullable=False)
+
+    def __str__(self):
+        return self.name
+
+    def __int__(self):
+        return self.id
+
+    def __repr__(self):
+        return f"Uploaded file('{self.name}', '{self.name}', '{self.user_id}')"
 

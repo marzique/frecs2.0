@@ -558,3 +558,12 @@ def conferences():
 @app.route('/contact')
 def contact():
     return render_template('contact.html', title='Контакти', menuitem='contacts')
+
+
+@app.route('/admin/upload_file', methods=['GET', 'POST'])
+def upload_file():
+    form = UploadFile()
+    if form.validate_on_submit():
+        print(form.file.data)
+        return redirect(url_for('upload_file'))
+    return render_template('new_upload.html', form=form, title='Додати файл')

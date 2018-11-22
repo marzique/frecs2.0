@@ -108,7 +108,9 @@ class NewRole(FlaskForm):
 
 
 def get_role_tuples():
-        '''make tuples duplicating role names for SelectField choices'''
+        '''
+        make tuples duplicating role names for SelectField choices
+        '''
         role_tuples = []
         tuppy = zip(get_all_roles(), get_all_roles())
         for item1, item2 in tuppy:
@@ -122,3 +124,16 @@ class AddRole(FlaskForm):
     submit = SubmitField('Надати роль')
 
     
+class UploadFile(FlaskForm):
+    '''
+    Uploads files for students
+    '''
+    name = StringField('Назва', validators=[
+                        DataRequired(), Length(min=5, max=100)])
+    course = StringField('Предмет', validators=[
+                        DataRequired(), Length(min=5, max=100)])
+    file = FileField('Файл', validators=[
+                        FileAllowed(['jpg', 'jpeg', 'png'])])
+
+    submit = SubmitField('Додати роль')
+
