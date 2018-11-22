@@ -14,9 +14,10 @@ from smtplib import SMTPException
 from flask import render_template, url_for, flash, redirect, request, abort, send_file
 from flask_login import login_user, current_user, logout_user, login_required, fresh_login_required
 from flask_mail import Message
+from werkzeug.utils import secure_filename
 from rpd_site import app, db, bcrypt, mail
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
-from .models import User, Post, Conference
+from .models import User, Post, Conference, Upload
 from .forms import *
 from .helpers import *
 from .constants import *
@@ -561,9 +562,19 @@ def contact():
 
 
 @app.route('/admin/upload_file', methods=['GET', 'POST'])
+@login_required
 def upload_file():
     form = UploadFile()
     if form.validate_on_submit():
-        print(form.file.data)
-        return redirect(url_for('upload_file'))
+        # get filename preventing path traversal
+        filename = secure_filename(form.file_uploaded.data.filename)
+
+        name = form.course.name
+        course = form.course.data
+        data = form.file_uploaded.data.read() # file data itself
+
+        new_file = Upload(name=name, data=data, course=course, author=current_user)
+        db.session.add(new_file)
+        db.session.commit()
+        return 'Saved ' + filename + ' to Database'
     return render_template('new_upload.html', form=form, title='Додати файл')

@@ -121,7 +121,7 @@ class UploadFile(FlaskForm):
     course = StringField('Предмет', validators=[
                         DataRequired(), Length(min=5, max=100)])
     # TODO: what extensions we will allow here?
-    file = FileField('Файл', validators=[
+    file_uploaded = FileField('Файл', validators=[
                         FileAllowed(['jpg', 'jpeg', 'png'])])
 
     submit = SubmitField('Додати роль')

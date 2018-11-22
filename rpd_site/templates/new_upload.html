@@ -35,10 +35,10 @@
                 {% endif %}
             </div>
             <div class="form-group">
-                    {{ form.file.label() }}
-                    {{ form.file(class="form-control-file") }}
-                    {% if form.file.errors %}
-                        {% for error in form.file.errors %}
+                    {{ form.file_uploaded.label() }}
+                    {{ form.file_uploaded(class="form-control-file") }}
+                    {% if form.file_uploaded.errors %}
+                        {% for error in form.file_uploaded.errors %}
                             <span class="text-danger">{{ error }}</span></br>
                         {% endfor %}
                     {% endif %}
