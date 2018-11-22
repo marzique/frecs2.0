@@ -506,7 +506,6 @@ def add_role():
     return render_template('add_role.html', form=form, title="Додати Роль")
 
 
-
 @app.route('/admin')
 @login_required
 def admin():
@@ -536,6 +535,7 @@ def admin_users():
                             users=users
                             )
 
+
 # Higher role must be required
 @app.route('/users/<int:user_id>/delete_role/<string:role>', methods=['POST'])
 @login_required
@@ -546,9 +546,15 @@ def delete_user_role(user_id, role):
     flash('Роль видалено', 'warning')
     return redirect(url_for('user_id', user_id=user_id))
 
+
 @app.route('/conferences')
 def conferences():
     conferences = Conference.query.all()
     return render_template('conferences.html', title="Конференції",
                             conferences=conferences
                             )
+
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html', title='Контакти', menuitem='contacts')

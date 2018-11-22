@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <!-- Page Content -->
+    <div style="margin-top:2%;" class="container" >
+
+      <!-- Page Heading/Breadcrumbs -->
+      <h1 class="mt-4 mb-3">{{title}}</h1>
+
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{{url_for('index')}}">Головна</a>
+        </li>
+        <li class="breadcrumb-item active">{{title}}</li>
+      </ol>
+
+      <!-- Content Row -->
+      <div class="row">
+        <!-- Map Column -->
+        <div class="col-lg-8 mb-4">
+          <!-- Embedded Google Map -->
+          <iframe height="400" width="100%" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d10176.868259453342!2d30.
+        469817000000003!3d50.381152!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x4732b80e33e6b43!2sUniversity+o
+        f+Kiev+Faculty+of+Radio+Physics%2C+Electronics+and+Computer+Systems!5e0!3m2!1sen!2sua!4v1527705681370"
+                frameborder="0" style="border:0; padding:0" allowfullscreen></iframe>
+        </div>
+        <!-- Contact Details Column -->
+        <div class="col-lg-4 mb-4">
+          <h3>Адреса</h3>
+          <p>
+            проспект Глушкова, 4-г
+            <br>Україна, 03022, м.Київ
+            <br>
+            Кафедра радіотехніки та радіоелектронних систем
+          </p>
+          <p>
+            <abbr title="Phone">P</abbr>: (123) 456-7890
+          </p>
+          <p>
+            <abbr title="Email">E</abbr>:
+            <a href="mailto:name@example.com">name@example.com
+            </a>
+          </p>
+          <p>
+            <abbr title="Hours">H</abbr>: Monday - Friday: 9:00 AM to 5:00 PM
+          </p>
+        </div>
+      </div>
+      <!-- /.row -->
+
+      <!-- Contact Form -->
+      <!-- In order to set the email address and subject line for the contact form go to the bin/contact_me.php file. -->
+      <div class="row">
+        <div class="col-lg-8 mb-4">
+          <h3>Напишіть нам</h3>
+          <form name="sentMessage" id="contactForm" novalidate>
+            <div class="control-group form-group">
+              <div class="controls">
+                <label>Ім'я:</label>
+                <input type="text" class="form-control" id="name" required data-validation-required-message="Введіть ім\'я'.">
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="control-group form-group">
+              <div class="controls">
+                <label>Контактний номер:</label>
+                <input type="tel" class="form-control" id="phone" required data-validation-required-message="Введіть ваш номер телефону.">
+              </div>
+            </div>
+            <div class="control-group form-group">
+              <div class="controls">
+                <label>Email:</label>
+                <input type="email" class="form-control" id="email" required data-validation-required-message="Вкажіть адресу електронної пошти.">
+              </div>
+            </div>
+            <div class="control-group form-group">
+              <div class="controls">
+                <label>Повідомлення:</label>
+                <textarea rows="10" cols="100" class="form-control" id="message" required data-validation-required-message="Напишіть ваше питання або запит" maxlength="999" style="resize:none"></textarea>
+              </div>
+            </div>
+            <div id="success"></div>
+            <!-- For success/fail messages -->
+            <button type="submit" class="btn btn-primary" id="sendMessageButton">Надіслати</button>
+          </form>
+        </div>
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+{% endblock %}
