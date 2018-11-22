@@ -558,3 +558,4 @@ def conferences():
 @app.route('/contact')
 def contact():
     return render_template('contact.html', title='Контакти', menuitem='contacts')
+    
