@@ -554,7 +554,7 @@ def conferences():
                             conferences=conferences
                             )
 
-
+# TODO: email, phone, form
 @app.route('/contact')
 def contact():
     return render_template('contact.html', title='Контакти', menuitem='contacts')
