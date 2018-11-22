@@ -34,7 +34,7 @@
             </a>-->
 
               <!-- Avatar -->
-              <a class="list-group-item text-center">
+              <a class="list-group-item text-center bg-dark">
 
                   <form method="POST" action="" enctype="multipart/form-data">
                   <fieldset class="form-group">
@@ -50,15 +50,15 @@
                   </div>
               </form>
               </a>
-            <a class="list-group-item">Повне ім&#39я: John Doe</a>
+            <a class="list-group-item bg-dark text-white">Повне ім&#39я: John Doe</a>
 
               <!--pass user status here-->
-            <a class="list-group-item">Група: {% for role in spans %}
+            <a class="list-group-item bg-dark text-white">Група: {% for role in spans %}
                                                         {{ role|safe }}
                                                     {% endfor %}
 
                 </a>
-            <a href="{{ url_for('news') + '/' + user.username}}" class="list-group-item">Новини автора</a>
+            <a href="{{ url_for('news') + '/' + user.username}}" class="list-group-item bg-dark">Новини автора</a>
           </div>
         </div>
 
