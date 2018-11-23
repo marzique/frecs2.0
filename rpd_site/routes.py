@@ -571,12 +571,12 @@ def upload_file():
         name = form.name.data
         course = form.course.data
         data = form.file_uploaded.data.read() # file data itself
-
         new_file = Upload(filename=filename, name=name, data=data, course=course, author=current_user)
         db.session.add(new_file)
         db.session.commit()
-
+        # flash(f'Файл {filename} додано' , 'success')
+        flash(f'size of {filename} is {new_file.file_size() } Mb and it\'s uploaded' , 'danger')
         # TODO: redirect to uploads page
-        flash(f'Файл {filename} додано' , 'success')
         return redirect(url_for('upload_file'))
+        
     return render_template('new_upload.html', form=form, title='Додати файл')

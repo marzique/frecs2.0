@@ -13,6 +13,7 @@ from flask_login import UserMixin
 from flask_security import RoleMixin
 from rpd_site import db, login_manager
 import os
+import sys
 
 
 # TODO comment here!
@@ -177,10 +178,11 @@ class Upload(db.Model):
 
     def extension(self):
         '''gets file extension
-        
         Returns:
             [string] -- [.ext => where ext could be rar,zip,pdf]
         '''
-
         _, file_extension = os.path.splitext(self.filename)
         return file_extension
+
+    def file_size(self):
+        return "{0:.2f}".format(sys.getsizeof(self.data) / (1024 * 1024))
