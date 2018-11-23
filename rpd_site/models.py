@@ -160,9 +160,10 @@ class Upload(db.Model):
     '''
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
+    filename = db.Column(db.String(100), nullable=False)
+    course = db.Column(db.String(100), nullable=False)
     data = db.Column(db.LargeBinary)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    course = db.Column(db.String(100), nullable=False)
 
     def __str__(self):
         return self.name
@@ -171,5 +172,7 @@ class Upload(db.Model):
         return self.id
 
     def __repr__(self):
-        return f"Uploaded file('{self.name}', '{self.name}', '{self.user_id}')"
+        return f"Uploaded file('{self.name}', '{self.course}', '{self.user_id}')"
 
+    def extension(self):
+        pass

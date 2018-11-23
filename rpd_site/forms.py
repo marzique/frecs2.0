@@ -122,7 +122,7 @@ class UploadFile(FlaskForm):
                         DataRequired(), Length(min=5, max=100)])
     # TODO: what extensions we will allow here?
     file_uploaded = FileField('Файл', validators=[
-                        FileAllowed(['jpg', 'jpeg', 'png'])])
+                        FileAllowed(['jpg', 'jpeg', 'png', 'pdf'])])
 
     submit = SubmitField('Завантажити')
 

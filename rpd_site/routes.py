@@ -568,12 +568,11 @@ def upload_file():
     if form.validate_on_submit():
         # get filename preventing path traversal
         filename = secure_filename(form.file_uploaded.data.filename)
-
-        name = form.course.name
+        name = form.name.data
         course = form.course.data
         data = form.file_uploaded.data.read() # file data itself
 
-        new_file = Upload(name=name, data=data, course=course, author=current_user)
+        new_file = Upload(filename=filename, name=name, data=data, course=course, author=current_user)
         db.session.add(new_file)
         db.session.commit()
 
