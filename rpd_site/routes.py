@@ -604,3 +604,13 @@ def download(file_id):
     f = Upload.query.get_or_404(file_id)
     flash(f'User wants to download {f.filename}', 'success')
     return redirect(url_for('uploads'))
+
+
+@app.route('/delete_file/<int:file_id>', methods=['POST'])
+@login_required
+def delete_file(file_id):
+    f = Upload.query.get_or_404(file_id)
+    db.session.delete(f)
+    db.session.commit()
+    flash(f'{f.filename} видалено з бази даних', 'success')
+    return redirect(url_for('admin_uploads'))

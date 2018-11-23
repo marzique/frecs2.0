@@ -28,7 +28,12 @@
                     <td>{{f.course}} </td>
                     <td><a href="{{ url_for('user_id', user_id=f.author.id) }}">{{ f.author.username }}</a></td>
                     <td>
-                        <a href="#"> <i class="fa fa-download" aria-hidden="true"></i></a>
+                               <!-- download file POST request -->
+                          <form action="{{ url_for('delete_file', file_id=f.id) }}" method="POST">
+                            <button class="btn btn-danger btn-sm" type="submit" value="" style="padding: 3px 10px 3px 10px; margin-top: 5px;">
+                              <i class="fas fa-trash-alt"></i>
+                            </button>
+                          </form>
                         <small> {{f.file_size()}}</small>
                     </td>
                     </tr>
