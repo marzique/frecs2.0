@@ -190,6 +190,9 @@ class Upload(db.Model):
         Returns:
             [string] -- [File size in Megabytes]
         '''
-
-        return "{0:.2f}".format(sys.getsizeof(self.data) / (1024 * 1024))
+        size_b = sys.getsizeof(self.data)
+        if size_b >= 1048576:
+            return "{0:.2f}".format(sys.getsizeof(self.data) / (1024 * 1024)) + ' MB'
+        else:
+            return "{0:.2f}".format(sys.getsizeof(self.data) / 1024) + ' kB'
         

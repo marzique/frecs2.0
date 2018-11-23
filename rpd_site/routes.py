@@ -576,7 +576,7 @@ def upload_file():
         db.session.add(new_file)
         db.session.commit()
         # flash(f'Файл {filename} додано' , 'success')
-        flash(f'size of {filename} is {new_file.file_size() } Mb and it\'s uploaded' , 'danger')
+        flash(f'size of {filename} is {new_file.file_size() } and it\'s uploaded' , 'success')
         # TODO: redirect to uploads page
         return redirect(url_for('upload_file'))
         
