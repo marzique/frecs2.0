@@ -45,6 +45,7 @@
                 <td>{{f.name}}</td>
                 <td>{{f.course}} </td>
                 <td><a href="{{ url_for('user_id', user_id=f.author.id) }}">{{ f.author.username }}</a></td>
+<<<<<<< HEAD
                 <td>
                         <form action="{{ url_for('download', file_id=f.id) }}" method="POST">
                                 <!-- <input class="btn btn-danger btn-sm" type="submit" value=""> -->
@@ -53,6 +54,9 @@
                         </form>
                     <small> {{f.file_size()}}</small>
                 </td>
+=======
+                <td><a href="#"> <i class="fa fa-download" aria-hidden="true"></i></a></td>
+>>>>>>> 6099bc7912a0ed3a6e05b64b359b0cce346e232b
                 </tr>
                 {% endfor %}
             </tbody>
