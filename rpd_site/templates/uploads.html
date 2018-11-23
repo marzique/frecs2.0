@@ -52,6 +52,7 @@
                                     <i class="fa fa-download"></i></button>
                         </form>
                     <small> {{f.file_size()}}</small>
+                    <small style="color:darkcyan">{{ f.extension()[1:] }}</small>
                 </td>
                 </tr>
                 {% endfor %}
