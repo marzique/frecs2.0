@@ -215,7 +215,8 @@
                         chosen 
                     {% endif %}
 
-                    "><i class="fas fa-users"></i>&nbsp;Користувачі&nbsp;<small style="color:white; background-color: #666; text-align: center; border-radius: 60%; padding-left:2%; padding-right:2%;">{{number_of_users}}</small>&nbsp;<i class="fas fa-caret-down"></i></a>
+                    "><i class="fas fa-users"></i>&nbsp;Користувачі&nbsp;
+                    <small style="color:white; background-color: #666; text-align: center; border-radius: 60%; padding-left:2%; padding-right:2%;">{{number_of_users}}</small>&nbsp;<i class="fas fa-caret-down"></i></a>
 
                     {% if title == 'Користувачі' %} 
                                 <a href="{{ url_for('users') }}" class="collapsed_item">Усі Користувачі</a>
@@ -243,7 +244,8 @@
                     {% if title == 'Завантаження' %} 
                             chosen 
                         {% endif %}
-                    "><i class="fas fa-folder-open"></i>&nbsp;Завантаження&nbsp;<i class="fas fa-caret-down"></i></a>
+                    "><i class="fas fa-folder-open"></i>&nbsp;Завантаження&nbsp;
+                    <small style="color:white; background-color: #666; text-align: center; border-radius: 60%; padding-left:2%; padding-right:2%;">{{number_of_uploads}}</small>&nbsp;&nbsp;<i class="fas fa-caret-down"></i></a>
 
                     {% if title == 'Завантаження' %} 
                                 <a href="{{ url_for('uploads') }}" class="collapsed_item">Усі файли</a>

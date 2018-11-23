@@ -519,7 +519,8 @@ def add_role():
 def admin():
     return render_template('dashboard.html', title="Панель Керування",
                             number_of_users=get_number_of_users(),
-                            number_of_posts=get_number_of_posts()
+                            number_of_posts=get_number_of_posts(),
+                            number_of_uploads=get_number_of_uploads(),
                             )
 
 @app.route('/admin/news')
@@ -529,6 +530,7 @@ def admin_news():
     return render_template('dashboard_news.html', title="Новини",
                             number_of_users=get_number_of_users(),
                             number_of_posts=get_number_of_posts(),
+                            number_of_uploads=get_number_of_uploads(),
                             posts=posts
                             )
 
@@ -540,6 +542,7 @@ def admin_users():
     return render_template('dashboard_users.html', title="Користувачі",
                             number_of_users=get_number_of_users(),
                             number_of_posts=get_number_of_posts(),
+                            number_of_uploads=get_number_of_uploads(),
                             users=users
                             )
 
@@ -574,7 +577,9 @@ def admin_uploads():
     files = Upload.query.all()
     return render_template('dashboard_uploads.html', files=files, title='Завантаження', 
                             number_of_users=get_number_of_users(),
-                            number_of_posts=get_number_of_posts())
+                            number_of_posts=get_number_of_posts(),
+                            number_of_uploads=get_number_of_uploads()
+                            )
 
 
 @app.route('/admin/upload_file', methods=['GET', 'POST'])
