@@ -198,4 +198,3 @@ class Upload(db.Model):
             return "{0:.2f}".format(sys.getsizeof(self.data) / (1024 * 1024)) + ' MB'
         else:
             return "{0:.2f}".format(sys.getsizeof(self.data) / 1024) + ' kB'
-        
