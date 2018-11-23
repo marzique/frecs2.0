@@ -565,6 +565,7 @@ def contact():
 @login_required
 def upload_file():
     form = UploadFile()
+    extensions = ', '.join(LIST_ALLOWED_FILE_EXTENSIONS)
     if form.validate_on_submit():
         # get filename preventing path traversal
         filename = secure_filename(form.file_uploaded.data.filename)
@@ -579,4 +580,4 @@ def upload_file():
         # TODO: redirect to uploads page
         return redirect(url_for('upload_file'))
         
-    return render_template('new_upload.html', form=form, title='Додати файл')
+    return render_template('new_upload.html', form=form, title='Додати файл', extensions=extensions)
