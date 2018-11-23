@@ -389,16 +389,23 @@ def user_id(user_id):
 @login_required
 def delete_user(user_id):
     '''
-    delete user including all of his posts to avoid DB integrity errors
+    delete user including all of his posts, uploads, and conferences to avoid DB integrity errors
     :param user_id:
     :return:
     '''
     user = User.query.get_or_404(user_id)
     posts = Post.query.filter_by(author=user)
+    conferences = Conference.query.filter_by(author=user)
+    uploads = Upload.query.filter_by(author=user)
     # temp admin check TODO: (should make decorator out of it!!)
     if 'admin' in current_user.roles:
         for post in posts:
             db.session.delete(post)
+        for conference in conferences:
+            db.session.delete(conference)
+        for upload in uploads:
+            db.session.delete(upload)
+
         db.session.delete(user)
         db.session.commit()
         flash('Користувача і всі його новини видалено', 'success')
@@ -603,6 +610,9 @@ def uploads():
 @app.route('/download/<int:file_id>', methods=['POST'])
 @login_required
 def download(file_id):
+    '''
+    get BLOB data from database convert it to file and download
+    '''
     from io import BytesIO
     f = Upload.query.get_or_404(file_id)
     return send_file(BytesIO(f.data), attachment_filename=f.filename, as_attachment=True)
@@ -611,6 +621,9 @@ def download(file_id):
 @app.route('/delete_file/<int:file_id>', methods=['POST'])
 @login_required
 def delete_file(file_id):
+    '''
+    delete file from database
+    '''
     f = Upload.query.get_or_404(file_id)
     db.session.delete(f)
     db.session.commit()
