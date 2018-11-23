@@ -185,4 +185,11 @@ class Upload(db.Model):
         return file_extension
 
     def file_size(self):
+        '''get file size in megabytes, with 2 digits after point
+        
+        Returns:
+            [string] -- [File size in Megabytes]
+        '''
+
         return "{0:.2f}".format(sys.getsizeof(self.data) / (1024 * 1024))
+        
