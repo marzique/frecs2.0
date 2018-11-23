@@ -45,7 +45,10 @@
                 <td>{{f.name}}</td>
                 <td>{{f.course}} </td>
                 <td><a href="{{ url_for('user_id', user_id=f.author.id) }}">{{ f.author.username }}</a></td>
-                <td><a href="#"> <i class="fa fa-download" aria-hidden="true"></i></a></td>
+                <td>
+                    <a href="#"> <i class="fa fa-download" aria-hidden="true"></i></a>
+                    <small> {{f.file_size()}}</small>
+                </td>
                 </tr>
                 {% endfor %}
             </tbody>
