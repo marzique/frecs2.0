@@ -596,7 +596,9 @@ def upload_file():
 @login_required
 def uploads():
     files = Upload.query.all()
-    return render_template('uploads.html', files=files, title='Навчальні матеріали')
+    return render_template('uploads.html', files=files, 
+                            title='Навчальні матеріали', menuitem='uploads')
+
 
 @app.route('/download/<int:file_id>', methods=['POST'])
 @login_required
@@ -604,8 +606,6 @@ def download(file_id):
     from io import BytesIO
     f = Upload.query.get_or_404(file_id)
     return send_file(BytesIO(f.data), attachment_filename=f.filename, as_attachment=True)
-    # flash(f'User wants to download {f.filename}', 'success')
-    # return redirect(url_for('uploads'))
 
 
 @app.route('/delete_file/<int:file_id>', methods=['POST'])
