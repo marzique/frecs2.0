@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <!-- Page Content -->
+    <div style="margin-top:2%;" class="container" >
+
+      <!-- Page Heading/Breadcrumbs -->
+      <div class="row">
+    <div class="col">
+      <h1 class="zero_margin mb-0" style="margin-bottom:2%; margin-top:2%;">
+        <kbd class=" text-center ">{{title}}</kbd>
+    </h1>
+    </div>
+    {% if 'admin' in current_user.roles %}
+    <div class="col">
+      <button onclick="location.href='{{ url_for('upload_file') }}'" type="button" class="btn btn-success float-right" 
+      style="margin-top: 5%;">Завантажити файл</button>
+    </div>
+    {% endif %}
+  </div>
+      <ol class="breadcrumb" style='margin-top: 1%;'>
+        <li class="breadcrumb-item">
+          <a href="{{ url_for('index') }} ">Головна</a>
+        </li>
+        <li class="breadcrumb-item active">{{title}}</li>
+      </ol>
+      <hr>
+      
+
+        <div class="col-sm-auto" style="width: 100%;">
+            <table class="table table-striped table-bordered table-hover table-sm">
+            <thead>
+                <tr>
+                <th scope="col">id</th>
+                <th scope="col">Назва</th>
+                <th scope="col">Предмет</th>
+                <th scope="col">Викладач</th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for f in files %}
+                <tr>
+                <th scope="row">{{ f.id }}</th>
+                <td>{{f.name}}</td>
+                <td>{{f.course}} </td>
+                <td><a href="{{ url_for('user_id', user_id=f.author.id) }}">{{ f.author.username }}</a></td>
+                <td><a href="#"> <i class="fa fa-download" aria-hidden="true"></i></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        </div>
+
+    </div>
+    <!-- /.container -->
+{% endblock %}
