@@ -587,7 +587,7 @@ def upload_file():
         # flash(f'Файл {filename} додано' , 'success')
         flash(f'size of {filename} is {new_file.file_size() } and it\'s uploaded' , 'success')
         # TODO: redirect to uploads page
-        return redirect(url_for('upload_file'))
+        return redirect(url_for('uploads'))
         
     return render_template('new_upload.html', form=form, title='Додати файл', extensions=extensions)
 
@@ -601,9 +601,11 @@ def uploads():
 @app.route('/download/<int:file_id>', methods=['POST'])
 @login_required
 def download(file_id):
+    from io import BytesIO
     f = Upload.query.get_or_404(file_id)
-    flash(f'User wants to download {f.filename}', 'success')
-    return redirect(url_for('uploads'))
+    return send_file(BytesIO(f.data), attachment_filename=f.filename, as_attachment=True)
+    # flash(f'User wants to download {f.filename}', 'success')
+    # return redirect(url_for('uploads'))
 
 
 @app.route('/delete_file/<int:file_id>', methods=['POST'])
