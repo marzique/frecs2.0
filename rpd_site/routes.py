@@ -561,6 +561,15 @@ def contact():
     return render_template('contact.html', title='Контакти', menuitem='contacts')
 
 
+@app.route('/admin/uploads')
+@login_required
+def admin_uploads():
+    files = Upload.query.all()
+    return render_template('dashboard_uploads.html', files=files, title='Завантаження', 
+                            number_of_users=get_number_of_users(),
+                            number_of_posts=get_number_of_posts())
+
+
 @app.route('/admin/upload_file', methods=['GET', 'POST'])
 @login_required
 def upload_file():
@@ -587,4 +596,11 @@ def upload_file():
 @login_required
 def uploads():
     files = Upload.query.all()
-    return render_template('uploads.html', files=files, title='Навчальні матераіли')
+    return render_template('uploads.html', files=files, title='Навчальні матеріали')
+
+@app.route('/download/<int:file_id>', methods=['POST'])
+@login_required
+def download(file_id):
+    f = Upload.query.get_or_404(file_id)
+    flash(f'User wants to download {f.filename}', 'success')
+    return redirect(url_for('uploads'))

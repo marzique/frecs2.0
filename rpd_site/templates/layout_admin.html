@@ -229,7 +229,8 @@
                             chosen 
                         {% endif %}
 
-                        "><i class="fas fa-newspaper"></i>&nbsp;Новини&nbsp;<small style="color:white; background-color: #666; text-align: center; border-radius: 60%; padding-left:2%; padding-right:2%;">{{number_of_posts}}</small>&nbsp;<i class="fas fa-caret-down"></i></a>
+                        "><i class="fas fa-newspaper"></i>&nbsp;Новини&nbsp;
+                        <small style="color:white; background-color: #666; text-align: center; border-radius: 60%; padding-left:2%; padding-right:2%;">{{number_of_posts}}</small>&nbsp;<i class="fas fa-caret-down"></i></a>
 
                         {% if title == 'Новини' %} 
                                 <a href="{{ url_for('news') }}" class="collapsed_item">Усі новини</a>
@@ -238,12 +239,17 @@
                         
                 </li>
                 <li>
-                    <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" 
-                    aria-controls="collapseExample"><i class="fas fa-folder-open"></i>&nbsp;Завантаження&nbsp;<i class="fas fa-caret-down"></i></a>
-                    <div class="collapse" id="collapseExample">
-                      <a href="#" class="collapsed_item">Внутрішній елемент1</a>
-                      <a href="#" class="collapsed_item">Внутрішній елемент2</a>
-                    </div>
+                    <a href="{{ url_for('admin_uploads') }}" class="
+                    {% if title == 'Завантаження' %} 
+                            chosen 
+                        {% endif %}
+                    "><i class="fas fa-folder-open"></i>&nbsp;Завантаження&nbsp;<i class="fas fa-caret-down"></i></a>
+
+                    {% if title == 'Завантаження' %} 
+                                <a href="{{ url_for('uploads') }}" class="collapsed_item">Усі файли</a>
+                                <a href="{{ url_for('upload_file') }}" class="collapsed_item">Завантажити файл</a>
+                    {% endif %}
+
                 </li>
                 <li>
                     <a href="#"><i class="fas fa-chart-line"></i>&nbsp;Статистика</a>
