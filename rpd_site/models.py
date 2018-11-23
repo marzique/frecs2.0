@@ -159,6 +159,9 @@ class Upload(db.Model):
     '''
     Uploaded file model.
     Each file can have only one author.
+    Files stored directly in DB as BLOB (Binary Large Object), not as filepath
+    since file size is limited to 32 MB, and only 'teachers' will upload them.
+    Also total amount of files predicted to be <= than few hundreds.
     '''
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
