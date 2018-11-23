@@ -21,3 +21,4 @@ VAR_CFG_FILE = 'config.cfg'
 VAR_MAX_LOGIN_ATTEMPTS = 3
 VAR_POST_PER_PAGE = 5
 VAR_MAX_UPLOAD_SIZE = 32 # Megabytes
+LIST_ALLOWED_FILE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'pdf', 'zip', 'rar']

@@ -14,6 +14,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextA
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from .models import User
 from .helpers import get_all_roles, get_role_tuples
+from .constants import LIST_ALLOWED_FILE_EXTENSIONS
 
 
 class RegistrationForm(FlaskForm):
@@ -121,8 +122,8 @@ class UploadFile(FlaskForm):
     course = StringField('Предмет', validators=[
                         DataRequired(), Length(min=5, max=100)])
     # TODO: what extensions we will allow here?
-    file_uploaded = FileField('Файл', validators=[
-                        FileAllowed(['jpg', 'jpeg', 'png', 'pdf'])])
+    file_uploaded = FileField('Файл', validators=[DataRequired(), 
+                        FileAllowed(LIST_ALLOWED_FILE_EXTENSIONS)])
 
     submit = SubmitField('Завантажити')
 

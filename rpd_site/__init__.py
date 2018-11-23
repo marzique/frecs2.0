@@ -14,7 +14,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
-from rpd_site.constants import VAR_APP_SECRET_KEY, VAR_DEBUG, VAR_CFG_FILE
+from rpd_site.constants import VAR_APP_SECRET_KEY, VAR_DEBUG, VAR_CFG_FILE, VAR_MAX_UPLOAD_SIZE
 
 
 app = Flask(__name__)
@@ -44,6 +44,7 @@ app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['MAX_CONTENT_LENGTH'] = VAR_MAX_UPLOAD_SIZE * 1024 * 1024 # set max upload file size
 
 # recaptcha disable for offline/development (it's still works smh)
 app.config['RECAPTCHA_ENABLE'] = False
