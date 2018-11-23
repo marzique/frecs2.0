@@ -12,6 +12,7 @@ from flask import flash
 from flask_login import UserMixin
 from flask_security import RoleMixin
 from rpd_site import db, login_manager
+import os
 
 
 # TODO comment here!
@@ -175,4 +176,11 @@ class Upload(db.Model):
         return f"Uploaded file('{self.name}', '{self.course}', '{self.user_id}')"
 
     def extension(self):
-        pass
+        '''gets file extension
+        
+        Returns:
+            [string] -- [.ext => where ext could be rar,zip,pdf]
+        '''
+
+        _, file_extension = os.path.splitext(self.filename)
+        return file_extension

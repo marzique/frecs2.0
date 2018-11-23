@@ -193,7 +193,7 @@ def role_spans(user):
         spans.append(span)
     return spans
     
-
+# TODO: think about it
 # def add_superadmin():
 #     user = User.query.filter_by(id=1).first()
 #     user.add_roles('superadmin')
