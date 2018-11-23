@@ -581,3 +581,10 @@ def upload_file():
         return redirect(url_for('upload_file'))
         
     return render_template('new_upload.html', form=form, title='Додати файл', extensions=extensions)
+
+
+@app.route('/uploads')
+@login_required
+def uploads():
+    files = Upload.query.all()
+    return render_template('uploads.html', files=files, title='Навчальні матераіли')
