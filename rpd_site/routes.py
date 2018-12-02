@@ -306,6 +306,8 @@ def update_account():
                         current_user.username = form.username.data
                         current_user.email = email
                         current_user.confirmed = 0
+                        current_user.add_roles('unconfirmed')
+                        current_user.delete_role('confirmed')
                         db.session.commit()
                         flash('Обліковий запис успішно відредаговано. Для підтвердження поштової адреси перейдіть по посиланню \
 								яке було надіслано на адресу: ' + email, 'success')
