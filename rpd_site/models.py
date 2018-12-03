@@ -59,7 +59,7 @@ class User(db.Model, UserMixin):
         '''
         Sets confirmed status to True or False
         '''
-        if flag == True:
+        if flag:
             self.confirmed = 1
             self.add_roles('confirmed')
             self.delete_role('unconfirmed')
