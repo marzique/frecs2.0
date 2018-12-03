@@ -153,11 +153,9 @@ def confirm_email(token):
 					або зверніться до адміністратора.</h1><br> \
 							   <a href="' + url_for('index') + '">Повернутись на сайт</a>'
 
-        # confirm user
-        current_user.confirmed = 1
-        current_user.add_roles('confirmed')
-        current_user.delete_role('unconfirmed')
-        db.session.commit()
+        # confirm user's email
+        current_user.confirm_email(True)
+
         flash('Пошта ' + current_user.email +
               ' прив\'язана до аккаунту - ' + current_user.username, 'success')
         return redirect(url_for('account'))
@@ -305,10 +303,9 @@ def update_account():
                         mail.send(msg)
                         current_user.username = form.username.data
                         current_user.email = email
-                        current_user.confirmed = 0
-                        current_user.add_roles('unconfirmed')
-                        current_user.delete_role('confirmed')
-                        db.session.commit()
+
+                        # user's new email unconfirmed 
+                        current_user.confirm_email(False)
                         flash('Обліковий запис успішно відредаговано. Для підтвердження поштової адреси перейдіть по посиланню \
 								яке було надіслано на адресу: ' + email, 'success')
                         print()

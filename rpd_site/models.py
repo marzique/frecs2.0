@@ -55,6 +55,20 @@ class User(db.Model, UserMixin):
     #     else:
     #         return False
 
+    def confirm_email(self, flag):
+        '''
+        Sets confirmed status to True or False
+        '''
+        if flag == True:
+            self.confirmed = 1
+            self.add_roles('confirmed')
+            self.delete_role('unconfirmed')
+        else:
+            self.confirmed = 0
+            self.add_roles('unconfirmed')
+            self.delete_role('confirmed')
+        db.session.commit()
+
     def add_roles(self, *args):
         added_roles = list(args)
         for role_name in args:
