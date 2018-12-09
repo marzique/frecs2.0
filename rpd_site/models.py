@@ -74,6 +74,8 @@ class User(db.Model, UserMixin):
         for role_name in args:
             role_search = Role.query.filter_by(name=role_name).first()
             if role_search and role_name not in self.roles:
+                if role_name in ['student', 'teacher', 'moderator', 'admin']:
+                    self.delete_role('unconfirmed') or self.delete_role('confirmed')
                 self.roles.append(role_search)
                 db.session.commit()
             else:
