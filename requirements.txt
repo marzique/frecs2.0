@@ -28,7 +28,7 @@ jsonpointer==1.9
 MarkupSafe==1.0
 oauth2client==4.1.2
 oauthlib==1.0.3
-Pillow==6.2.0
+Pillow==9.3.0
 prettytable==0.7.2
 psutil==5.6.6
 pyasn1==0.4.4
